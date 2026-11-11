@@ -66,8 +66,7 @@ public class frmLogin extends javax.swing.JFrame {
         lbl_empresa4.setText("Modeler");
         pnl_cabecera.add(lbl_empresa4, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 100, 140, -1));
 
-        lbl_icono1.setIcon(new javax.swing.ImageIcon("C:\\Users\\Walter\\Documents\\GitHub\\GFR_Modeler_3D\\src\\main\\java\\Utilidades\\GFR_Modeler_3D_icon_128.png")); // NOI18N
-        lbl_icono1.setText("jLabel2");
+        lbl_icono1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Utilidades/GFR_Modeler_3D_icon_128.png"))); // NOI18N
         lbl_icono1.setMaximumSize(new java.awt.Dimension(40, 20));
         lbl_icono1.setMinimumSize(new java.awt.Dimension(40, 20));
         pnl_cabecera.add(lbl_icono1, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 20, 130, 150));
@@ -142,7 +141,7 @@ public class frmLogin extends javax.swing.JFrame {
         pnl_vaso.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         pnl_vaso.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        lbl_icono2.setIcon(new javax.swing.ImageIcon("C:\\Users\\Walter\\Documents\\GitHub\\GFR_Modeler_3D\\src\\main\\java\\Utilidades\\vaso.png")); // NOI18N
+        lbl_icono2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Utilidades/vaso.png"))); // NOI18N
         lbl_icono2.setText("jLabel2");
         lbl_icono2.setMaximumSize(new java.awt.Dimension(40, 20));
         lbl_icono2.setMinimumSize(new java.awt.Dimension(40, 20));
