@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-package Vista;
+package Vistas;
 
 /**
  *
@@ -82,16 +82,14 @@ public class frmPrincipal extends javax.swing.JFrame {
         btnExportarPDF = new javax.swing.JButton();
         jSeparator1 = new javax.swing.JSeparator();
         btnExportarPNG1 = new javax.swing.JButton();
-        btnExportarPNG2 = new javax.swing.JButton();
-        btnExportarPNG3 = new javax.swing.JButton();
+        btnCerrarSesion = new javax.swing.JButton();
+        btnActualizar = new javax.swing.JButton();
         tab_modelado = new javax.swing.JPanel();
         btnLagrange = new javax.swing.JButton();
         btnGradienteDerivadas = new javax.swing.JButton();
         btnCurvasnivel = new javax.swing.JButton();
         btnSuperficie = new javax.swing.JButton();
-        btnUnidades = new javax.swing.JButton();
         btnPlantillas = new javax.swing.JButton();
-        btnEscala = new javax.swing.JButton();
         separador2 = new javax.swing.JSeparator();
         tab_calculo = new javax.swing.JPanel();
         btnVolumen = new javax.swing.JButton();
@@ -110,9 +108,12 @@ public class frmPrincipal extends javax.swing.JFrame {
         btnDesmoldar = new javax.swing.JButton();
         separador3 = new javax.swing.JSeparator();
         pnl_bottom_1 = new javax.swing.JPanel();
-        lblCursor = new javax.swing.JLabel();
-        lblEstadoBD1 = new javax.swing.JLabel();
-        lblCursor1 = new javax.swing.JLabel();
+        lblintegracion = new javax.swing.JLabel();
+        lblEstadoBD = new javax.swing.JLabel();
+        lblCursorPosicion = new javax.swing.JLabel();
+        lbl_caption = new javax.swing.JLabel();
+        lbl_caption27 = new javax.swing.JLabel();
+        lbl_caption50 = new javax.swing.JLabel();
         jsp_parametrosytableta = new javax.swing.JSplitPane();
         pnl_parametros = new javax.swing.JPanel();
         btnCalcularVaso = new javax.swing.JButton();
@@ -730,23 +731,23 @@ public class frmPrincipal extends javax.swing.JFrame {
         btnExportarPNG1.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         btnExportarPNG1.addActionListener(this::btnExportarPNG1ActionPerformed);
 
-        btnExportarPNG2.setBackground(new java.awt.Color(54, 54, 54));
-        btnExportarPNG2.setFont(new java.awt.Font("Square721 BT", 0, 18)); // NOI18N
-        btnExportarPNG2.setForeground(new java.awt.Color(255, 255, 255));
-        btnExportarPNG2.setText("Cerrar sesión");
-        btnExportarPNG2.setBorderPainted(false);
-        btnExportarPNG2.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        btnExportarPNG2.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        btnExportarPNG2.addActionListener(this::btnExportarPNG2ActionPerformed);
+        btnCerrarSesion.setBackground(new java.awt.Color(54, 54, 54));
+        btnCerrarSesion.setFont(new java.awt.Font("Square721 BT", 0, 18)); // NOI18N
+        btnCerrarSesion.setForeground(new java.awt.Color(255, 255, 255));
+        btnCerrarSesion.setText("Cerrar sesión");
+        btnCerrarSesion.setBorderPainted(false);
+        btnCerrarSesion.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btnCerrarSesion.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        btnCerrarSesion.addActionListener(this::btnCerrarSesionActionPerformed);
 
-        btnExportarPNG3.setBackground(new java.awt.Color(54, 54, 54));
-        btnExportarPNG3.setFont(new java.awt.Font("Square721 BT", 0, 18)); // NOI18N
-        btnExportarPNG3.setForeground(new java.awt.Color(255, 255, 255));
-        btnExportarPNG3.setText("Actualizar");
-        btnExportarPNG3.setBorderPainted(false);
-        btnExportarPNG3.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        btnExportarPNG3.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        btnExportarPNG3.addActionListener(this::btnExportarPNG3ActionPerformed);
+        btnActualizar.setBackground(new java.awt.Color(54, 54, 54));
+        btnActualizar.setFont(new java.awt.Font("Square721 BT", 0, 18)); // NOI18N
+        btnActualizar.setForeground(new java.awt.Color(255, 255, 255));
+        btnActualizar.setText("Actualizar");
+        btnActualizar.setBorderPainted(false);
+        btnActualizar.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btnActualizar.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        btnActualizar.addActionListener(this::btnActualizarActionPerformed);
 
         javax.swing.GroupLayout tab_archivoLayout = new javax.swing.GroupLayout(tab_archivo);
         tab_archivo.setLayout(tab_archivoLayout);
@@ -774,8 +775,8 @@ public class frmPrincipal extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(tab_archivoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(btnExportarPNG1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnExportarPNG3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnExportarPNG2, javax.swing.GroupLayout.DEFAULT_SIZE, 184, Short.MAX_VALUE))
+                    .addComponent(btnActualizar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnCerrarSesion, javax.swing.GroupLayout.DEFAULT_SIZE, 184, Short.MAX_VALUE))
                 .addContainerGap(23, Short.MAX_VALUE))
         );
         tab_archivoLayout.setVerticalGroup(
@@ -789,9 +790,9 @@ public class frmPrincipal extends javax.swing.JFrame {
                             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, tab_archivoLayout.createSequentialGroup()
                                 .addComponent(btnExportarPNG1, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(0, 0, 0)
-                                .addComponent(btnExportarPNG3, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(btnActualizar, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(0, 0, 0)
-                                .addComponent(btnExportarPNG2, javax.swing.GroupLayout.DEFAULT_SIZE, 44, Short.MAX_VALUE))
+                                .addComponent(btnCerrarSesion, javax.swing.GroupLayout.DEFAULT_SIZE, 44, Short.MAX_VALUE))
                             .addGroup(tab_archivoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                 .addComponent(btnExportarDXF, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addComponent(btnExportarSTIL, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -845,15 +846,6 @@ public class frmPrincipal extends javax.swing.JFrame {
         btnSuperficie.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         btnSuperficie.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
 
-        btnUnidades.setBackground(new java.awt.Color(54, 54, 54));
-        btnUnidades.setFont(new java.awt.Font("Square721 BT", 0, 18)); // NOI18N
-        btnUnidades.setForeground(new java.awt.Color(255, 255, 255));
-        btnUnidades.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Utilidades/iconos/images/icono_principal_13.png"))); // NOI18N
-        btnUnidades.setText("Unidades");
-        btnUnidades.setBorderPainted(false);
-        btnUnidades.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        btnUnidades.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-
         btnPlantillas.setBackground(new java.awt.Color(54, 54, 54));
         btnPlantillas.setFont(new java.awt.Font("Square721 BT", 0, 18)); // NOI18N
         btnPlantillas.setForeground(new java.awt.Color(255, 255, 255));
@@ -863,15 +855,6 @@ public class frmPrincipal extends javax.swing.JFrame {
         btnPlantillas.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         btnPlantillas.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         btnPlantillas.addActionListener(this::btnPlantillasActionPerformed);
-
-        btnEscala.setBackground(new java.awt.Color(54, 54, 54));
-        btnEscala.setFont(new java.awt.Font("Square721 BT", 0, 18)); // NOI18N
-        btnEscala.setForeground(new java.awt.Color(255, 255, 255));
-        btnEscala.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Utilidades/iconos/images/icono_principal_15.png"))); // NOI18N
-        btnEscala.setText("Escala");
-        btnEscala.setBorderPainted(false);
-        btnEscala.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        btnEscala.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
 
         separador2.setForeground(new java.awt.Color(102, 102, 102));
         separador2.setOrientation(javax.swing.SwingConstants.VERTICAL);
@@ -892,19 +875,13 @@ public class frmPrincipal extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(separador2, javax.swing.GroupLayout.PREFERRED_SIZE, 3, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnUnidades)
-                .addGap(6, 6, 6)
                 .addComponent(btnPlantillas)
-                .addGap(6, 6, 6)
-                .addComponent(btnEscala, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
         tab_modeladoLayout.setVerticalGroup(
             tab_modeladoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(btnLagrange, javax.swing.GroupLayout.DEFAULT_SIZE, 135, Short.MAX_VALUE)
-            .addComponent(btnUnidades, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(btnPlantillas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(btnEscala, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(btnGradienteDerivadas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(btnCurvasnivel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(btnSuperficie, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -1125,20 +1102,32 @@ public class frmPrincipal extends javax.swing.JFrame {
         pnl_bottom_1.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         pnl_bottom_1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        lblCursor.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        lblCursor.setForeground(new java.awt.Color(255, 255, 255));
-        lblCursor.setText("Tolerancia de integración: 0%");
-        pnl_bottom_1.add(lblCursor, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 10, 200, -1));
+        lblintegracion.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        lblintegracion.setForeground(new java.awt.Color(255, 255, 255));
+        pnl_bottom_1.add(lblintegracion, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 10, 60, 20));
 
-        lblEstadoBD1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        lblEstadoBD1.setForeground(new java.awt.Color(255, 255, 255));
-        lblEstadoBD1.setText("Estado de la base de datos:");
-        pnl_bottom_1.add(lblEstadoBD1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 240, -1));
+        lblEstadoBD.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        lblEstadoBD.setForeground(new java.awt.Color(255, 255, 255));
+        pnl_bottom_1.add(lblEstadoBD, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 10, 80, 20));
 
-        lblCursor1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        lblCursor1.setForeground(new java.awt.Color(255, 255, 255));
-        lblCursor1.setText("Cursor:  X:       ; Y:         ; Z:");
-        pnl_bottom_1.add(lblCursor1, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 10, 200, -1));
+        lblCursorPosicion.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        lblCursorPosicion.setForeground(new java.awt.Color(255, 255, 255));
+        pnl_bottom_1.add(lblCursorPosicion, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 10, 150, 20));
+
+        lbl_caption.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        lbl_caption.setForeground(new java.awt.Color(255, 255, 255));
+        lbl_caption.setText("Estado de la base de datos:");
+        pnl_bottom_1.add(lbl_caption, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 170, -1));
+
+        lbl_caption27.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        lbl_caption27.setForeground(new java.awt.Color(255, 255, 255));
+        lbl_caption27.setText("Cursor:");
+        pnl_bottom_1.add(lbl_caption27, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 10, 50, -1));
+
+        lbl_caption50.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        lbl_caption50.setForeground(new java.awt.Color(255, 255, 255));
+        lbl_caption50.setText("Tolerancia de integración:");
+        pnl_bottom_1.add(lbl_caption50, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 10, 160, -1));
 
         pnl_parametros.setBackground(new java.awt.Color(54, 54, 54));
         pnl_parametros.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(102, 102, 102)));
@@ -1497,13 +1486,13 @@ public class frmPrincipal extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_btnExportarPNG1ActionPerformed
 
-    private void btnExportarPNG2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExportarPNG2ActionPerformed
+    private void btnCerrarSesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCerrarSesionActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_btnExportarPNG2ActionPerformed
+    }//GEN-LAST:event_btnCerrarSesionActionPerformed
 
-    private void btnExportarPNG3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExportarPNG3ActionPerformed
+    private void btnActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualizarActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_btnExportarPNG3ActionPerformed
+    }//GEN-LAST:event_btnActualizarActionPerformed
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
         this.dlg_abrirproyecto.setVisible(false);
@@ -1574,122 +1563,123 @@ public class frmPrincipal extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnAbrir;
-    private javax.swing.JButton btnAbrirProyecto;
-    private javax.swing.JButton btnAlturaObjetivo;
-    private javax.swing.JButton btnAnalizartodo;
-    private javax.swing.JButton btnAproximaciones;
-    private javax.swing.JButton btnAreaPared;
-    private javax.swing.JButton btnBuscar;
-    private javax.swing.JButton btnCalcularVaso;
-    private javax.swing.JButton btnCalculartodo;
-    private javax.swing.JButton btnCambiarNombre;
-    private javax.swing.JButton btnCopa;
-    private javax.swing.JButton btnCosto;
-    private javax.swing.JButton btnCurvasnivel;
-    private javax.swing.JButton btnDesmoldar;
-    private javax.swing.JButton btnEliminarProyecto;
-    private javax.swing.JButton btnEscala;
-    private javax.swing.JButton btnExportarCSV;
-    private javax.swing.JButton btnExportarDXF;
-    private javax.swing.JButton btnExportarPDF;
-    private javax.swing.JButton btnExportarPNG;
-    private javax.swing.JButton btnExportarPNG1;
-    private javax.swing.JButton btnExportarPNG2;
-    private javax.swing.JButton btnExportarPNG3;
-    private javax.swing.JButton btnExportarSTIL;
-    private javax.swing.JButton btnGradienteDerivadas;
-    private javax.swing.JButton btnGuardar;
-    private javax.swing.JButton btnIniciarSesion1;
-    private javax.swing.JButton btnIniciarSesion2;
-    private javax.swing.JButton btnIniciarSesion3;
-    private javax.swing.JButton btnLagrange;
-    private javax.swing.JButton btnMateriales;
-    private javax.swing.JButton btnNuevo;
-    private javax.swing.JButton btnPlantillas;
-    private javax.swing.JButton btnResina;
-    private javax.swing.JButton btnSeleccionarMaterial;
-    private javax.swing.JButton btnSeleccionarPlantilla;
-    private javax.swing.JButton btnSensibilidad;
-    private javax.swing.JButton btnSimular;
-    private javax.swing.JButton btnSuperficie;
-    private javax.swing.JButton btnTablaGradiente;
-    private javax.swing.JButton btnTazon;
-    private javax.swing.JButton btnUnidades;
-    private javax.swing.JButton btnVaso;
-    private javax.swing.JButton btnVasoabombado;
-    private javax.swing.JButton btnVolumen;
-    private javax.swing.JPanel controlador2D;
-    private javax.swing.JPanel controlador3D;
-    private javax.swing.JDialog dlg_abrirproyecto;
-    private javax.swing.JDialog dlg_materiales;
-    private javax.swing.JDialog dlg_plantillas;
-    private javax.swing.JDialog dlg_sensibilidad;
-    private javax.swing.JSeparator jSeparator1;
-    private javax.swing.JSeparator jSeparator2;
-    private javax.swing.JSplitPane jsp_3dy2d;
-    private javax.swing.JScrollPane jsp_consola;
-    private javax.swing.JSplitPane jsp_consolaytabla;
-    private javax.swing.JSplitPane jsp_parametrosytableta;
-    private javax.swing.JScrollPane jsp_tabla;
-    private javax.swing.JScrollPane jsp_tabla1;
-    private javax.swing.JScrollPane jsp_tabla2;
-    private javax.swing.JSplitPane jsp_tableta;
-    private javax.swing.JLabel lblCursor;
-    private javax.swing.JLabel lblCursor1;
-    private javax.swing.JLabel lblEstadoBD1;
-    private javax.swing.JLabel lbl_caption1;
-    private javax.swing.JLabel lbl_caption10;
-    private javax.swing.JLabel lbl_caption11;
-    private javax.swing.JLabel lbl_caption12;
-    private javax.swing.JLabel lbl_caption13;
-    private javax.swing.JLabel lbl_caption14;
-    private javax.swing.JLabel lbl_caption15;
-    private javax.swing.JLabel lbl_caption16;
-    private javax.swing.JLabel lbl_caption17;
-    private javax.swing.JLabel lbl_caption18;
-    private javax.swing.JLabel lbl_caption2;
-    private javax.swing.JLabel lbl_caption20;
-    private javax.swing.JLabel lbl_caption21;
-    private javax.swing.JLabel lbl_caption3;
-    private javax.swing.JLabel lbl_caption4;
-    private javax.swing.JLabel lbl_caption5;
-    private javax.swing.JLabel lbl_caption6;
-    private javax.swing.JLabel lbl_caption7;
-    private javax.swing.JLabel lbl_estado_ideal;
-    private javax.swing.JLabel lbl_estado_simulado;
-    private javax.swing.JLabel lbl_volumen_ideal;
-    private javax.swing.JLabel lbl_volumen_simulado;
-    private javax.swing.JPanel pnl_bottom_1;
-    private javax.swing.JPanel pnl_inferior_der;
-    private javax.swing.JPanel pnl_inferior_izq;
-    private javax.swing.JPanel pnl_materiales;
-    private javax.swing.JPanel pnl_materiales1;
-    private javax.swing.JPanel pnl_parametros;
-    private javax.swing.JPanel pnl_plantilla;
-    private javax.swing.JPanel pnl_sensibilidad;
-    private javax.swing.JPanel pnl_superior_der;
-    private javax.swing.JPanel pnl_superior_izq;
-    private javax.swing.JPanel pnl_tableta;
-    private javax.swing.JSeparator separador2;
-    private javax.swing.JSeparator separador3;
-    private javax.swing.JSeparator separador6;
-    private javax.swing.JSpinner spn_altura;
-    private javax.swing.JSpinner spn_coeficiente;
-    private javax.swing.JSpinner spn_espesor;
-    private javax.swing.JSpinner spn_volumen;
-    private javax.swing.JTextArea tA_consola;
-    private javax.swing.JPanel tab_analisis;
-    private javax.swing.JPanel tab_archivo;
-    private javax.swing.JPanel tab_calculo;
-    private javax.swing.JPanel tab_modelado;
-    private javax.swing.JTable tbl_materiales;
-    private javax.swing.JTable tbl_proyectos;
-    private javax.swing.JTable tbl_variables;
-    private javax.swing.JTabbedPane tbn_top;
-    private javax.swing.JTextField txtBuscar;
-    private javax.swing.JTextField txtDensidad;
-    private javax.swing.JTextField txtFuncion1;
-    private javax.swing.JTextField txtPrecio;
+    public javax.swing.JButton btnAbrir;
+    public javax.swing.JButton btnAbrirProyecto;
+    public javax.swing.JButton btnActualizar;
+    public javax.swing.JButton btnAlturaObjetivo;
+    public javax.swing.JButton btnAnalizartodo;
+    public javax.swing.JButton btnAproximaciones;
+    public javax.swing.JButton btnAreaPared;
+    public javax.swing.JButton btnBuscar;
+    public javax.swing.JButton btnCalcularVaso;
+    public javax.swing.JButton btnCalculartodo;
+    public javax.swing.JButton btnCambiarNombre;
+    public javax.swing.JButton btnCerrarSesion;
+    public javax.swing.JButton btnCopa;
+    public javax.swing.JButton btnCosto;
+    public javax.swing.JButton btnCurvasnivel;
+    public javax.swing.JButton btnDesmoldar;
+    public javax.swing.JButton btnEliminarProyecto;
+    public javax.swing.JButton btnExportarCSV;
+    public javax.swing.JButton btnExportarDXF;
+    public javax.swing.JButton btnExportarPDF;
+    public javax.swing.JButton btnExportarPNG;
+    public javax.swing.JButton btnExportarPNG1;
+    public javax.swing.JButton btnExportarSTIL;
+    public javax.swing.JButton btnGradienteDerivadas;
+    public javax.swing.JButton btnGuardar;
+    public javax.swing.JButton btnIniciarSesion1;
+    public javax.swing.JButton btnIniciarSesion2;
+    public javax.swing.JButton btnIniciarSesion3;
+    public javax.swing.JButton btnLagrange;
+    public javax.swing.JButton btnMateriales;
+    public javax.swing.JButton btnNuevo;
+    public javax.swing.JButton btnPlantillas;
+    public javax.swing.JButton btnResina;
+    public javax.swing.JButton btnSeleccionarMaterial;
+    public javax.swing.JButton btnSeleccionarPlantilla;
+    public javax.swing.JButton btnSensibilidad;
+    public javax.swing.JButton btnSimular;
+    public javax.swing.JButton btnSuperficie;
+    public javax.swing.JButton btnTablaGradiente;
+    public javax.swing.JButton btnTazon;
+    public javax.swing.JButton btnVaso;
+    public javax.swing.JButton btnVasoabombado;
+    public javax.swing.JButton btnVolumen;
+    public javax.swing.JPanel controlador2D;
+    public javax.swing.JPanel controlador3D;
+    public javax.swing.JDialog dlg_abrirproyecto;
+    public javax.swing.JDialog dlg_materiales;
+    public javax.swing.JDialog dlg_plantillas;
+    public javax.swing.JDialog dlg_sensibilidad;
+    public javax.swing.JSeparator jSeparator1;
+    public javax.swing.JSeparator jSeparator2;
+    public javax.swing.JSplitPane jsp_3dy2d;
+    public javax.swing.JScrollPane jsp_consola;
+    public javax.swing.JSplitPane jsp_consolaytabla;
+    public javax.swing.JSplitPane jsp_parametrosytableta;
+    public javax.swing.JScrollPane jsp_tabla;
+    public javax.swing.JScrollPane jsp_tabla1;
+    public javax.swing.JScrollPane jsp_tabla2;
+    public javax.swing.JSplitPane jsp_tableta;
+    public javax.swing.JLabel lblCursorPosicion;
+    public javax.swing.JLabel lblEstadoBD;
+    public javax.swing.JLabel lbl_caption;
+    public javax.swing.JLabel lbl_caption1;
+    public javax.swing.JLabel lbl_caption10;
+    public javax.swing.JLabel lbl_caption11;
+    public javax.swing.JLabel lbl_caption12;
+    public javax.swing.JLabel lbl_caption13;
+    public javax.swing.JLabel lbl_caption14;
+    public javax.swing.JLabel lbl_caption15;
+    public javax.swing.JLabel lbl_caption16;
+    public javax.swing.JLabel lbl_caption17;
+    public javax.swing.JLabel lbl_caption18;
+    public javax.swing.JLabel lbl_caption2;
+    public javax.swing.JLabel lbl_caption20;
+    public javax.swing.JLabel lbl_caption21;
+    public javax.swing.JLabel lbl_caption27;
+    public javax.swing.JLabel lbl_caption3;
+    public javax.swing.JLabel lbl_caption4;
+    public javax.swing.JLabel lbl_caption5;
+    public javax.swing.JLabel lbl_caption50;
+    public javax.swing.JLabel lbl_caption6;
+    public javax.swing.JLabel lbl_caption7;
+    public javax.swing.JLabel lbl_estado_ideal;
+    public javax.swing.JLabel lbl_estado_simulado;
+    public javax.swing.JLabel lbl_volumen_ideal;
+    public javax.swing.JLabel lbl_volumen_simulado;
+    public javax.swing.JLabel lblintegracion;
+    public javax.swing.JPanel pnl_bottom_1;
+    public javax.swing.JPanel pnl_inferior_der;
+    public javax.swing.JPanel pnl_inferior_izq;
+    public javax.swing.JPanel pnl_materiales;
+    public javax.swing.JPanel pnl_materiales1;
+    public javax.swing.JPanel pnl_parametros;
+    public javax.swing.JPanel pnl_plantilla;
+    public javax.swing.JPanel pnl_sensibilidad;
+    public javax.swing.JPanel pnl_superior_der;
+    public javax.swing.JPanel pnl_superior_izq;
+    public javax.swing.JPanel pnl_tableta;
+    public javax.swing.JSeparator separador2;
+    public javax.swing.JSeparator separador3;
+    public javax.swing.JSeparator separador6;
+    public javax.swing.JSpinner spn_altura;
+    public javax.swing.JSpinner spn_coeficiente;
+    public javax.swing.JSpinner spn_espesor;
+    public javax.swing.JSpinner spn_volumen;
+    public javax.swing.JTextArea tA_consola;
+    public javax.swing.JPanel tab_analisis;
+    public javax.swing.JPanel tab_archivo;
+    public javax.swing.JPanel tab_calculo;
+    public javax.swing.JPanel tab_modelado;
+    public javax.swing.JTable tbl_materiales;
+    public javax.swing.JTable tbl_proyectos;
+    public javax.swing.JTable tbl_variables;
+    public javax.swing.JTabbedPane tbn_top;
+    public javax.swing.JTextField txtBuscar;
+    public javax.swing.JTextField txtDensidad;
+    public javax.swing.JTextField txtFuncion1;
+    public javax.swing.JTextField txtPrecio;
     // End of variables declaration//GEN-END:variables
 }
