@@ -38,18 +38,19 @@ public class frmLogin extends javax.swing.JFrame {
         lbl_icono1 = new javax.swing.JLabel();
         lbl_software1 = new javax.swing.JLabel();
         pnl_contenido = new javax.swing.JPanel();
-        lbl_empresa3 = new javax.swing.JLabel();
-        lbl_empresa1 = new javax.swing.JLabel();
+        lbl_caption1 = new javax.swing.JLabel();
+        lbl_caption2 = new javax.swing.JLabel();
+        lbl_caption3 = new javax.swing.JLabel();
+        lbl_caption4 = new javax.swing.JLabel();
+        lbl_registrarse = new javax.swing.JLabel();
         txtUsuario = new javax.swing.JTextField();
         btnIniciarSesion = new javax.swing.JButton();
         txtContraseña = new javax.swing.JPasswordField();
-        lbl_empresa2 = new javax.swing.JLabel();
-        lbl_empresa5 = new javax.swing.JLabel();
-        jLabel1 = new javax.swing.JLabel();
         pnl_vaso = new javax.swing.JPanel();
         lbl_icono2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("GFR Modeler 3D - Iniciar sesión");
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         pnl_cabecera.setBackground(new java.awt.Color(54, 54, 54));
@@ -59,12 +60,12 @@ public class frmLogin extends javax.swing.JFrame {
         lbl_software.setFont(new java.awt.Font("Segoe UI", 0, 82)); // NOI18N
         lbl_software.setForeground(new java.awt.Color(255, 96, 96));
         lbl_software.setText("3D");
-        pnl_cabecera.add(lbl_software, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 60, 120, 90));
+        pnl_cabecera.add(lbl_software, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 50, 110, 90));
 
         lbl_empresa4.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
         lbl_empresa4.setForeground(new java.awt.Color(255, 255, 255));
         lbl_empresa4.setText("Modeler");
-        pnl_cabecera.add(lbl_empresa4, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 100, 140, -1));
+        pnl_cabecera.add(lbl_empresa4, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 90, 140, -1));
 
         lbl_icono1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Utilidades/GFR_Modeler_3D_icon_128.png"))); // NOI18N
         lbl_icono1.setMaximumSize(new java.awt.Dimension(40, 20));
@@ -74,7 +75,7 @@ public class frmLogin extends javax.swing.JFrame {
         lbl_software1.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
         lbl_software1.setForeground(new java.awt.Color(255, 255, 255));
         lbl_software1.setText("GFR");
-        pnl_cabecera.add(lbl_software1, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 70, 70, -1));
+        pnl_cabecera.add(lbl_software1, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 60, 70, -1));
 
         getContentPane().add(pnl_cabecera, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 0, 500, 170));
 
@@ -82,20 +83,40 @@ public class frmLogin extends javax.swing.JFrame {
         pnl_contenido.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         pnl_contenido.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        lbl_empresa3.setBackground(new java.awt.Color(15, 35, 91));
-        lbl_empresa3.setFont(new java.awt.Font("Square721 BT", 0, 18)); // NOI18N
-        lbl_empresa3.setForeground(new java.awt.Color(255, 255, 255));
-        lbl_empresa3.setText("Contraseña:");
-        pnl_contenido.add(lbl_empresa3, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 85, -1, -1));
+        lbl_caption1.setBackground(new java.awt.Color(15, 35, 91));
+        lbl_caption1.setFont(new java.awt.Font("Square721 BT", 0, 18)); // NOI18N
+        lbl_caption1.setForeground(new java.awt.Color(255, 255, 255));
+        lbl_caption1.setText("Usuario:");
+        pnl_contenido.add(lbl_caption1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 10, -1, -1));
 
-        lbl_empresa1.setBackground(new java.awt.Color(15, 35, 91));
-        lbl_empresa1.setFont(new java.awt.Font("Square721 BT", 0, 12)); // NOI18N
-        lbl_empresa1.setForeground(new java.awt.Color(255, 255, 255));
-        lbl_empresa1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lbl_empresa1.setText("Powered by Java & MySQL."); // NOI18N
-        lbl_empresa1.setToolTipText("");
-        lbl_empresa1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        pnl_contenido.add(lbl_empresa1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 275, 420, 20));
+        lbl_caption2.setBackground(new java.awt.Color(15, 35, 91));
+        lbl_caption2.setFont(new java.awt.Font("Square721 BT", 0, 12)); // NOI18N
+        lbl_caption2.setForeground(new java.awt.Color(255, 255, 255));
+        lbl_caption2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lbl_caption2.setText("© 2026 GFR Modeler 3D. Todos los derechos reservados."); // NOI18N
+        lbl_caption2.setToolTipText("");
+        lbl_caption2.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        pnl_contenido.add(lbl_caption2, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 260, 420, 20));
+
+        lbl_caption3.setBackground(new java.awt.Color(15, 35, 91));
+        lbl_caption3.setFont(new java.awt.Font("Square721 BT", 0, 18)); // NOI18N
+        lbl_caption3.setForeground(new java.awt.Color(255, 255, 255));
+        lbl_caption3.setText("Contraseña:");
+        pnl_contenido.add(lbl_caption3, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 85, -1, -1));
+
+        lbl_caption4.setBackground(new java.awt.Color(15, 35, 91));
+        lbl_caption4.setFont(new java.awt.Font("Square721 BT", 0, 12)); // NOI18N
+        lbl_caption4.setForeground(new java.awt.Color(255, 255, 255));
+        lbl_caption4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lbl_caption4.setText("Powered by Java & MySQL."); // NOI18N
+        lbl_caption4.setToolTipText("");
+        lbl_caption4.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        pnl_contenido.add(lbl_caption4, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 275, 420, 20));
+
+        lbl_registrarse.setBackground(new java.awt.Color(255, 255, 255));
+        lbl_registrarse.setForeground(new java.awt.Color(255, 183, 183));
+        lbl_registrarse.setText("¿No tiene cuenta? Regístrese aquí");
+        pnl_contenido.add(lbl_registrarse, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 162, -1, 20));
 
         txtUsuario.setBackground(new java.awt.Color(54, 54, 54));
         txtUsuario.setFont(new java.awt.Font("Square721 BT", 0, 18)); // NOI18N
@@ -114,26 +135,6 @@ public class frmLogin extends javax.swing.JFrame {
         txtContraseña.setForeground(new java.awt.Color(255, 255, 255));
         txtContraseña.setText("jPasswordField1");
         pnl_contenido.add(txtContraseña, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 115, 420, 35));
-
-        lbl_empresa2.setBackground(new java.awt.Color(15, 35, 91));
-        lbl_empresa2.setFont(new java.awt.Font("Square721 BT", 0, 18)); // NOI18N
-        lbl_empresa2.setForeground(new java.awt.Color(255, 255, 255));
-        lbl_empresa2.setText("Usuario:");
-        pnl_contenido.add(lbl_empresa2, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 10, -1, -1));
-
-        lbl_empresa5.setBackground(new java.awt.Color(15, 35, 91));
-        lbl_empresa5.setFont(new java.awt.Font("Square721 BT", 0, 12)); // NOI18N
-        lbl_empresa5.setForeground(new java.awt.Color(255, 255, 255));
-        lbl_empresa5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lbl_empresa5.setText("© 2026 GFR Modeler 3D. Todos los derechos reservados."); // NOI18N
-        lbl_empresa5.setToolTipText("");
-        lbl_empresa5.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        pnl_contenido.add(lbl_empresa5, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 260, 420, 20));
-
-        jLabel1.setBackground(new java.awt.Color(255, 255, 255));
-        jLabel1.setForeground(new java.awt.Color(255, 183, 183));
-        jLabel1.setText("¿No tiene cuenta? Regístrese aquí");
-        pnl_contenido.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 162, -1, 20));
 
         getContentPane().add(pnl_contenido, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 170, 500, 310));
 
@@ -174,14 +175,14 @@ public class frmLogin extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnIniciarSesion;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel lbl_empresa1;
-    private javax.swing.JLabel lbl_empresa2;
-    private javax.swing.JLabel lbl_empresa3;
+    private javax.swing.JLabel lbl_caption1;
+    private javax.swing.JLabel lbl_caption2;
+    private javax.swing.JLabel lbl_caption3;
+    private javax.swing.JLabel lbl_caption4;
     private javax.swing.JLabel lbl_empresa4;
-    private javax.swing.JLabel lbl_empresa5;
     private javax.swing.JLabel lbl_icono1;
     private javax.swing.JLabel lbl_icono2;
+    private javax.swing.JLabel lbl_registrarse;
     private javax.swing.JLabel lbl_software;
     private javax.swing.JLabel lbl_software1;
     private javax.swing.JPanel pnl_cabecera;
