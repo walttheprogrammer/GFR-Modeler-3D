@@ -4,21 +4,24 @@ import Modelo.Material;
 import Modelo.ResultadoCalculo;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import net.objecthunter.exp4j.Expression;
 import net.objecthunter.exp4j.ExpressionBuilder;
 import org.apache.commons.math3.analysis.UnivariateFunction;
 import org.apache.commons.math3.analysis.solvers.BisectionSolver;
 
 public class CtrlMotorCalculo {
-
     private Expression expresion;
     private String funcionActual = "";
     private static final int N_THETA = 36;
     private static final int N_R = 60;
 
-    public boolean compilarFuncion(String textoCrudo) {
+public boolean compilarFuncion(String textoCrudo) {
+        if (textoCrudo == null) return false;
         try {
             String limpia = textoCrudo
+                    .toLowerCase(Locale.ROOT)
+                    .replaceFirst("^z\\s*=\\s*", "")
                     .replace("²", "^2")
                     .replace("³", "^3")
                     .replace(",", ".")
@@ -28,10 +31,33 @@ public class CtrlMotorCalculo {
             this.expresion = new ExpressionBuilder(limpia)
                     .variables("x", "y")
                     .build();
-            // Verificación en origen
-            this.expresion.setVariable("x", 0.0).setVariable("y", 0.0).evaluate();
+
+            double z0 = this.expresion.setVariable("x", 0.0).setVariable("y", 0.0).evaluate();
+            if (Double.isNaN(z0) || Double.isInfinite(z0)) {
+                throw new IllegalArgumentException("La función no está definida en el origen (0, 0).");
+            }
+
+            for (int i = 0; i < 16; i++) {
+                double theta = (2.0 * Math.PI * i) / 16.0;
+                double cos = Math.cos(theta);
+                double sin = Math.sin(theta);
+
+                double z1 = this.expresion.setVariable("x", 1.0 * cos).setVariable("y", 1.0 * sin).evaluate();
+                double z5 = this.expresion.setVariable("x", 5.0 * cos).setVariable("y", 5.0 * sin).evaluate();
+
+                if (Double.isNaN(z1) || Double.isInfinite(z1) || Double.isNaN(z5) || Double.isInfinite(z5)) {
+                    throw new IllegalArgumentException("La función produce valores indefinidos (NaN/Infinito) en el dominio del envase.");
+                }
+                if (z5 <= z0 + 1e-4) {
+                    throw new IllegalArgumentException("La superficie f(x,y) no forma un recipiente cerrado válido (debe crecer en todas direcciones desde el origen).");
+                }
+            }
+
             this.funcionActual = limpia;
             return true;
+        } catch (IllegalArgumentException iae) {
+            this.expresion = null;
+            throw iae;
         } catch (Exception e) {
             this.expresion = null;
             return false;
@@ -46,18 +72,34 @@ public class CtrlMotorCalculo {
     // Encuentra el radio donde f(r*cos(theta), r*sin(theta)) = zNivel usando BisectionSolver de Commons Math3
     public double hallarRadioEnNivel(double zNivel, double theta) {
         double z0 = evaluarZ(0, 0);
+        if (Double.isNaN(z0) || Double.isInfinite(z0)) {
+            throw new IllegalArgumentException("La función produce valores indefinidos en el origen.");
+        }
         if (zNivel <= z0 + 1e-6) return 0.0;
 
-        UnivariateFunction fn = r -> evaluarZ(r * Math.cos(theta), r * Math.sin(theta)) - zNivel;
+        double cos = Math.cos(theta);
+        double sin = Math.sin(theta);
+        UnivariateFunction fn = r -> {
+            double val = evaluarZ(r * cos, r * sin);
+            if (Double.isNaN(val) || Double.isInfinite(val)) {
+                throw new IllegalArgumentException("La función produce valores indefinidos en el dominio del envase.");
+            }
+            return val - zNivel;
+        };
+
         double rMax = 0.5;
         while (rMax < 60.0 && fn.value(rMax) < 0) {
             rMax *= 1.5;
         }
-        if (fn.value(rMax) < 0) return 10.0;
+        if (fn.value(rMax) < 0) {
+            throw new IllegalArgumentException("La superficie no alcanza la altura solicitada dentro de un radio válido (60 cm).");
+        }
 
         try {
             BisectionSolver solver = new BisectionSolver(1e-6);
             return solver.solve(200, fn, 0.0, rMax);
+        } catch (IllegalArgumentException iae) {
+            throw iae;
         } catch (Exception e) {
             return rMax;
         }

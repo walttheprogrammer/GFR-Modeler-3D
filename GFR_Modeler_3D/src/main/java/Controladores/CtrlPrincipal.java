@@ -793,9 +793,9 @@ public class CtrlPrincipal implements ActionListener {
         this.plantillaSeleccionada = id;
         switch (id) {
             case 1: // Vaso estándar (350 ml)
-                vista.getTxtFuncion1().setText("0.25 * (x^2 + y^2)");
-                vista.getSpnAltura().setValue(7.5);
-                vista.getSpnEspesor().setValue(0.20);
+                vista.getTxtFuncion1().setText("0.4 * (x^2 + y^2)");
+                vista.getSpnAltura().setValue(9.5);
+                vista.getSpnEspesor().setValue(0.25);
                 vista.getSpnVolumen().setValue(350.0);
                 break;
             case 2: // Tazón / Bowl (500 ml)
@@ -805,14 +805,14 @@ public class CtrlPrincipal implements ActionListener {
                 vista.getSpnVolumen().setValue(500.0);
                 break;
             case 3: // Vaso abombado (500 ml)
-                vista.getTxtFuncion1().setText("0.20 * (x^2 + y^2)");
-                vista.getSpnAltura().setValue(10.0);
+                vista.getTxtFuncion1().setText("0.0012 * (x^2 + y^2)^3 + 0.10 * (x^2 + y^2)");
+                vista.getSpnAltura().setValue(11.35);
                 vista.getSpnEspesor().setValue(0.25);
                 vista.getSpnVolumen().setValue(500.0);
                 break;
             case 4: // Copa (250 ml)
-                vista.getTxtFuncion1().setText("0.35 * (x^2 + y^2)");
-                vista.getSpnAltura().setValue(8.5);
+                vista.getTxtFuncion1().setText("4.5 * (1 - exp(-5 * (x^2 + y^2))) + 0.12 * (x^2 + y^2)");
+                vista.getSpnAltura().setValue(8.85);
                 vista.getSpnEspesor().setValue(0.15);
                 vista.getSpnVolumen().setValue(250.0);
                 break;

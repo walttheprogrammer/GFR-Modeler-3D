@@ -1340,7 +1340,7 @@ public class frmPrincipal extends javax.swing.JFrame {
                     .addComponent(btnReporteC, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jsp_consola, javax.swing.GroupLayout.PREFERRED_SIZE, 383, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         pnl_inferior_izqLayout.setVerticalGroup(
             pnl_inferior_izqLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
