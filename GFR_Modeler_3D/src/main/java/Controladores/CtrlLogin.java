@@ -24,17 +24,17 @@ public class CtrlLogin implements ActionListener {
 
     private void inicializar() {
         // Limpiar campos por defecto
-        vista.txtContraseña.setText("");
-        vista.lbl_registrarse.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        vista.getTxtContraseña().setText("");
+        vista.getLblRegistrarse().setCursor(new Cursor(Cursor.HAND_CURSOR));
 
         // Registrar ActionListeners centralizados
-        vista.btnIniciarSesion.addActionListener(this);
-        vista.txtContraseña.addActionListener(this); // Iniciar sesión con tecla Enter
-        vista.txtUsuario.addActionListener(this);
-        vista.btnSeleccionarPlantilla1.addActionListener(this); // Botón de registro en dlg_registrarusuario
+        vista.getBtnIniciarSesion().addActionListener(this);
+        vista.getTxtContraseña().addActionListener(this); // Iniciar sesión con tecla Enter
+        vista.getTxtUsuario().addActionListener(this);
+        vista.getBtnSeleccionarPlantilla1().addActionListener(this); // Botón de registro en dlg_registrarusuario
 
         // Evento de clic sobre el enlace de registro
-        vista.lbl_registrarse.addMouseListener(new MouseAdapter() {
+        vista.getLblRegistrarse().addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
                 abrirDialogoRegistro();
@@ -46,23 +46,23 @@ public class CtrlLogin implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         Object fuente = e.getSource();
 
-        if (fuente == vista.btnIniciarSesion || fuente == vista.txtContraseña || fuente == vista.txtUsuario) {
+        if (fuente == vista.getBtnIniciarSesion() || fuente == vista.getTxtContraseña() || fuente == vista.getTxtUsuario()) {
             procesarLogin();
-        } else if (fuente == vista.btnSeleccionarPlantilla1) {
+        } else if (fuente == vista.getBtnSeleccionarPlantilla1()) {
             procesarRegistro();
         }
     }
 
     private void abrirDialogoRegistro() {
         limpiarCamposRegistro();
-        vista.dlg_registrarusuario.pack();
-        vista.dlg_registrarusuario.setLocationRelativeTo(vista);
-        vista.dlg_registrarusuario.setVisible(true);
+        vista.getDlgRegistrarusuario().pack();
+        vista.getDlgRegistrarusuario().setLocationRelativeTo(vista);
+        vista.getDlgRegistrarusuario().setVisible(true);
     }
 
     private void procesarLogin() {
-        String user = vista.txtUsuario.getText().trim();
-        String pass = new String(vista.txtContraseña.getPassword());
+        String user = vista.getTxtUsuario().getText().trim();
+        String pass = new String(vista.getTxtContraseña().getPassword());
 
         if (user.isEmpty() || pass.isEmpty()) {
             JOptionPane.showMessageDialog(vista,
@@ -86,22 +86,22 @@ public class CtrlLogin implements ActionListener {
     }
 
     private void procesarRegistro() {
-        String nombres = vista.txtNombresUsuario.getText().trim();
-        String apellidos = vista.txtApellidosUsuario.getText().trim();
-        String user = vista.txtUsuarioReg.getText().trim();
-        String correo = vista.txtCorreoUsuario.getText().trim();
-        String pass1 = new String(vista.txtContraseñaReg.getPassword());
-        String pass2 = new String(vista.txtContraseñaRegConf.getPassword());
+        String nombres = vista.getTxtNombresUsuario().getText().trim();
+        String apellidos = vista.getTxtApellidosUsuario().getText().trim();
+        String user = vista.getTxtUsuarioReg().getText().trim();
+        String correo = vista.getTxtCorreoUsuario().getText().trim();
+        String pass1 = new String(vista.getTxtContraseñaReg().getPassword());
+        String pass2 = new String(vista.getTxtContraseñaRegConf().getPassword());
 
         if (nombres.isEmpty() || apellidos.isEmpty() || user.isEmpty() || correo.isEmpty() || pass1.isEmpty()) {
-            JOptionPane.showMessageDialog(vista.dlg_registrarusuario,
+            JOptionPane.showMessageDialog(vista.getDlgRegistrarusuario(),
                     "Complete todos los campos del formulario.",
                     "Aviso", JOptionPane.WARNING_MESSAGE);
             return;
         }
 
         if (!pass1.equals(pass2)) {
-            JOptionPane.showMessageDialog(vista.dlg_registrarusuario,
+            JOptionPane.showMessageDialog(vista.getDlgRegistrarusuario(),
                     "Las contraseñas ingresadas no coinciden.",
                     "Error de validación", JOptionPane.ERROR_MESSAGE);
             return;
@@ -116,25 +116,25 @@ public class CtrlLogin implements ActionListener {
         nuevo.setContraseña(pass1);
 
         if (usuarioDAO.registrar(nuevo)) {
-            JOptionPane.showMessageDialog(vista.dlg_registrarusuario,
+            JOptionPane.showMessageDialog(vista.getDlgRegistrarusuario(),
                     "Usuario registrado correctamente. Ya puede iniciar sesión.",
                     "Registro exitoso", JOptionPane.INFORMATION_MESSAGE);
-            vista.txtUsuario.setText(user);
-            vista.txtContraseña.setText("");
-            vista.dlg_registrarusuario.dispose();
+            vista.getTxtUsuario().setText(user);
+            vista.getTxtContraseña().setText("");
+            vista.getDlgRegistrarusuario().dispose();
         } else {
-            JOptionPane.showMessageDialog(vista.dlg_registrarusuario,
+            JOptionPane.showMessageDialog(vista.getDlgRegistrarusuario(),
                     "No se pudo registrar el usuario (el usuario o correo ya existe).",
                     "Error de registro", JOptionPane.ERROR_MESSAGE);
         }
     }
 
     private void limpiarCamposRegistro() {
-        vista.txtNombresUsuario.setText("");
-        vista.txtApellidosUsuario.setText("");
-        vista.txtUsuarioReg.setText("");
-        vista.txtCorreoUsuario.setText("");
-        vista.txtContraseñaReg.setText("");
-        vista.txtContraseñaRegConf.setText("");
+        vista.getTxtNombresUsuario().setText("");
+        vista.getTxtApellidosUsuario().setText("");
+        vista.getTxtUsuarioReg().setText("");
+        vista.getTxtCorreoUsuario().setText("");
+        vista.getTxtContraseñaReg().setText("");
+        vista.getTxtContraseñaRegConf().setText("");
     }
 }

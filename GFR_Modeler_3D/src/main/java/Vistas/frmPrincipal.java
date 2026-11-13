@@ -112,7 +112,6 @@ public class frmPrincipal extends javax.swing.JFrame {
         lblEstadoBD = new javax.swing.JLabel();
         lblCursorPosicion = new javax.swing.JLabel();
         lbl_caption = new javax.swing.JLabel();
-        lbl_caption27 = new javax.swing.JLabel();
         lbl_caption50 = new javax.swing.JLabel();
         jsp_parametrosytableta = new javax.swing.JSplitPane();
         pnl_parametros = new javax.swing.JPanel();
@@ -138,9 +137,9 @@ public class frmPrincipal extends javax.swing.JFrame {
         pnl_inferior_izq = new javax.swing.JPanel();
         jsp_consola = new javax.swing.JScrollPane();
         tA_consola = new javax.swing.JTextArea();
-        btnIniciarSesion1 = new javax.swing.JButton();
-        btnIniciarSesion2 = new javax.swing.JButton();
-        btnIniciarSesion3 = new javax.swing.JButton();
+        btnReporteB = new javax.swing.JButton();
+        btnReporteA = new javax.swing.JButton();
+        btnReporteC = new javax.swing.JButton();
         pnl_inferior_der = new javax.swing.JPanel();
         jsp_tabla = new javax.swing.JScrollPane();
         tbl_variables = new javax.swing.JTable();
@@ -1112,17 +1111,12 @@ public class frmPrincipal extends javax.swing.JFrame {
 
         lblCursorPosicion.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         lblCursorPosicion.setForeground(new java.awt.Color(255, 255, 255));
-        pnl_bottom_1.add(lblCursorPosicion, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 10, 150, 20));
+        pnl_bottom_1.add(lblCursorPosicion, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 10, 150, 20));
 
         lbl_caption.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         lbl_caption.setForeground(new java.awt.Color(255, 255, 255));
         lbl_caption.setText("Estado de la base de datos:");
         pnl_bottom_1.add(lbl_caption, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 170, -1));
-
-        lbl_caption27.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        lbl_caption27.setForeground(new java.awt.Color(255, 255, 255));
-        lbl_caption27.setText("Cursor:");
-        pnl_bottom_1.add(lbl_caption27, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 10, 50, -1));
 
         lbl_caption50.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         lbl_caption50.setForeground(new java.awt.Color(255, 255, 255));
@@ -1318,20 +1312,20 @@ public class frmPrincipal extends javax.swing.JFrame {
         tA_consola.setRows(5);
         jsp_consola.setViewportView(tA_consola);
 
-        btnIniciarSesion1.setBackground(new java.awt.Color(163, 53, 53));
-        btnIniciarSesion1.setFont(new java.awt.Font("Square721 BT", 0, 18)); // NOI18N
-        btnIniciarSesion1.setForeground(new java.awt.Color(255, 255, 255));
-        btnIniciarSesion1.setText("B");
+        btnReporteB.setBackground(new java.awt.Color(163, 53, 53));
+        btnReporteB.setFont(new java.awt.Font("Square721 BT", 0, 18)); // NOI18N
+        btnReporteB.setForeground(new java.awt.Color(255, 255, 255));
+        btnReporteB.setText("B");
 
-        btnIniciarSesion2.setBackground(new java.awt.Color(163, 53, 53));
-        btnIniciarSesion2.setFont(new java.awt.Font("Square721 BT", 0, 18)); // NOI18N
-        btnIniciarSesion2.setForeground(new java.awt.Color(255, 255, 255));
-        btnIniciarSesion2.setText("A");
+        btnReporteA.setBackground(new java.awt.Color(163, 53, 53));
+        btnReporteA.setFont(new java.awt.Font("Square721 BT", 0, 18)); // NOI18N
+        btnReporteA.setForeground(new java.awt.Color(255, 255, 255));
+        btnReporteA.setText("A");
 
-        btnIniciarSesion3.setBackground(new java.awt.Color(163, 53, 53));
-        btnIniciarSesion3.setFont(new java.awt.Font("Square721 BT", 0, 18)); // NOI18N
-        btnIniciarSesion3.setForeground(new java.awt.Color(255, 255, 255));
-        btnIniciarSesion3.setText("C");
+        btnReporteC.setBackground(new java.awt.Color(163, 53, 53));
+        btnReporteC.setFont(new java.awt.Font("Square721 BT", 0, 18)); // NOI18N
+        btnReporteC.setForeground(new java.awt.Color(255, 255, 255));
+        btnReporteC.setText("C");
 
         javax.swing.GroupLayout pnl_inferior_izqLayout = new javax.swing.GroupLayout(pnl_inferior_izq);
         pnl_inferior_izq.setLayout(pnl_inferior_izqLayout);
@@ -1341,9 +1335,9 @@ public class frmPrincipal extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(pnl_inferior_izqLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(pnl_inferior_izqLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addComponent(btnIniciarSesion1, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(btnIniciarSesion2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(btnIniciarSesion3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(btnReporteB, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnReporteA, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnReporteC, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jsp_consola, javax.swing.GroupLayout.PREFERRED_SIZE, 383, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
@@ -1357,11 +1351,11 @@ public class frmPrincipal extends javax.swing.JFrame {
                         .addComponent(jsp_consola)
                         .addContainerGap())
                     .addGroup(pnl_inferior_izqLayout.createSequentialGroup()
-                        .addComponent(btnIniciarSesion2, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnReporteA, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(8, 8, 8)
-                        .addComponent(btnIniciarSesion1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnReporteB, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnIniciarSesion3, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnReporteC, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(108, 117, Short.MAX_VALUE))))
         );
 
@@ -1563,123 +1557,202 @@ public class frmPrincipal extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    public javax.swing.JButton btnAbrir;
-    public javax.swing.JButton btnAbrirProyecto;
-    public javax.swing.JButton btnActualizar;
-    public javax.swing.JButton btnAlturaObjetivo;
-    public javax.swing.JButton btnAnalizartodo;
-    public javax.swing.JButton btnAproximaciones;
-    public javax.swing.JButton btnAreaPared;
-    public javax.swing.JButton btnBuscar;
-    public javax.swing.JButton btnCalcularVaso;
-    public javax.swing.JButton btnCalculartodo;
-    public javax.swing.JButton btnCambiarNombre;
-    public javax.swing.JButton btnCerrarSesion;
-    public javax.swing.JButton btnCopa;
-    public javax.swing.JButton btnCosto;
-    public javax.swing.JButton btnCurvasnivel;
-    public javax.swing.JButton btnDesmoldar;
-    public javax.swing.JButton btnEliminarProyecto;
-    public javax.swing.JButton btnExportarCSV;
-    public javax.swing.JButton btnExportarDXF;
-    public javax.swing.JButton btnExportarPDF;
-    public javax.swing.JButton btnExportarPNG;
-    public javax.swing.JButton btnExportarPNG1;
-    public javax.swing.JButton btnExportarSTIL;
-    public javax.swing.JButton btnGradienteDerivadas;
-    public javax.swing.JButton btnGuardar;
-    public javax.swing.JButton btnIniciarSesion1;
-    public javax.swing.JButton btnIniciarSesion2;
-    public javax.swing.JButton btnIniciarSesion3;
-    public javax.swing.JButton btnLagrange;
-    public javax.swing.JButton btnMateriales;
-    public javax.swing.JButton btnNuevo;
-    public javax.swing.JButton btnPlantillas;
-    public javax.swing.JButton btnResina;
-    public javax.swing.JButton btnSeleccionarMaterial;
-    public javax.swing.JButton btnSeleccionarPlantilla;
-    public javax.swing.JButton btnSensibilidad;
-    public javax.swing.JButton btnSimular;
-    public javax.swing.JButton btnSuperficie;
-    public javax.swing.JButton btnTablaGradiente;
-    public javax.swing.JButton btnTazon;
-    public javax.swing.JButton btnVaso;
-    public javax.swing.JButton btnVasoabombado;
-    public javax.swing.JButton btnVolumen;
-    public javax.swing.JPanel controlador2D;
-    public javax.swing.JPanel controlador3D;
-    public javax.swing.JDialog dlg_abrirproyecto;
-    public javax.swing.JDialog dlg_materiales;
-    public javax.swing.JDialog dlg_plantillas;
-    public javax.swing.JDialog dlg_sensibilidad;
-    public javax.swing.JSeparator jSeparator1;
-    public javax.swing.JSeparator jSeparator2;
-    public javax.swing.JSplitPane jsp_3dy2d;
-    public javax.swing.JScrollPane jsp_consola;
-    public javax.swing.JSplitPane jsp_consolaytabla;
-    public javax.swing.JSplitPane jsp_parametrosytableta;
-    public javax.swing.JScrollPane jsp_tabla;
-    public javax.swing.JScrollPane jsp_tabla1;
-    public javax.swing.JScrollPane jsp_tabla2;
-    public javax.swing.JSplitPane jsp_tableta;
-    public javax.swing.JLabel lblCursorPosicion;
-    public javax.swing.JLabel lblEstadoBD;
-    public javax.swing.JLabel lbl_caption;
-    public javax.swing.JLabel lbl_caption1;
-    public javax.swing.JLabel lbl_caption10;
-    public javax.swing.JLabel lbl_caption11;
-    public javax.swing.JLabel lbl_caption12;
-    public javax.swing.JLabel lbl_caption13;
-    public javax.swing.JLabel lbl_caption14;
-    public javax.swing.JLabel lbl_caption15;
-    public javax.swing.JLabel lbl_caption16;
-    public javax.swing.JLabel lbl_caption17;
-    public javax.swing.JLabel lbl_caption18;
-    public javax.swing.JLabel lbl_caption2;
-    public javax.swing.JLabel lbl_caption20;
-    public javax.swing.JLabel lbl_caption21;
-    public javax.swing.JLabel lbl_caption27;
-    public javax.swing.JLabel lbl_caption3;
-    public javax.swing.JLabel lbl_caption4;
-    public javax.swing.JLabel lbl_caption5;
-    public javax.swing.JLabel lbl_caption50;
-    public javax.swing.JLabel lbl_caption6;
-    public javax.swing.JLabel lbl_caption7;
-    public javax.swing.JLabel lbl_estado_ideal;
-    public javax.swing.JLabel lbl_estado_simulado;
-    public javax.swing.JLabel lbl_volumen_ideal;
-    public javax.swing.JLabel lbl_volumen_simulado;
-    public javax.swing.JLabel lblintegracion;
-    public javax.swing.JPanel pnl_bottom_1;
-    public javax.swing.JPanel pnl_inferior_der;
-    public javax.swing.JPanel pnl_inferior_izq;
-    public javax.swing.JPanel pnl_materiales;
-    public javax.swing.JPanel pnl_materiales1;
-    public javax.swing.JPanel pnl_parametros;
-    public javax.swing.JPanel pnl_plantilla;
-    public javax.swing.JPanel pnl_sensibilidad;
-    public javax.swing.JPanel pnl_superior_der;
-    public javax.swing.JPanel pnl_superior_izq;
-    public javax.swing.JPanel pnl_tableta;
-    public javax.swing.JSeparator separador2;
-    public javax.swing.JSeparator separador3;
-    public javax.swing.JSeparator separador6;
-    public javax.swing.JSpinner spn_altura;
-    public javax.swing.JSpinner spn_coeficiente;
-    public javax.swing.JSpinner spn_espesor;
-    public javax.swing.JSpinner spn_volumen;
-    public javax.swing.JTextArea tA_consola;
-    public javax.swing.JPanel tab_analisis;
-    public javax.swing.JPanel tab_archivo;
-    public javax.swing.JPanel tab_calculo;
-    public javax.swing.JPanel tab_modelado;
-    public javax.swing.JTable tbl_materiales;
-    public javax.swing.JTable tbl_proyectos;
-    public javax.swing.JTable tbl_variables;
-    public javax.swing.JTabbedPane tbn_top;
-    public javax.swing.JTextField txtBuscar;
-    public javax.swing.JTextField txtDensidad;
-    public javax.swing.JTextField txtFuncion1;
-    public javax.swing.JTextField txtPrecio;
+    private javax.swing.JButton btnAbrir;
+    private javax.swing.JButton btnAbrirProyecto;
+    private javax.swing.JButton btnActualizar;
+    private javax.swing.JButton btnAlturaObjetivo;
+    private javax.swing.JButton btnAnalizartodo;
+    private javax.swing.JButton btnAproximaciones;
+    private javax.swing.JButton btnAreaPared;
+    private javax.swing.JButton btnBuscar;
+    private javax.swing.JButton btnCalcularVaso;
+    private javax.swing.JButton btnCalculartodo;
+    private javax.swing.JButton btnCambiarNombre;
+    private javax.swing.JButton btnCerrarSesion;
+    private javax.swing.JButton btnCopa;
+    private javax.swing.JButton btnCosto;
+    private javax.swing.JButton btnCurvasnivel;
+    private javax.swing.JButton btnDesmoldar;
+    private javax.swing.JButton btnEliminarProyecto;
+    private javax.swing.JButton btnExportarCSV;
+    private javax.swing.JButton btnExportarDXF;
+    private javax.swing.JButton btnExportarPDF;
+    private javax.swing.JButton btnExportarPNG;
+    private javax.swing.JButton btnExportarPNG1;
+    private javax.swing.JButton btnExportarSTIL;
+    private javax.swing.JButton btnGradienteDerivadas;
+    private javax.swing.JButton btnGuardar;
+    private javax.swing.JButton btnLagrange;
+    private javax.swing.JButton btnMateriales;
+    private javax.swing.JButton btnNuevo;
+    private javax.swing.JButton btnPlantillas;
+    private javax.swing.JButton btnReporteA;
+    private javax.swing.JButton btnReporteB;
+    private javax.swing.JButton btnReporteC;
+    private javax.swing.JButton btnResina;
+    private javax.swing.JButton btnSeleccionarMaterial;
+    private javax.swing.JButton btnSeleccionarPlantilla;
+    private javax.swing.JButton btnSensibilidad;
+    private javax.swing.JButton btnSimular;
+    private javax.swing.JButton btnSuperficie;
+    private javax.swing.JButton btnTablaGradiente;
+    private javax.swing.JButton btnTazon;
+    private javax.swing.JButton btnVaso;
+    private javax.swing.JButton btnVasoabombado;
+    private javax.swing.JButton btnVolumen;
+    private javax.swing.JPanel controlador2D;
+    private javax.swing.JPanel controlador3D;
+    private javax.swing.JDialog dlg_abrirproyecto;
+    private javax.swing.JDialog dlg_materiales;
+    private javax.swing.JDialog dlg_plantillas;
+    private javax.swing.JDialog dlg_sensibilidad;
+    private javax.swing.JSeparator jSeparator1;
+    private javax.swing.JSeparator jSeparator2;
+    private javax.swing.JSplitPane jsp_3dy2d;
+    private javax.swing.JScrollPane jsp_consola;
+    private javax.swing.JSplitPane jsp_consolaytabla;
+    private javax.swing.JSplitPane jsp_parametrosytableta;
+    private javax.swing.JScrollPane jsp_tabla;
+    private javax.swing.JScrollPane jsp_tabla1;
+    private javax.swing.JScrollPane jsp_tabla2;
+    private javax.swing.JSplitPane jsp_tableta;
+    private javax.swing.JLabel lblCursorPosicion;
+    private javax.swing.JLabel lblEstadoBD;
+    private javax.swing.JLabel lbl_caption;
+    private javax.swing.JLabel lbl_caption1;
+    private javax.swing.JLabel lbl_caption10;
+    private javax.swing.JLabel lbl_caption11;
+    private javax.swing.JLabel lbl_caption12;
+    private javax.swing.JLabel lbl_caption13;
+    private javax.swing.JLabel lbl_caption14;
+    private javax.swing.JLabel lbl_caption15;
+    private javax.swing.JLabel lbl_caption16;
+    private javax.swing.JLabel lbl_caption17;
+    private javax.swing.JLabel lbl_caption18;
+    private javax.swing.JLabel lbl_caption2;
+    private javax.swing.JLabel lbl_caption20;
+    private javax.swing.JLabel lbl_caption21;
+    private javax.swing.JLabel lbl_caption3;
+    private javax.swing.JLabel lbl_caption4;
+    private javax.swing.JLabel lbl_caption5;
+    private javax.swing.JLabel lbl_caption50;
+    private javax.swing.JLabel lbl_caption6;
+    private javax.swing.JLabel lbl_caption7;
+    private javax.swing.JLabel lbl_estado_ideal;
+    private javax.swing.JLabel lbl_estado_simulado;
+    private javax.swing.JLabel lbl_volumen_ideal;
+    private javax.swing.JLabel lbl_volumen_simulado;
+    private javax.swing.JLabel lblintegracion;
+    private javax.swing.JPanel pnl_bottom_1;
+    private javax.swing.JPanel pnl_inferior_der;
+    private javax.swing.JPanel pnl_inferior_izq;
+    private javax.swing.JPanel pnl_materiales;
+    private javax.swing.JPanel pnl_materiales1;
+    private javax.swing.JPanel pnl_parametros;
+    private javax.swing.JPanel pnl_plantilla;
+    private javax.swing.JPanel pnl_sensibilidad;
+    private javax.swing.JPanel pnl_superior_der;
+    private javax.swing.JPanel pnl_superior_izq;
+    private javax.swing.JPanel pnl_tableta;
+    private javax.swing.JSeparator separador2;
+    private javax.swing.JSeparator separador3;
+    private javax.swing.JSeparator separador6;
+    private javax.swing.JSpinner spn_altura;
+    private javax.swing.JSpinner spn_coeficiente;
+    private javax.swing.JSpinner spn_espesor;
+    private javax.swing.JSpinner spn_volumen;
+    private javax.swing.JTextArea tA_consola;
+    private javax.swing.JPanel tab_analisis;
+    private javax.swing.JPanel tab_archivo;
+    private javax.swing.JPanel tab_calculo;
+    private javax.swing.JPanel tab_modelado;
+    private javax.swing.JTable tbl_materiales;
+    private javax.swing.JTable tbl_proyectos;
+    private javax.swing.JTable tbl_variables;
+    private javax.swing.JTabbedPane tbn_top;
+    private javax.swing.JTextField txtBuscar;
+    private javax.swing.JTextField txtDensidad;
+    private javax.swing.JTextField txtFuncion1;
+    private javax.swing.JTextField txtPrecio;
     // End of variables declaration//GEN-END:variables
+
+    // =========================================================================
+    // GETTERS PÚBLICOS — Acceso controlado para CtrlPrincipal (patrón MVC)
+    // =========================================================================
+    // Botones principales
+    public javax.swing.JButton getBtnCalcularVaso()          { return btnCalcularVaso; }
+    public javax.swing.JButton getBtnReporteA()              { return btnReporteA; }
+    public javax.swing.JButton getBtnReporteB()              { return btnReporteB; }
+    public javax.swing.JButton getBtnReporteC()              { return btnReporteC; }
+    public javax.swing.JButton getBtnLagrange()              { return btnLagrange; }
+    public javax.swing.JButton getBtnGradienteDerivadas()    { return btnGradienteDerivadas; }
+    public javax.swing.JButton getBtnCurvasnivel()           { return btnCurvasnivel; }
+    public javax.swing.JButton getBtnSuperficie()            { return btnSuperficie; }
+    public javax.swing.JButton getBtnPlantillas()            { return btnPlantillas; }
+    public javax.swing.JButton getBtnVolumen()               { return btnVolumen; }
+    public javax.swing.JButton getBtnAlturaObjetivo()        { return btnAlturaObjetivo; }
+    public javax.swing.JButton getBtnTablaGradiente()        { return btnTablaGradiente; }
+    public javax.swing.JButton getBtnAreaPared()             { return btnAreaPared; }
+    public javax.swing.JButton getBtnResina()                { return btnResina; }
+    public javax.swing.JButton getBtnCosto()                 { return btnCosto; }
+    public javax.swing.JButton getBtnCalculartodo()          { return btnCalculartodo; }
+    public javax.swing.JButton getBtnAnalizartodo()          { return btnAnalizartodo; }
+    public javax.swing.JButton getBtnAproximaciones()        { return btnAproximaciones; }
+    public javax.swing.JButton getBtnSensibilidad()          { return btnSensibilidad; }
+    public javax.swing.JButton getBtnMateriales()            { return btnMateriales; }
+    public javax.swing.JButton getBtnDesmoldar()             { return btnDesmoldar; }
+    public javax.swing.JButton getBtnSimular()               { return btnSimular; }
+    public javax.swing.JButton getBtnGuardar()               { return btnGuardar; }
+    public javax.swing.JButton getBtnAbrir()                 { return btnAbrir; }
+    public javax.swing.JButton getBtnNuevo()                 { return btnNuevo; }
+    public javax.swing.JButton getBtnExportarPNG()           { return btnExportarPNG; }
+    public javax.swing.JButton getBtnExportarPDF()           { return btnExportarPDF; }
+    public javax.swing.JButton getBtnExportarDXF()           { return btnExportarDXF; }
+    public javax.swing.JButton getBtnExportarSTIL()          { return btnExportarSTIL; }
+    public javax.swing.JButton getBtnExportarCSV()           { return btnExportarCSV; }
+    public javax.swing.JButton getBtnExportarPNG1()          { return btnExportarPNG1; }
+    public javax.swing.JButton getBtnActualizar()            { return btnActualizar; }
+    public javax.swing.JButton getBtnCerrarSesion()          { return btnCerrarSesion; }
+    public javax.swing.JButton getBtnSeleccionarMaterial()   { return btnSeleccionarMaterial; }
+    public javax.swing.JButton getBtnSeleccionarPlantilla()  { return btnSeleccionarPlantilla; }
+    public javax.swing.JButton getBtnBuscar()                { return btnBuscar; }
+    public javax.swing.JButton getBtnCambiarNombre()         { return btnCambiarNombre; }
+    public javax.swing.JButton getBtnEliminarProyecto()      { return btnEliminarProyecto; }
+    public javax.swing.JButton getBtnAbrirProyecto()         { return btnAbrirProyecto; }
+    public javax.swing.JButton getBtnVaso()                  { return btnVaso; }
+    public javax.swing.JButton getBtnTazon()                 { return btnTazon; }
+    public javax.swing.JButton getBtnVasoabombado()          { return btnVasoabombado; }
+    public javax.swing.JButton getBtnCopa()                  { return btnCopa; }
+    // Spinners
+    public javax.swing.JSpinner getSpnAltura()               { return spn_altura; }
+    public javax.swing.JSpinner getSpnEspesor()              { return spn_espesor; }
+    public javax.swing.JSpinner getSpnVolumen()              { return spn_volumen; }
+    public javax.swing.JSpinner getSpnCoeficiente()          { return spn_coeficiente; }
+    // Campos de texto
+    public javax.swing.JTextField getTxtFuncion1()           { return txtFuncion1; }
+    public javax.swing.JTextField getTxtDensidad()           { return txtDensidad; }
+    public javax.swing.JTextField getTxtPrecio()             { return txtPrecio; }
+    public javax.swing.JTextField getTxtBuscar()             { return txtBuscar; }
+    // Área de texto (consola)
+    public javax.swing.JTextArea getTA_consola()             { return tA_consola; }
+    // Labels de estado
+    public javax.swing.JLabel getLblEstadoBD()               { return lblEstadoBD; }
+    public javax.swing.JLabel getLblCursorPosicion()         { return lblCursorPosicion; }
+    public javax.swing.JLabel getLblintegracion()            { return lblintegracion; }
+    public javax.swing.JLabel getLblVolumenIdeal()           { return lbl_volumen_ideal; }
+    public javax.swing.JLabel getLblEstadoIdeal()            { return lbl_estado_ideal; }
+    public javax.swing.JLabel getLblVolumenSimulado()        { return lbl_volumen_simulado; }
+    public javax.swing.JLabel getLblEstadoSimulado()         { return lbl_estado_simulado; }
+    // Tablas
+    public javax.swing.JTable getTblVariables()              { return tbl_variables; }
+    public javax.swing.JTable getTblMateriales()             { return tbl_materiales; }
+    public javax.swing.JTable getTblProyectos()              { return tbl_proyectos; }
+    // Paneles de renderizado
+    public javax.swing.JPanel getControlador2D()             { return controlador2D; }
+    public javax.swing.JPanel getControlador3D()             { return controlador3D; }
+    // Diálogos
+    public javax.swing.JDialog getDlgAbrirproyecto()         { return dlg_abrirproyecto; }
+    public javax.swing.JDialog getDlgMateriales()            { return dlg_materiales; }
+    public javax.swing.JDialog getDlgPlantillas()            { return dlg_plantillas; }
+    public javax.swing.JDialog getDlgSensibilidad()          { return dlg_sensibilidad; }
 }

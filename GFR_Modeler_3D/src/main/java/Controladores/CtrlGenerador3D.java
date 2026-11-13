@@ -49,7 +49,7 @@ public class CtrlGenerador3D {
 
         Group root = new Group(contenedorMalla, luzAmbiente, luzPrincipal);
         Scene scene = new Scene(root, 500, 420, true, SceneAntialiasing.BALANCED);
-        scene.setFill(Color.web("#2B2B2B"));
+        scene.setFill(Color.rgb(54, 54, 54));
 
         camera = new PerspectiveCamera(true);
         camera.setNearClip(0.1);
@@ -159,6 +159,18 @@ public class CtrlGenerador3D {
 
                 mesh.getFaces().addAll(topIn0, 0, topOut0, 0, topOut1, 0);
                 mesh.getFaces().addAll(topIn0, 0, topOut1, 0, topIn1, 0);
+            }
+
+            // Tapa inferior del anillo base (iz = 0) uniendo interior y exterior
+            for (int it = 0; it < nTheta; it++) {
+                int itNext = (it + 1) % nTheta;
+                int botIn0 = it;
+                int botIn1 = itNext;
+                int botOut0 = offsetExt + botIn0;
+                int botOut1 = offsetExt + botIn1;
+
+                mesh.getFaces().addAll(botIn0, 0, botIn1, 0, botOut1, 0);
+                mesh.getFaces().addAll(botIn0, 0, botOut1, 0, botOut0, 0);
             }
 
             MeshView meshView = new MeshView(mesh);

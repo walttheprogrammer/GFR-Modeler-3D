@@ -356,37 +356,53 @@ public class frmLogin extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    public javax.swing.JButton btnIniciarSesion;
-    public javax.swing.JButton btnSeleccionarPlantilla1;
-    public javax.swing.JDialog dlg_registrarusuario;
-    public javax.swing.JLabel lbl_caption1;
-    public javax.swing.JLabel lbl_caption10;
-    public javax.swing.JLabel lbl_caption11;
-    public javax.swing.JLabel lbl_caption12;
-    public javax.swing.JLabel lbl_caption13;
-    public javax.swing.JLabel lbl_caption2;
-    public javax.swing.JLabel lbl_caption3;
-    public javax.swing.JLabel lbl_caption4;
-    public javax.swing.JLabel lbl_caption7;
-    public javax.swing.JLabel lbl_caption8;
-    public javax.swing.JLabel lbl_caption9;
-    public javax.swing.JLabel lbl_empresa4;
-    public javax.swing.JLabel lbl_icono1;
-    public javax.swing.JLabel lbl_icono4;
-    public javax.swing.JLabel lbl_icono5;
-    public javax.swing.JLabel lbl_registrarse;
-    public javax.swing.JLabel lbl_software;
-    public javax.swing.JLabel lbl_software1;
-    public javax.swing.JPanel pnl_contenido;
-    public javax.swing.JPanel pnl_registro;
-    public javax.swing.JPanel pnl_vaso;
-    public javax.swing.JTextField txtApellidosUsuario;
-    public javax.swing.JPasswordField txtContraseña;
-    public javax.swing.JPasswordField txtContraseñaReg;
-    public javax.swing.JPasswordField txtContraseñaRegConf;
-    public javax.swing.JTextField txtCorreoUsuario;
-    public javax.swing.JTextField txtNombresUsuario;
-    public javax.swing.JTextField txtUsuario;
-    public javax.swing.JTextField txtUsuarioReg;
+    private javax.swing.JButton btnIniciarSesion;
+    private javax.swing.JButton btnSeleccionarPlantilla1;
+    private javax.swing.JDialog dlg_registrarusuario;
+    private javax.swing.JLabel lbl_caption1;
+    private javax.swing.JLabel lbl_caption10;
+    private javax.swing.JLabel lbl_caption11;
+    private javax.swing.JLabel lbl_caption12;
+    private javax.swing.JLabel lbl_caption13;
+    private javax.swing.JLabel lbl_caption2;
+    private javax.swing.JLabel lbl_caption3;
+    private javax.swing.JLabel lbl_caption4;
+    private javax.swing.JLabel lbl_caption7;
+    private javax.swing.JLabel lbl_caption8;
+    private javax.swing.JLabel lbl_caption9;
+    private javax.swing.JLabel lbl_empresa4;
+    private javax.swing.JLabel lbl_icono1;
+    private javax.swing.JLabel lbl_icono4;
+    private javax.swing.JLabel lbl_icono5;
+    private javax.swing.JLabel lbl_registrarse;
+    private javax.swing.JLabel lbl_software;
+    private javax.swing.JLabel lbl_software1;
+    private javax.swing.JPanel pnl_contenido;
+    private javax.swing.JPanel pnl_registro;
+    private javax.swing.JPanel pnl_vaso;
+    private javax.swing.JTextField txtApellidosUsuario;
+    private javax.swing.JPasswordField txtContraseña;
+    private javax.swing.JPasswordField txtContraseñaReg;
+    private javax.swing.JPasswordField txtContraseñaRegConf;
+    private javax.swing.JTextField txtCorreoUsuario;
+    private javax.swing.JTextField txtNombresUsuario;
+    private javax.swing.JTextField txtUsuario;
+    private javax.swing.JTextField txtUsuarioReg;
     // End of variables declaration//GEN-END:variables
+
+    // =========================================================================
+    // GETTERS PÚBLICOS — Acceso controlado para CtrlLogin (patrón MVC)
+    // =========================================================================
+    public javax.swing.JButton getBtnIniciarSesion()          { return btnIniciarSesion; }
+    public javax.swing.JButton getBtnSeleccionarPlantilla1()  { return btnSeleccionarPlantilla1; }
+    public javax.swing.JDialog getDlgRegistrarusuario()       { return dlg_registrarusuario; }
+    public javax.swing.JLabel  getLblRegistrarse()            { return lbl_registrarse; }
+    public javax.swing.JTextField getTxtUsuario()             { return txtUsuario; }
+    public javax.swing.JPasswordField getTxtContraseña()      { return txtContraseña; }
+    public javax.swing.JTextField getTxtNombresUsuario()      { return txtNombresUsuario; }
+    public javax.swing.JTextField getTxtApellidosUsuario()    { return txtApellidosUsuario; }
+    public javax.swing.JTextField getTxtUsuarioReg()          { return txtUsuarioReg; }
+    public javax.swing.JTextField getTxtCorreoUsuario()       { return txtCorreoUsuario; }
+    public javax.swing.JPasswordField getTxtContraseñaReg()   { return txtContraseñaReg; }
+    public javax.swing.JPasswordField getTxtContraseñaRegConf(){ return txtContraseñaRegConf; }
 }

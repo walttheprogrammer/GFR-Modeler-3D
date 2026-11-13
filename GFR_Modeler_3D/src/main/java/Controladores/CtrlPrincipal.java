@@ -11,8 +11,8 @@ import Modelo.Usuario;
 import Utilidades.ConexionBD;
 import Vistas.frmLogin;
 import Vistas.frmPrincipal;
-
 import java.awt.Color;
+import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
@@ -22,7 +22,9 @@ import java.util.List;
 import java.util.Locale;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import javax.swing.SwingConstants;
 import javax.swing.filechooser.FileNameExtensionFilter;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 
 public class CtrlPrincipal implements ActionListener {
@@ -55,8 +57,8 @@ public class CtrlPrincipal implements ActionListener {
 
         // Instanciación de controladores auxiliares conectando las vistas de frmPrincipal
         this.motorCalculo = new CtrlMotorCalculo();
-        this.generador2D = new CtrlGenerador2D(vista.controlador2D, vista.lblCursorPosicion);
-        this.generador3D = new CtrlGenerador3D(vista.controlador3D);
+        this.generador2D = new CtrlGenerador2D(vista.getControlador2D(), vista.getLblCursorPosicion());
+        this.generador3D = new CtrlGenerador3D(vista.getControlador3D());
 
         inicializar();
     }
@@ -76,7 +78,7 @@ public class CtrlPrincipal implements ActionListener {
 
         // Estado inicial de la base de datos y tolerancia
         actualizarEstadoConexionBD();
-        vista.lblintegracion.setText("±0.018%");
+        vista.getLblintegracion().setText("±0.018%");
 
         // Inicializar materiales
         cargarMaterialesDesdeBD();
@@ -84,14 +86,19 @@ public class CtrlPrincipal implements ActionListener {
         // Configurar modelo de la tabla de variables y cotas
         configurarTablaVariables();
 
+        // Configurar consola de salida
+        vista.getTA_consola().setMargin(new Insets(10, 12, 10, 12));
+        vista.getTA_consola().setLineWrap(true);
+        vista.getTA_consola().setWrapStyleWord(true);
+
         // Listener de selección en tabla de materiales
-        vista.tbl_materiales.getSelectionModel().addListSelectionListener(e -> {
+        vista.getTblMateriales().getSelectionModel().addListSelectionListener(e -> {
             if (!e.getValueIsAdjusting()) {
-                int fila = vista.tbl_materiales.getSelectedRow();
+                int fila = vista.getTblMateriales().getSelectedRow();
                 if (fila >= 0 && listaMaterialesMemoria != null && fila < listaMaterialesMemoria.size()) {
                     Material m = listaMaterialesMemoria.get(fila);
-                    vista.txtDensidad.setText(String.format(Locale.US, "%.3f", m.getDensidadGcm3()));
-                    vista.txtPrecio.setText(String.format(Locale.US, "%.2f", m.getPrecioCm3()));
+                    vista.getTxtDensidad().setText(String.format(Locale.US, "%.3f", m.getDensidadGcm3()));
+                    vista.getTxtPrecio().setText(String.format(Locale.US, "%.2f", m.getPrecioCm3()));
                 }
             }
         });
@@ -106,66 +113,66 @@ public class CtrlPrincipal implements ActionListener {
 
     private void registrarEventos() {
         // Tab Archivo
-        vista.btnNuevo.addActionListener(this);
-        vista.btnAbrir.addActionListener(this);
-        vista.btnGuardar.addActionListener(this);
-        vista.btnActualizar.addActionListener(this);
-        vista.btnExportarPNG.addActionListener(this);
-        vista.btnExportarCSV.addActionListener(this);
-        vista.btnExportarSTIL.addActionListener(this);
-        vista.btnExportarDXF.addActionListener(this);
-        vista.btnExportarPDF.addActionListener(this);
-        vista.btnExportarPNG1.addActionListener(this); // Acerca de
-        vista.btnCerrarSesion.addActionListener(this);
+        vista.getBtnNuevo().addActionListener(this);
+        vista.getBtnAbrir().addActionListener(this);
+        vista.getBtnGuardar().addActionListener(this);
+        vista.getBtnActualizar().addActionListener(this);
+        vista.getBtnExportarPNG().addActionListener(this);
+        vista.getBtnExportarCSV().addActionListener(this);
+        vista.getBtnExportarSTIL().addActionListener(this);
+        vista.getBtnExportarDXF().addActionListener(this);
+        vista.getBtnExportarPDF().addActionListener(this);
+        vista.getBtnExportarPNG1().addActionListener(this); // Acerca de
+        vista.getBtnCerrarSesion().addActionListener(this);
 
         // Tab Modelado
-        vista.btnLagrange.addActionListener(this); // Perfil del envase
-        vista.btnGradienteDerivadas.addActionListener(this); // Marcas de graduación
-        vista.btnCurvasnivel.addActionListener(this); // Curvas de nivel
-        vista.btnSuperficie.addActionListener(this); // Malla 3D alambre/sólido
-        vista.btnPlantillas.addActionListener(this);
+        vista.getBtnLagrange().addActionListener(this); // Perfil del envase
+        vista.getBtnGradienteDerivadas().addActionListener(this); // Marcas de graduación
+        vista.getBtnCurvasnivel().addActionListener(this); // Curvas de nivel
+        vista.getBtnSuperficie().addActionListener(this); // Malla 3D alambre/sólido
+        vista.getBtnPlantillas().addActionListener(this);
 
         // Tab Cálculo
-        vista.btnVolumen.addActionListener(this);
-        vista.btnAlturaObjetivo.addActionListener(this);
-        vista.btnTablaGradiente.addActionListener(this);
-        vista.btnAreaPared.addActionListener(this);
-        vista.btnResina.addActionListener(this);
-        vista.btnCosto.addActionListener(this);
-        vista.btnCalculartodo.addActionListener(this);
-        vista.btnCalcularVaso.addActionListener(this);
+        vista.getBtnVolumen().addActionListener(this);
+        vista.getBtnAlturaObjetivo().addActionListener(this);
+        vista.getBtnTablaGradiente().addActionListener(this);
+        vista.getBtnAreaPared().addActionListener(this);
+        vista.getBtnResina().addActionListener(this);
+        vista.getBtnCosto().addActionListener(this);
+        vista.getBtnCalculartodo().addActionListener(this);
+        vista.getBtnCalcularVaso().addActionListener(this);
 
         // Tab Análisis
-        vista.btnAnalizartodo.addActionListener(this);
-        vista.btnAproximaciones.addActionListener(this);
-        vista.btnSensibilidad.addActionListener(this);
-        vista.btnMateriales.addActionListener(this);
-        vista.btnDesmoldar.addActionListener(this);
+        vista.getBtnAnalizartodo().addActionListener(this);
+        vista.getBtnAproximaciones().addActionListener(this);
+        vista.getBtnSensibilidad().addActionListener(this);
+        vista.getBtnMateriales().addActionListener(this);
+        vista.getBtnDesmoldar().addActionListener(this);
 
         // Botones de reporte de consola A, B, C
-        vista.btnIniciarSesion2.addActionListener(this); // Botón A
-        vista.btnIniciarSesion1.addActionListener(this); // Botón B
-        vista.btnIniciarSesion3.addActionListener(this); // Botón C
+        vista.getBtnReporteA().addActionListener(this); // Botón A
+        vista.getBtnReporteB().addActionListener(this); // Botón B
+        vista.getBtnReporteC().addActionListener(this); // Botón C
 
         // JDialog dlg_abrirproyecto
-        vista.btnBuscar.addActionListener(this);
-        vista.txtBuscar.addActionListener(this);
-        vista.btnAbrirProyecto.addActionListener(this);
-        vista.btnCambiarNombre.addActionListener(this);
-        vista.btnEliminarProyecto.addActionListener(this);
+        vista.getBtnBuscar().addActionListener(this);
+        vista.getTxtBuscar().addActionListener(this);
+        vista.getBtnAbrirProyecto().addActionListener(this);
+        vista.getBtnCambiarNombre().addActionListener(this);
+        vista.getBtnEliminarProyecto().addActionListener(this);
 
         // JDialog dlg_plantillas
-        vista.btnVaso.addActionListener(this);
-        vista.btnTazon.addActionListener(this);
-        vista.btnVasoabombado.addActionListener(this);
-        vista.btnCopa.addActionListener(this);
-        vista.btnSeleccionarPlantilla.addActionListener(this);
+        vista.getBtnVaso().addActionListener(this);
+        vista.getBtnTazon().addActionListener(this);
+        vista.getBtnVasoabombado().addActionListener(this);
+        vista.getBtnCopa().addActionListener(this);
+        vista.getBtnSeleccionarPlantilla().addActionListener(this);
 
         // JDialog dlg_materiales
-        vista.btnSeleccionarMaterial.addActionListener(this);
+        vista.getBtnSeleccionarMaterial().addActionListener(this);
 
         // JDialog dlg_sensibilidad
-        vista.btnSimular.addActionListener(this);
+        vista.getBtnSimular().addActionListener(this);
     }
 
     @Override
@@ -175,121 +182,121 @@ public class CtrlPrincipal implements ActionListener {
         // ==========================================
         // 1. ACCIONES DE ARCHIVO
         // ==========================================
-        if (s == vista.btnNuevo) {
+        if (s == vista.getBtnNuevo()) {
             accionNuevo();
-        } else if (s == vista.btnAbrir) {
+        } else if (s == vista.getBtnAbrir()) {
             abrirDialogoProyectos();
-        } else if (s == vista.btnGuardar) {
+        } else if (s == vista.getBtnGuardar()) {
             accionGuardarProyecto();
-        } else if (s == vista.btnActualizar) {
+        } else if (s == vista.getBtnActualizar()) {
             accionActualizarProyecto();
-        } else if (s == vista.btnExportarPNG) {
+        } else if (s == vista.getBtnExportarPNG()) {
             exportarGraficaPNG();
-        } else if (s == vista.btnExportarCSV) {
+        } else if (s == vista.getBtnExportarCSV()) {
             exportarDatosCSV();
-        } else if (s == vista.btnExportarSTIL) {
+        } else if (s == vista.getBtnExportarSTIL()) {
             exportarMallaSTL();
-        } else if (s == vista.btnExportarDXF) {
+        } else if (s == vista.getBtnExportarDXF()) {
             exportarPlanosDXF();
-        } else if (s == vista.btnExportarPDF) {
+        } else if (s == vista.getBtnExportarPDF()) {
             exportarInformePDF();
-        } else if (s == vista.btnExportarPNG1) {
+        } else if (s == vista.getBtnExportarPNG1()) {
             mostrarAcercaDe();
-        } else if (s == vista.btnCerrarSesion) {
+        } else if (s == vista.getBtnCerrarSesion()) {
             cerrarSesion();
 
         // ==========================================
         // 2. ACCIONES DE MODELADO Y GRÁFICOS 2D/3D
         // ==========================================
-        } else if (s == vista.btnCurvasnivel) {
+        } else if (s == vista.getBtnCurvasnivel()) {
             mostrarCurvasNivel();
-        } else if (s == vista.btnLagrange) {
+        } else if (s == vista.getBtnLagrange()) {
             mostrarPerfilEnvase();
-        } else if (s == vista.btnGradienteDerivadas) {
+        } else if (s == vista.getBtnGradienteDerivadas()) {
             mostrarMarcasGraduacion();
-        } else if (s == vista.btnSuperficie) {
+        } else if (s == vista.getBtnSuperficie()) {
             alternarSuperficie3D();
-        } else if (s == vista.btnPlantillas) {
+        } else if (s == vista.getBtnPlantillas()) {
             abrirDialogoPlantillas();
 
         // ==========================================
         // 3. ACCIONES DE CÁLCULO
         // ==========================================
-        } else if (s == vista.btnCalcularVaso || s == vista.btnCalculartodo) {
+        } else if (s == vista.getBtnCalcularVaso() || s == vista.getBtnCalculartodo()) {
             ejecutarCalculoCompleto();
-        } else if (s == vista.btnVolumen) {
+        } else if (s == vista.getBtnVolumen()) {
             mostrarDetalleVolumen();
-        } else if (s == vista.btnAlturaObjetivo) {
+        } else if (s == vista.getBtnAlturaObjetivo()) {
             mostrarDetalleAltura();
-        } else if (s == vista.btnTablaGradiente) {
+        } else if (s == vista.getBtnTablaGradiente()) {
             mostrarDetalleTablaGradiente();
-        } else if (s == vista.btnAreaPared) {
+        } else if (s == vista.getBtnAreaPared()) {
             mostrarDetalleArea();
-        } else if (s == vista.btnResina) {
+        } else if (s == vista.getBtnResina()) {
             mostrarDetalleResina();
-        } else if (s == vista.btnCosto) {
+        } else if (s == vista.getBtnCosto()) {
             mostrarDetalleCosto();
 
         // ==========================================
         // 4. ACCIONES DE ANÁLISIS
         // ==========================================
-        } else if (s == vista.btnAnalizartodo) {
+        } else if (s == vista.getBtnAnalizartodo()) {
             ejecutarAnalisisCompletoConsola();
-        } else if (s == vista.btnAproximaciones) {
+        } else if (s == vista.getBtnAproximaciones()) {
             mostrarDetalleAproximaciones();
-        } else if (s == vista.btnDesmoldar) {
+        } else if (s == vista.getBtnDesmoldar()) {
             mostrarDetalleDesmolde();
-        } else if (s == vista.btnSensibilidad) {
+        } else if (s == vista.getBtnSensibilidad()) {
             abrirDialogoSensibilidad();
-        } else if (s == vista.btnMateriales) {
+        } else if (s == vista.getBtnMateriales()) {
             abrirDialogoMateriales();
 
         // ==========================================
         // 5. BOTONES RÁPIDOS DE CONSOLA (A, B, C)
         // ==========================================
-        } else if (s == vista.btnIniciarSesion2) {
+        } else if (s == vista.getBtnReporteA()) {
             mostrarReporteA();
-        } else if (s == vista.btnIniciarSesion1) {
+        } else if (s == vista.getBtnReporteB()) {
             mostrarReporteB();
-        } else if (s == vista.btnIniciarSesion3) {
+        } else if (s == vista.getBtnReporteC()) {
             mostrarReporteC();
 
         // ==========================================
         // 6. DIÁLOGO: ABRIR PROYECTO
         // ==========================================
-        } else if (s == vista.btnBuscar || s == vista.txtBuscar) {
+        } else if (s == vista.getBtnBuscar() || s == vista.getTxtBuscar()) {
             filtrarProyectos();
-        } else if (s == vista.btnAbrirProyecto) {
+        } else if (s == vista.getBtnAbrirProyecto()) {
             cargarProyectoSeleccionado();
-        } else if (s == vista.btnCambiarNombre) {
+        } else if (s == vista.getBtnCambiarNombre()) {
             renombrarProyectoSeleccionado();
-        } else if (s == vista.btnEliminarProyecto) {
+        } else if (s == vista.getBtnEliminarProyecto()) {
             eliminarProyectoSeleccionado();
 
         // ==========================================
         // 7. DIÁLOGO: PLANTILLAS
         // ==========================================
-        } else if (s == vista.btnVaso) {
+        } else if (s == vista.getBtnVaso()) {
             seleccionarPlantilla(1);
-        } else if (s == vista.btnTazon) {
+        } else if (s == vista.getBtnTazon()) {
             seleccionarPlantilla(2);
-        } else if (s == vista.btnVasoabombado) {
+        } else if (s == vista.getBtnVasoabombado()) {
             seleccionarPlantilla(3);
-        } else if (s == vista.btnCopa) {
+        } else if (s == vista.getBtnCopa()) {
             seleccionarPlantilla(4);
-        } else if (s == vista.btnSeleccionarPlantilla) {
+        } else if (s == vista.getBtnSeleccionarPlantilla()) {
             aplicarPlantilla();
 
         // ==========================================
         // 8. DIÁLOGO: MATERIALES
         // ==========================================
-        } else if (s == vista.btnSeleccionarMaterial) {
+        } else if (s == vista.getBtnSeleccionarMaterial()) {
             aplicarMaterialSeleccionado();
 
         // ==========================================
         // 9. DIÁLOGO: SENSIBILIDAD
         // ==========================================
-        } else if (s == vista.btnSimular) {
+        } else if (s == vista.getBtnSimular()) {
             ejecutarSimulacionSensibilidad();
         }
     }
@@ -299,10 +306,10 @@ public class CtrlPrincipal implements ActionListener {
     // =========================================================================
 
     private void ejecutarCalculoCompleto() {
-        String funcionTexto = vista.txtFuncion1.getText().trim();
-        double alturaH = ((Number) vista.spn_altura.getValue()).doubleValue();
-        double espesorE = ((Number) vista.spn_espesor.getValue()).doubleValue();
-        double volumenObj = ((Number) vista.spn_volumen.getValue()).doubleValue();
+        String funcionTexto = vista.getTxtFuncion1().getText().trim();
+        double alturaH = ((Number) vista.getSpnAltura().getValue()).doubleValue();
+        double espesorE = ((Number) vista.getSpnEspesor().getValue()).doubleValue();
+        double volumenObj = ((Number) vista.getSpnVolumen().getValue()).doubleValue();
 
         if (funcionTexto.isEmpty()) {
             JOptionPane.showMessageDialog(vista, "Ingrese la función f(x, y) de la pared del envase.", "Aviso", JOptionPane.WARNING_MESSAGE);
@@ -311,7 +318,7 @@ public class CtrlPrincipal implements ActionListener {
 
         if (espesorE <= 0) {
             espesorE = 0.20;
-            vista.spn_espesor.setValue(espesorE);
+            vista.getSpnEspesor().setValue(espesorE);
         }
 
         if (materialActual == null) {
@@ -324,7 +331,7 @@ public class CtrlPrincipal implements ActionListener {
             this.resultadoActual = res;
 
             // Si la altura fue calculada automáticamente por volumen objetivo, actualizar el spinner
-            vista.spn_altura.setValue(res.alturaIngresada);
+            vista.getSpnAltura().setValue(res.alturaIngresada);
 
             // 2. Delegar generación y renderizado 2D (por defecto Curvas de Nivel)
             generador2D.mostrarCurvasDeNivel(motorCalculo, res);
@@ -336,11 +343,11 @@ public class CtrlPrincipal implements ActionListener {
             actualizarTablaVariables(res.cotas);
 
             // 5. Imprimir reporte ejecutivo en la consola
-            vista.tA_consola.setText(res.reporteA);
+            vista.getTA_consola().setText(res.reporteA);
 
             // Actualizar datos de sensibilidad ideales
-            vista.lbl_volumen_ideal.setText(String.format(Locale.US, "%.2f ml", res.volumenCalculado));
-            vista.lbl_estado_ideal.setText(res.desmoldable ? "APROBADO" : "REVISAR");
+            vista.getLblVolumenIdeal().setText(String.format(Locale.US, "%.2f ml", res.volumenCalculado));
+            vista.getLblEstadoIdeal().setText(res.desmoldable ? "APROBADO" : "REVISAR");
 
         } catch (IllegalArgumentException ex) {
             JOptionPane.showMessageDialog(vista, "Error en la expresión matemática: " + ex.getMessage(), "Error de Sintaxis", JOptionPane.ERROR_MESSAGE);
@@ -356,21 +363,21 @@ public class CtrlPrincipal implements ActionListener {
     private void mostrarCurvasNivel() {
         if (verificarCalculo()) {
             generador2D.mostrarCurvasDeNivel(motorCalculo, resultadoActual);
-            vista.tA_consola.append("\n[2D] Mostrando Curvas de Nivel en el plano XY.");
+            vista.getTA_consola().append("\n[2D] Mostrando Curvas de Nivel en el plano XY.");
         }
     }
 
     private void mostrarPerfilEnvase() {
         if (verificarCalculo()) {
             generador2D.mostrarPerfilEnvase(motorCalculo, resultadoActual);
-            vista.tA_consola.append("\n[2D] Mostrando Perfil Transversal z(r) y marcas de cota.");
+            vista.getTA_consola().append("\n[2D] Mostrando Perfil Transversal z(r) y marcas de cota.");
         }
     }
 
     private void mostrarMarcasGraduacion() {
         if (verificarCalculo()) {
             generador2D.mostrarCurvaGraduacion(resultadoActual);
-            vista.tA_consola.append("\n[2D] Mostrando Curva de Graduación Volumétrica V(h).");
+            vista.getTA_consola().append("\n[2D] Mostrando Curva de Graduación Volumétrica V(h).");
         }
     }
 
@@ -379,7 +386,7 @@ public class CtrlPrincipal implements ActionListener {
             modoWireframe = !modoWireframe;
             generador3D.setModoWireframe(modoWireframe);
             generador3D.actualizarEnvase3D(motorCalculo, resultadoActual.alturaIngresada, resultadoActual.espesor);
-            vista.tA_consola.append("\n[3D] Modo visualización cambiado a: " + (modoWireframe ? "Malla de alambre (Wireframe)" : "Sólido sombreado (Shaded)"));
+            vista.getTA_consola().append("\n[3D] Modo visualización cambiado a: " + (modoWireframe ? "Malla de alambre (Wireframe)" : "Sólido sombreado (Shaded)"));
         }
     }
 
@@ -389,98 +396,94 @@ public class CtrlPrincipal implements ActionListener {
 
     private void mostrarDetalleVolumen() {
         if (!verificarCalculo()) return;
-        vista.tA_consola.setText(String.format(Locale.US,
-                "=== CÁLCULO DE VOLUMEN (INTEGRAL DOBLE) ===\n" +
-                "Función de la pared: z = %s\n" +
-                "Altura analizada (h): %.2f cm\n" +
-                "Capacidad útil V(h): %.2f ml (cm³)\n" +
-                "Método: Coordenadas Polares ∬ [h - f(r,θ)] r dr dθ\n" +
-                "Tolerancia de error numérico: ±0.018%%",
-                resultadoActual.funcion, resultadoActual.alturaIngresada, resultadoActual.volumenCalculado));
+        vista.getTA_consola().setText(String.format(Locale.US,
+                "=== VOLUMEN V(h) ===\n" +
+                "Función: z = %s\n" +
+                "Altura (h): %.2f cm\n" +
+                "V(h): %.2f ml\n" +
+                "Integral: ∬ [h - f(r,θ)] r dr dθ\n" +
+                "Tolerancia: ±%.3f%%",
+                resultadoActual.funcion, resultadoActual.alturaIngresada,
+                resultadoActual.volumenCalculado, resultadoActual.errorNumericoPorcentaje));
     }
 
     private void mostrarDetalleAltura() {
         if (!verificarCalculo()) return;
-        vista.tA_consola.setText(String.format(Locale.US,
-                "=== ALTURA REQUERIDA ===\n" +
-                "Altura actual configurada: %.2f cm\n" +
-                "Volumen objetivo meta: %.2f ml\n" +
-                "Altura exacta para meta V(h)=Meta: %.2f cm\n" +
-                "Radio en el borde superior: %.2f cm",
-                resultadoActual.alturaIngresada, resultadoActual.volumenObjetivo,
-                resultadoActual.alturaParaObjetivo, resultadoActual.radioBorde));
+        vista.getTA_consola().setText(String.format(Locale.US,
+                "=== ALTURA OBJETIVO ===\n" +
+                "Altura (h): %.2f cm (Objetivo: %.2f cm)\n" +
+                "V objetivo: %.2f ml\n" +
+                "Borde (r): %.2f cm",
+                resultadoActual.alturaIngresada, resultadoActual.alturaParaObjetivo,
+                resultadoActual.volumenObjetivo, resultadoActual.radioBorde));
     }
 
     private void mostrarDetalleTablaGradiente() {
         if (!verificarCalculo()) return;
         actualizarTablaVariables(resultadoActual.cotas);
-        vista.tA_consola.setText(String.format(Locale.US,
-                "=== TABLA DE GRADUACIÓN VOLUMÉTRICA ===\n" +
-                "Total de cotas generadas: %d marcas (cada 50 ml)\n" +
-                "Consulte la tabla inferior para ver el detalle de nivel, radio, área y costo acumulado.",
+        vista.getTA_consola().setText(String.format(Locale.US,
+                "=== TABLA DE GRADUACIÓN ===\n" +
+                "Marcas: %d (cada 50 ml) | Ver tabla inferior",
                 resultadoActual.cotas != null ? resultadoActual.cotas.size() : 0));
     }
 
     private void mostrarDetalleArea() {
         if (!verificarCalculo()) return;
-        vista.tA_consola.setText(String.format(Locale.US,
-                "=== ÁREA SUPERFICIAL DE LA PARED ===\n" +
-                "Integral de superficie A = ∬ sqrt(1 + ||∇f||²) dA\n" +
-                "Área lateral calculada: %.2f cm²\n" +
-                "Altura de referencia: %.2f cm",
+        vista.getTA_consola().setText(String.format(Locale.US,
+                "=== ÁREA DE SUPERFICIE DE PARED ===\n" +
+                "A = ∬ √(1 + ||∇f||²) dA\n" +
+                "Área (A): %.2f cm²\n" +
+                "Altura (h): %.2f cm",
                 resultadoActual.areaPared, resultadoActual.alturaIngresada));
     }
 
     private void mostrarDetalleResina() {
         if (!verificarCalculo()) return;
-        vista.tA_consola.setText(String.format(Locale.US,
-                "=== CONSUMO DE MATERIAL / RESINA ===\n" +
-                "Material: %s\n" +
-                "Densidad: %.3f g/cm³\n" +
-                "Espesor de pared (e): %.2f cm\n" +
-                "Volumen neto de material (A * e): %.2f cm³\n" +
-                "Masa total calculada: %.2f g",
+        vista.getTA_consola().setText(String.format(Locale.US,
+                "=== RESINA Y MATERIAL ===\n" +
+                "Material: %s | Densidad: %.3f g/cm³\n" +
+                "Espesor (e): %.2f cm\n" +
+                "Insumo (A·e): %.2f cm³ (%.1f g)",
                 materialActual.getNombreMaterial(), materialActual.getDensidadGcm3(),
                 resultadoActual.espesor, resultadoActual.volumenMaterial, resultadoActual.masaGramos));
     }
 
     private void mostrarDetalleCosto() {
         if (!verificarCalculo()) return;
-        vista.tA_consola.setText(String.format(Locale.US,
-                "=== ANÁLISIS DE COSTO UNITARIO ===\n" +
-                "Material: %s\n" +
-                "Precio por cm³: S/ %.2f\n" +
-                "Consumo de material: %.2f cm³\n" +
-                "COSTO DE MATERIAL POR ENVASE: S/ %.2f",
+        vista.getTA_consola().setText(String.format(Locale.US,
+                "=== COSTO UNITARIO ===\n" +
+                "Material: %s | Precio: S/ %.2f/cm³\n" +
+                "Insumo: %.2f cm³\n" +
+                "Costo: S/ %.2f",
                 materialActual.getNombreMaterial(), materialActual.getPrecioCm3(),
                 resultadoActual.volumenMaterial, resultadoActual.costoTotal));
     }
 
     private void ejecutarAnalisisCompletoConsola() {
         if (!verificarCalculo()) return;
-        vista.tA_consola.setText(resultadoActual.reporteA + "\n\n" + resultadoActual.reporteB + "\n\n" + resultadoActual.reporteC);
+        vista.getTA_consola().setText(resultadoActual.reporteA + "\n\n" + resultadoActual.reporteB + "\n\n" + resultadoActual.reporteC);
     }
 
     private void mostrarDetalleAproximaciones() {
         if (!verificarCalculo()) return;
-        vista.tA_consola.setText(resultadoActual.reporteC);
+        vista.getTA_consola().setText(resultadoActual.reporteC);
     }
 
     private void mostrarDetalleDesmolde() {
         if (!verificarCalculo()) return;
-        vista.tA_consola.setText(resultadoActual.reporteB);
+        vista.getTA_consola().setText(resultadoActual.reporteB);
     }
 
     private void mostrarReporteA() {
-        if (verificarCalculo()) vista.tA_consola.setText(resultadoActual.reporteA);
+        if (verificarCalculo()) vista.getTA_consola().setText(resultadoActual.reporteA);
     }
 
     private void mostrarReporteB() {
-        if (verificarCalculo()) vista.tA_consola.setText(resultadoActual.reporteB);
+        if (verificarCalculo()) vista.getTA_consola().setText(resultadoActual.reporteB);
     }
 
     private void mostrarReporteC() {
-        if (verificarCalculo()) vista.tA_consola.setText(resultadoActual.reporteC);
+        if (verificarCalculo()) vista.getTA_consola().setText(resultadoActual.reporteC);
     }
 
     // =========================================================================
@@ -594,7 +597,7 @@ public class CtrlPrincipal implements ActionListener {
     private void accionNuevo() {
         proyectoActual = null;
         seleccionarPlantilla(1);
-        vista.tA_consola.setText("=== NUEVO PROYECTO INICIADO ===\nIngrese los parámetros o elija una plantilla.");
+        vista.getTA_consola().setText("=== NUEVO PROYECTO INICIADO ===\nIngrese los parámetros o elija una plantilla.");
         ejecutarCalculoCompleto();
     }
 
@@ -604,13 +607,13 @@ public class CtrlPrincipal implements ActionListener {
             return;
         }
         cargarListaProyectos("");
-        vista.dlg_abrirproyecto.pack();
-        vista.dlg_abrirproyecto.setLocationRelativeTo(vista);
-        vista.dlg_abrirproyecto.setVisible(true);
+        vista.getDlgAbrirproyecto().pack();
+        vista.getDlgAbrirproyecto().setLocationRelativeTo(vista);
+        vista.getDlgAbrirproyecto().setVisible(true);
     }
 
     private void filtrarProyectos() {
-        String texto = vista.txtBuscar.getText().trim();
+        String texto = vista.getTxtBuscar().getText().trim();
         cargarListaProyectos(texto);
     }
 
@@ -618,7 +621,7 @@ public class CtrlPrincipal implements ActionListener {
         if (usuarioActual == null) return;
         this.listaProyectosMemoria = proyectoDAO.listarPorUsuario(usuarioActual.getIdUsuario(), filtro);
 
-        DefaultTableModel modelo = (DefaultTableModel) vista.tbl_proyectos.getModel();
+        DefaultTableModel modelo = (DefaultTableModel) vista.getTblProyectos().getModel();
         modelo.setRowCount(0);
 
         if (listaProyectosMemoria != null) {
@@ -637,9 +640,9 @@ public class CtrlPrincipal implements ActionListener {
     }
 
     private void cargarProyectoSeleccionado() {
-        int fila = vista.tbl_proyectos.getSelectedRow();
+        int fila = vista.getTblProyectos().getSelectedRow();
         if (fila < 0 || listaProyectosMemoria == null || fila >= listaProyectosMemoria.size()) {
-            JOptionPane.showMessageDialog(vista.dlg_abrirproyecto, "Seleccione un proyecto de la lista.", "Aviso", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(vista.getDlgAbrirproyecto(), "Seleccione un proyecto de la lista.", "Aviso", JOptionPane.WARNING_MESSAGE);
             return;
         }
 
@@ -648,65 +651,65 @@ public class CtrlPrincipal implements ActionListener {
 
         if (p.getParametro() != null) {
             Parametro par = p.getParametro();
-            vista.txtFuncion1.setText(par.getFuncionPared());
-            vista.spn_altura.setValue(par.getAlturaCm());
-            vista.spn_espesor.setValue(par.getEspesorCm());
-            vista.spn_volumen.setValue(par.getVolumenObjetivoMl());
+            vista.getTxtFuncion1().setText(par.getFuncionPared());
+            vista.getSpnAltura().setValue(par.getAlturaCm());
+            vista.getSpnEspesor().setValue(par.getEspesorCm());
+            vista.getSpnVolumen().setValue(par.getVolumenObjetivoMl());
         }
 
         if (p.getMaterial() != null) {
             this.materialActual = p.getMaterial();
         }
 
-        vista.dlg_abrirproyecto.setVisible(false);
+        vista.getDlgAbrirproyecto().setVisible(false);
         ejecutarCalculoCompleto();
-        vista.tA_consola.append("\nProyecto cargado: " + p.getNombreProyecto());
+        vista.getTA_consola().append("\nProyecto cargado: " + p.getNombreProyecto());
     }
 
     private void renombrarProyectoSeleccionado() {
-        int fila = vista.tbl_proyectos.getSelectedRow();
+        int fila = vista.getTblProyectos().getSelectedRow();
         if (fila < 0 || listaProyectosMemoria == null || fila >= listaProyectosMemoria.size()) {
-            JOptionPane.showMessageDialog(vista.dlg_abrirproyecto, "Seleccione un proyecto para cambiar el nombre.", "Aviso", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(vista.getDlgAbrirproyecto(), "Seleccione un proyecto para cambiar el nombre.", "Aviso", JOptionPane.WARNING_MESSAGE);
             return;
         }
 
         Proyecto p = listaProyectosMemoria.get(fila);
-        String nuevo = JOptionPane.showInputDialog(vista.dlg_abrirproyecto, "Nuevo nombre para el proyecto:", p.getNombreProyecto());
+        String nuevo = JOptionPane.showInputDialog(vista.getDlgAbrirproyecto(), "Nuevo nombre para el proyecto:", p.getNombreProyecto());
         if (nuevo != null && !nuevo.trim().isEmpty()) {
             if (proyectoDAO.renombrar(p.getIdProyecto(), nuevo.trim())) {
-                JOptionPane.showMessageDialog(vista.dlg_abrirproyecto, "Nombre actualizado correctamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(vista.getDlgAbrirproyecto(), "Nombre actualizado correctamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
                 p.setNombreProyecto(nuevo.trim());
                 if (proyectoActual != null && proyectoActual.getIdProyecto() == p.getIdProyecto()) {
                     proyectoActual.setNombreProyecto(nuevo.trim());
                 }
-                cargarListaProyectos(vista.txtBuscar.getText().trim());
+                cargarListaProyectos(vista.getTxtBuscar().getText().trim());
             } else {
-                JOptionPane.showMessageDialog(vista.dlg_abrirproyecto, "No se pudo actualizar el nombre.", "Error", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(vista.getDlgAbrirproyecto(), "No se pudo actualizar el nombre.", "Error", JOptionPane.ERROR_MESSAGE);
             }
         }
     }
 
     private void eliminarProyectoSeleccionado() {
-        int fila = vista.tbl_proyectos.getSelectedRow();
+        int fila = vista.getTblProyectos().getSelectedRow();
         if (fila < 0 || listaProyectosMemoria == null || fila >= listaProyectosMemoria.size()) {
-            JOptionPane.showMessageDialog(vista.dlg_abrirproyecto, "Seleccione un proyecto para eliminar.", "Aviso", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(vista.getDlgAbrirproyecto(), "Seleccione un proyecto para eliminar.", "Aviso", JOptionPane.WARNING_MESSAGE);
             return;
         }
 
         Proyecto p = listaProyectosMemoria.get(fila);
-        int resp = JOptionPane.showConfirmDialog(vista.dlg_abrirproyecto,
+        int resp = JOptionPane.showConfirmDialog(vista.getDlgAbrirproyecto(),
                 "¿Está seguro de eliminar permanentemente el proyecto '" + p.getNombreProyecto() + "'?",
                 "Confirmar Eliminación", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
 
         if (resp == JOptionPane.YES_OPTION) {
             if (proyectoDAO.eliminar(p.getIdProyecto())) {
-                JOptionPane.showMessageDialog(vista.dlg_abrirproyecto, "Proyecto eliminado correctamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(vista.getDlgAbrirproyecto(), "Proyecto eliminado correctamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
                 if (proyectoActual != null && proyectoActual.getIdProyecto() == p.getIdProyecto()) {
                     proyectoActual = null;
                 }
-                cargarListaProyectos(vista.txtBuscar.getText().trim());
+                cargarListaProyectos(vista.getTxtBuscar().getText().trim());
             } else {
-                JOptionPane.showMessageDialog(vista.dlg_abrirproyecto, "No se pudo eliminar el proyecto.", "Error", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(vista.getDlgAbrirproyecto(), "No se pudo eliminar el proyecto.", "Error", JOptionPane.ERROR_MESSAGE);
             }
         }
     }
@@ -781,44 +784,44 @@ public class CtrlPrincipal implements ActionListener {
     // =========================================================================
 
     private void abrirDialogoPlantillas() {
-        vista.dlg_plantillas.pack();
-        vista.dlg_plantillas.setLocationRelativeTo(vista);
-        vista.dlg_plantillas.setVisible(true);
+        vista.getDlgPlantillas().pack();
+        vista.getDlgPlantillas().setLocationRelativeTo(vista);
+        vista.getDlgPlantillas().setVisible(true);
     }
 
     private void seleccionarPlantilla(int id) {
         this.plantillaSeleccionada = id;
         switch (id) {
             case 1: // Vaso estándar (350 ml)
-                vista.txtFuncion1.setText("0.25 * (x^2 + y^2)");
-                vista.spn_altura.setValue(7.5);
-                vista.spn_espesor.setValue(0.20);
-                vista.spn_volumen.setValue(350.0);
+                vista.getTxtFuncion1().setText("0.25 * (x^2 + y^2)");
+                vista.getSpnAltura().setValue(7.5);
+                vista.getSpnEspesor().setValue(0.20);
+                vista.getSpnVolumen().setValue(350.0);
                 break;
             case 2: // Tazón / Bowl (500 ml)
-                vista.txtFuncion1.setText("0.15 * (x^2 + y^2)");
-                vista.spn_altura.setValue(6.0);
-                vista.spn_espesor.setValue(0.30);
-                vista.spn_volumen.setValue(500.0);
+                vista.getTxtFuncion1().setText("0.15 * (x^2 + y^2)");
+                vista.getSpnAltura().setValue(6.0);
+                vista.getSpnEspesor().setValue(0.30);
+                vista.getSpnVolumen().setValue(500.0);
                 break;
             case 3: // Vaso abombado (500 ml)
-                vista.txtFuncion1.setText("0.20 * (x^2 + y^2)");
-                vista.spn_altura.setValue(10.0);
-                vista.spn_espesor.setValue(0.25);
-                vista.spn_volumen.setValue(500.0);
+                vista.getTxtFuncion1().setText("0.20 * (x^2 + y^2)");
+                vista.getSpnAltura().setValue(10.0);
+                vista.getSpnEspesor().setValue(0.25);
+                vista.getSpnVolumen().setValue(500.0);
                 break;
             case 4: // Copa (250 ml)
-                vista.txtFuncion1.setText("0.35 * (x^2 + y^2)");
-                vista.spn_altura.setValue(8.5);
-                vista.spn_espesor.setValue(0.15);
-                vista.spn_volumen.setValue(250.0);
+                vista.getTxtFuncion1().setText("0.35 * (x^2 + y^2)");
+                vista.getSpnAltura().setValue(8.5);
+                vista.getSpnEspesor().setValue(0.15);
+                vista.getSpnVolumen().setValue(250.0);
                 break;
         }
     }
 
     private void aplicarPlantilla() {
         seleccionarPlantilla(plantillaSeleccionada);
-        vista.dlg_plantillas.setVisible(false);
+        vista.getDlgPlantillas().setVisible(false);
         ejecutarCalculoCompleto();
     }
 
@@ -828,9 +831,9 @@ public class CtrlPrincipal implements ActionListener {
 
     private void abrirDialogoMateriales() {
         cargarMaterialesDesdeBD();
-        vista.dlg_materiales.pack();
-        vista.dlg_materiales.setLocationRelativeTo(vista);
-        vista.dlg_materiales.setVisible(true);
+        vista.getDlgMateriales().pack();
+        vista.getDlgMateriales().setLocationRelativeTo(vista);
+        vista.getDlgMateriales().setVisible(true);
     }
 
     private void cargarMaterialesDesdeBD() {
@@ -846,7 +849,7 @@ public class CtrlPrincipal implements ActionListener {
             materialActual = listaMaterialesMemoria.get(0);
         }
 
-        DefaultTableModel modelo = (DefaultTableModel) vista.tbl_materiales.getModel();
+        DefaultTableModel modelo = (DefaultTableModel) vista.getTblMateriales().getModel();
         modelo.setRowCount(0);
 
         for (Material m : listaMaterialesMemoria) {
@@ -859,14 +862,14 @@ public class CtrlPrincipal implements ActionListener {
     }
 
     private void aplicarMaterialSeleccionado() {
-        int fila = vista.tbl_materiales.getSelectedRow();
+        int fila = vista.getTblMateriales().getSelectedRow();
         if (fila >= 0 && listaMaterialesMemoria != null && fila < listaMaterialesMemoria.size()) {
             Material m = listaMaterialesMemoria.get(fila);
 
             // Permite actualizar en base de datos si el usuario editó densidad o precio
             try {
-                String strDens = vista.txtDensidad.getText().trim();
-                String strPrec = vista.txtPrecio.getText().trim();
+                String strDens = vista.getTxtDensidad().getText().trim();
+                String strPrec = vista.getTxtPrecio().getText().trim();
                 if (!strDens.isEmpty() && !strPrec.isEmpty()) {
                     double dens = Double.parseDouble(strDens);
                     double prec = Double.parseDouble(strPrec);
@@ -879,13 +882,13 @@ public class CtrlPrincipal implements ActionListener {
             } catch (Exception ignored) {}
 
             this.materialActual = m;
-            vista.dlg_materiales.setVisible(false);
+            vista.getDlgMateriales().setVisible(false);
 
             if (resultadoActual != null) {
                 ejecutarCalculoCompleto();
             }
         } else {
-            vista.dlg_materiales.setVisible(false);
+            vista.getDlgMateriales().setVisible(false);
         }
     }
 
@@ -896,29 +899,29 @@ public class CtrlPrincipal implements ActionListener {
     private void abrirDialogoSensibilidad() {
         if (!verificarCalculo()) return;
 
-        vista.lbl_volumen_ideal.setText(String.format(Locale.US, "%.2f ml", resultadoActual.volumenCalculado));
-        vista.lbl_estado_ideal.setText((resultadoActual.volumenObjetivo > 0 && Math.abs(resultadoActual.volumenCalculado - resultadoActual.volumenObjetivo) <= 5.0) ? "CUMPLE META" : "NOMINAL");
-        vista.spn_coeficiente.setValue(1.0);
-        vista.lbl_volumen_simulado.setText("-");
-        vista.lbl_estado_simulado.setText("-");
+        vista.getLblVolumenIdeal().setText(String.format(Locale.US, "%.2f ml", resultadoActual.volumenCalculado));
+        vista.getLblEstadoIdeal().setText((resultadoActual.volumenObjetivo > 0 && Math.abs(resultadoActual.volumenCalculado - resultadoActual.volumenObjetivo) <= 5.0) ? "CUMPLE META" : "NOMINAL");
+        vista.getSpnCoeficiente().setValue(1.0);
+        vista.getLblVolumenSimulado().setText("-");
+        vista.getLblEstadoSimulado().setText("-");
 
-        vista.dlg_sensibilidad.pack();
-        vista.dlg_sensibilidad.setLocationRelativeTo(vista);
-        vista.dlg_sensibilidad.setVisible(true);
+        vista.getDlgSensibilidad().pack();
+        vista.getDlgSensibilidad().setLocationRelativeTo(vista);
+        vista.getDlgSensibilidad().setVisible(true);
     }
 
     private void ejecutarSimulacionSensibilidad() {
         if (!verificarCalculo()) return;
 
-        double factorK = ((Number) vista.spn_coeficiente.getValue()).doubleValue();
+        double factorK = ((Number) vista.getSpnCoeficiente().getValue()).doubleValue();
         if (factorK <= 0) factorK = 1.0;
 
         double volSimulado = motorCalculo.simularDesviacionCurvatura(resultadoActual.funcion, factorK, resultadoActual.alturaIngresada);
-        vista.lbl_volumen_simulado.setText(String.format(Locale.US, "%.2f ml", volSimulado));
+        vista.getLblVolumenSimulado().setText(String.format(Locale.US, "%.2f ml", volSimulado));
 
         double desviacionPorcentual = ((volSimulado - resultadoActual.volumenCalculado) / resultadoActual.volumenCalculado) * 100.0;
         String dictamen = Math.abs(desviacionPorcentual) <= 5.0 ? "TOLERABLE (±5%)" : "CRÍTICO (>5%)";
-        vista.lbl_estado_simulado.setText(String.format(Locale.US, "%+.2f %% (%s)", desviacionPorcentual, dictamen));
+        vista.getLblEstadoSimulado().setText(String.format(Locale.US, "%+.2f %% (%s)", desviacionPorcentual, dictamen));
     }
 
     // =========================================================================
@@ -933,11 +936,18 @@ public class CtrlPrincipal implements ActionListener {
                 return false;
             }
         };
-        vista.tbl_variables.setModel(modelo);
+        vista.getTblVariables().setModel(modelo);
+
+        // Alinear todas las columnas a la derecha (son todas numéricas)
+        DefaultTableCellRenderer rendererDerecha = new DefaultTableCellRenderer();
+        rendererDerecha.setHorizontalAlignment(SwingConstants.RIGHT);
+        for (int col = 0; col < columnas.length; col++) {
+            vista.getTblVariables().getColumnModel().getColumn(col).setCellRenderer(rendererDerecha);
+        }
     }
 
     private void actualizarTablaVariables(List<CotaGraduacion> cotas) {
-        DefaultTableModel modelo = (DefaultTableModel) vista.tbl_variables.getModel();
+        DefaultTableModel modelo = (DefaultTableModel) vista.getTblVariables().getModel();
         modelo.setRowCount(0);
         if (cotas != null) {
             for (CotaGraduacion c : cotas) {
@@ -955,8 +965,8 @@ public class CtrlPrincipal implements ActionListener {
 
     private void actualizarEstadoConexionBD() {
         boolean conectada = ConexionBD.verificarConexion();
-        vista.lblEstadoBD.setText(conectada ? "Conectado" : "Offline");
-        vista.lblEstadoBD.setForeground(conectada ? new Color(46, 204, 113) : new Color(231, 76, 60));
+        vista.getLblEstadoBD().setText(conectada ? "Conectado" : "Offline");
+        vista.getLblEstadoBD().setForeground(conectada ? new Color(46, 204, 113) : new Color(231, 76, 60));
     }
 
     private boolean verificarCalculo() {
@@ -1000,4 +1010,3 @@ public class CtrlPrincipal implements ActionListener {
         }
     }
 }
-

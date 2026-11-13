@@ -25,7 +25,7 @@ public class ResultadoCalculo {
     public double volumenCilindroAprox;
     public double volumenConoAprox;
 
-    // Tabla y reportes para los botones
+    // Tabla y reportes para los
     public List<CotaGraduacion> cotas;
     public String reporteA;
     public String reporteB;

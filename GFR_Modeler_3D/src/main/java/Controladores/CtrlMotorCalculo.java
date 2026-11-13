@@ -13,6 +13,8 @@ public class CtrlMotorCalculo {
 
     private Expression expresion;
     private String funcionActual = "";
+    private static final int N_THETA = 36;
+    private static final int N_R = 60;
 
     public boolean compilarFuncion(String textoCrudo) {
         try {
@@ -63,11 +65,13 @@ public class CtrlMotorCalculo {
 
     // Integral Doble V(h) = ∬ [h - f(x,y)] dA en coordenadas polares
     public double calcularVolumenHastaAltura(double h) {
+        return calcularVolumenHastaAltura(h, N_THETA, N_R);
+    }
+    
+    public double calcularVolumenHastaAltura(double h, int nTheta, int nR) {
         double zMin = evaluarZ(0, 0);
         if (h <= zMin) return 0.0;
 
-        int nTheta = 36;
-        int nR = 60;
         double dTheta = (2.0 * Math.PI) / nTheta;
         double volumenTotal = 0.0;
 
@@ -81,12 +85,11 @@ public class CtrlMotorCalculo {
             for (int j = 0; j < nR; j++) {
                 double r = (j + 0.5) * dr;
                 double z = evaluarZ(r * Math.cos(theta), r * Math.sin(theta));
-                double diff = Math.max(0.0, h - z);
-                sumaRadial += diff * r * dr;
+                sumaRadial += Math.max(0.0, h - z) * r * dr;
             }
             volumenTotal += sumaRadial * dTheta;
         }
-        return volumenTotal; // 1 cm³ = 1 ml
+        return volumenTotal;
     }
 
     // Integral Doble de Superficie A = ∬ sqrt(1 + (∂f/∂x)² + (∂f/∂y)²) dA
@@ -176,8 +179,9 @@ public class CtrlMotorCalculo {
         res.anguloDesmoldeGrados = (magGrad > 1e-6) ? Math.toDegrees(Math.atan(1.0 / magGrad)) : 90.0;
         res.desmoldable = res.anguloDesmoldeGrados >= 3.0;
 
-        // Tolerancia respecto a refino fino
-        res.errorNumericoPorcentaje = 0.018;
+        // Tolerancia respecto a refino fino¡
+        double vFino = calcularVolumenHastaAltura(alturaH, 2 * N_THETA, 2 * N_R);
+        res.errorNumericoPorcentaje = (vFino > 0) ? Math.abs(vFino - res.volumenCalculado) / vFino * 100.0 : 0.0;
 
         // Optimización por Multiplicadores de Lagrange (∇V = λ∇A -> cilindro/paraboloide óptimo H = R)
         double vRef = (volumenObj > 0) ? volumenObj : res.volumenCalculado;
@@ -210,41 +214,37 @@ public class CtrlMotorCalculo {
 
         // Reportes formateados para los botones A, B y C
         res.reporteA = String.format(
-            "=== CÁLCULO VOLUMÉTRICO Y CUBICACIÓN ===\n" +
-            "Función de la pared: z = %s\n" +
-            "Altura (h): %.2f cm | Radio borde: %.2f cm\n" +
-            "Capacidad calculada V(h): %.2f ml (Meta: %.2f ml)\n" +
-            "Altura exacta p/ meta: %.2f cm\n" +
-            "Área superficial A: %.2f cm²\n" +
-            "Insumo (%s): %.2f cm³ (%.2f g)\n" +
-            "Costo unitario material: S/ %.2f",
-            res.funcion, res.alturaIngresada, res.radioBorde,
-            res.volumenCalculado, res.volumenObjetivo, res.alturaParaObjetivo,
-            res.areaPared, mat.getNombreMaterial(), res.volumenMaterial, res.masaGramos, res.costoTotal
+            "=== [A] CÁLCULO VOLUMÉTRICO Y CUBICACIÓN ===\n" +
+            "Función: z = %s\n" +
+            "Altura (h): %.2f cm (Objetivo: %.2f cm)\n" +
+            "V(h): %.2f ml / %.0f ml\n" +
+            "Borde (r): %.2f cm | Insumo: %.2f cm³ (%.1f g)\n" +
+            "Área (A): %.2f cm²\n" +
+            "Costo: S/ %.2f (%s)",
+            res.funcion,
+            res.alturaIngresada, res.alturaParaObjetivo,
+            res.volumenCalculado, res.volumenObjetivo,
+            res.radioBorde, res.volumenMaterial, res.masaGramos,
+            res.areaPared,
+            res.costoTotal, mat.getNombreMaterial()
         );
-
         res.reporteB = String.format(
-            "=== ANÁLISIS DE GRADIENTE Y DESMOLDE ===\n" +
-            "Gradiente en borde ∇f(%.2f, 0) = (%.3f, %.3f)\n" +
-            "Magnitud ||∇f|| = %.3f\n" +
-            "Ángulo de salida de molde: %.2f° (Mínimo CNC: 3.00°)\n" +
-            "Dictamen de extracción: %s\n" +
-            "Error numérico integración: %.3f%% (< 0.10%% OK)",
-            xb, dfdx, dfdy, magGrad, res.anguloDesmoldeGrados,
-            res.desmoldable ? "APROBADO (Sin fricción)" : "ALERTA (Pared muy vertical)",
-            res.errorNumericoPorcentaje
+            "=== [B] ANÁLISIS DE GRADIENTE Y DESMOLDE ===\n" +
+            "∇f(%.2f, 0) = (%.2f, %.2f)\n" +
+            "||∇f||: %.2f | Ángulo: %.1f°\n" +
+            "Desmolde: %s (≥ 3.0°)\n" +
+            "Tolerancia: ±%.3f%% (%s)",
+            xb, dfdx, dfdy,
+            magGrad, res.anguloDesmoldeGrados,
+            res.desmoldable ? "APROBADO" : "REVISAR",
+            res.errorNumericoPorcentaje,
+            res.errorNumericoPorcentaje < 0.1 ? "OK" : "REVISAR"
         );
 
         res.reporteC = String.format(
-            "=== LAGRANGE Y COMPARATIVA CAD ===\n" +
-            "Optimización ∇V = λ∇A (Mínimo material):\n" +
-            " -> Radio óptimo: %.2f cm | Altura óptima: %.2f cm\n" +
-            " -> Insumo teórico mínimo: %.2f cm³\n" +
-            "----------------------------------------------\n" +
-            "Comparativa vs. Hojas de Cálculo:\n" +
-            " • Integral Doble GFR 3D : %.2f ml (Exacto)\n" +
-            " • Aprox. Cilindro (πR²h): %.2f ml (Error: %+.1f ml)\n" +
-            " • Aprox. Tronco de Cono : %.2f ml (Error: %+.1f ml)",
+            "=== C_OPTIMIZACIÓN Y COMPARATIVA CAD ===\n" +
+            "Optimización Lagrange: r* = %.2f cm | h* = %.2f cm | Insumo* = %.1f cm³\n" +
+            "V(h) Integral: %.2f ml | Aprox. Cilindro: %.2f ml (%+.1f ml) | Aprox. Tronco de Cono: %.2f ml (%+.1f ml)",
             res.radioOptimoLagrange, res.alturaOptimaLagrange, res.materialOptimoLagrange,
             res.volumenCalculado,
             res.volumenCilindroAprox, res.volumenCilindroAprox - res.volumenCalculado,
