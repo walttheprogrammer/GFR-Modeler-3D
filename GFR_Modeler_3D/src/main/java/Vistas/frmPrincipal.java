@@ -1103,7 +1103,7 @@ public class frmPrincipal extends javax.swing.JFrame {
 
         lblintegracion.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         lblintegracion.setForeground(new java.awt.Color(255, 255, 255));
-        pnl_bottom_1.add(lblintegracion, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 10, 60, 20));
+        pnl_bottom_1.add(lblintegracion, new org.netbeans.lib.awtextra.AbsoluteConstraints(690, 10, 60, 20));
 
         lblEstadoBD.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         lblEstadoBD.setForeground(new java.awt.Color(255, 255, 255));
@@ -1111,7 +1111,7 @@ public class frmPrincipal extends javax.swing.JFrame {
 
         lblCursorPosicion.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         lblCursorPosicion.setForeground(new java.awt.Color(255, 255, 255));
-        pnl_bottom_1.add(lblCursorPosicion, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 10, 150, 20));
+        pnl_bottom_1.add(lblCursorPosicion, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 10, 240, 20));
 
         lbl_caption.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         lbl_caption.setForeground(new java.awt.Color(255, 255, 255));
@@ -1121,7 +1121,7 @@ public class frmPrincipal extends javax.swing.JFrame {
         lbl_caption50.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         lbl_caption50.setForeground(new java.awt.Color(255, 255, 255));
         lbl_caption50.setText("Tolerancia de integración:");
-        pnl_bottom_1.add(lbl_caption50, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 10, 160, -1));
+        pnl_bottom_1.add(lbl_caption50, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 10, 160, -1));
 
         pnl_parametros.setBackground(new java.awt.Color(54, 54, 54));
         pnl_parametros.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(102, 102, 102)));
@@ -1315,17 +1315,17 @@ public class frmPrincipal extends javax.swing.JFrame {
         btnReporteB.setBackground(new java.awt.Color(163, 53, 53));
         btnReporteB.setFont(new java.awt.Font("Square721 BT", 0, 18)); // NOI18N
         btnReporteB.setForeground(new java.awt.Color(255, 255, 255));
-        btnReporteB.setText("B");
+        btnReporteB.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Utilidades/iconos/images/images/images/images/icono_plantilla_02.png"))); // NOI18N
 
         btnReporteA.setBackground(new java.awt.Color(163, 53, 53));
         btnReporteA.setFont(new java.awt.Font("Square721 BT", 0, 18)); // NOI18N
         btnReporteA.setForeground(new java.awt.Color(255, 255, 255));
-        btnReporteA.setText("A");
+        btnReporteA.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Utilidades/iconos/images/images/images/images/icono_plantilla_01.png"))); // NOI18N
 
         btnReporteC.setBackground(new java.awt.Color(163, 53, 53));
         btnReporteC.setFont(new java.awt.Font("Square721 BT", 0, 18)); // NOI18N
         btnReporteC.setForeground(new java.awt.Color(255, 255, 255));
-        btnReporteC.setText("C");
+        btnReporteC.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Utilidades/iconos/images/images/images/images/icono_plantilla_03.png"))); // NOI18N
 
         javax.swing.GroupLayout pnl_inferior_izqLayout = new javax.swing.GroupLayout(pnl_inferior_izq);
         pnl_inferior_izq.setLayout(pnl_inferior_izqLayout);
