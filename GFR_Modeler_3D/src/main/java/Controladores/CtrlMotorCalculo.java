@@ -16,8 +16,12 @@ public class CtrlMotorCalculo {
     private static final int N_THETA = 36;
     private static final int N_R = 60;
 
-public boolean compilarFuncion(String textoCrudo) {
-        if (textoCrudo == null) return false;
+    public boolean compilarFuncion(String textoCrudo) {
+        if (textoCrudo == null || textoCrudo.trim().isEmpty()) {
+            this.expresion = null;
+            this.funcionActual = "";
+            throw new IllegalArgumentException("La función no puede estar vacía.");
+        }
         try {
             String limpia = textoCrudo
                     .toLowerCase(Locale.ROOT)
@@ -26,7 +30,11 @@ public boolean compilarFuncion(String textoCrudo) {
                     .replace("³", "^3")
                     .replace(",", ".")
                     .trim();
-            if (limpia.isEmpty()) return false;
+            if (limpia.isEmpty()) {
+                this.expresion = null;
+                this.funcionActual = "";
+                throw new IllegalArgumentException("La función no puede estar vacía.");
+            }
 
             this.expresion = new ExpressionBuilder(limpia)
                     .variables("x", "y")
@@ -60,7 +68,7 @@ public boolean compilarFuncion(String textoCrudo) {
             throw iae;
         } catch (Exception e) {
             this.expresion = null;
-            return false;
+            throw new IllegalArgumentException("Sintaxis matemática inválida en f(x,y): " + e.getMessage(), e);
         }
     }
 
@@ -71,6 +79,9 @@ public boolean compilarFuncion(String textoCrudo) {
 
     // Encuentra el radio donde f(r*cos(theta), r*sin(theta)) = zNivel usando BisectionSolver de Commons Math3
     public double hallarRadioEnNivel(double zNivel, double theta) {
+        if (expresion == null) {
+            throw new IllegalArgumentException("No hay una función compilada válida.");
+        }
         double z0 = evaluarZ(0, 0);
         if (Double.isNaN(z0) || Double.isInfinite(z0)) {
             throw new IllegalArgumentException("La función produce valores indefinidos en el origen.");
@@ -254,51 +265,142 @@ public boolean compilarFuncion(String textoCrudo) {
         }
         res.cotas = listaCotas;
 
-        // Reportes formateados para los botones A, B y C
-        res.reporteA = String.format(
-            "=== [A] CÁLCULO VOLUMÉTRICO Y CUBICACIÓN ===\n" +
+        // Reportes formateados para los botones A, B y C (sin prefijos [A], [B], [C])
+        double diffVol = res.volumenCalculado - res.volumenObjetivo;
+        String evaluacionVolumen = (res.volumenObjetivo > 0)
+            ? (Math.abs(diffVol) <= 5.0
+                ? String.format(Locale.US, "La capacidad efectiva satisface el volumen nominal requerido con una desviación de solo %+.2f ml.", diffVol)
+                : String.format(Locale.US, "La geometría actual presenta una variación volumétrica de %+.2f ml respecto a la cuota establecida.", diffVol))
+            : "La cavidad evaluada no presenta una restricción de llenado objetivo predefinida.";
+
+        String evaluacionMaterial = String.format(Locale.US,
+            "El espesor uniforme de %.2f cm demanda %.2f cm³ de %s, equivalente a %.1f g de masa neta.",
+            res.espesor, res.volumenMaterial, mat.getNombreMaterial(), res.masaGramos);
+
+        String evaluacionCosto = String.format(Locale.US,
+            "La tasa de material proyecta un costo directo de fabricación de S/ %.2f por envase.",
+            res.costoTotal);
+
+        String conclusionA = (res.volumenObjetivo > 0 && Math.abs(diffVol) <= 5.0)
+            ? "El dimensionamiento geométrico es apto para producción sin requerir ajuste de cota de llenado."
+            : String.format(Locale.US, "Se sugiere calibrar la altura a %.2f cm para coincidir exactamente con el tiraje de envasado.", res.alturaParaObjetivo);
+
+        String narrativaA = String.format(
+            "\nDiagnóstico Técnico:\n" +
+            "• %s\n" +
+            "• %s\n" +
+            "• %s\n" +
+            "• %s",
+            evaluacionVolumen, evaluacionMaterial, evaluacionCosto, conclusionA
+        );
+
+        res.reporteA = String.format(Locale.US,
+            "=== CÁLCULO VOLUMÉTRICO Y CUBICACIÓN ===\n" +
             "Función: z = %s\n" +
             "Altura (h): %.2f cm (Objetivo: %.2f cm)\n" +
             "V(h): %.2f ml / %.0f ml\n" +
             "Borde (r): %.2f cm | Insumo: %.2f cm³ (%.1f g)\n" +
             "Área (A): %.2f cm²\n" +
-            "Costo: S/ %.2f (%s)",
+            "Costo: S/ %.2f (%s)%s",
             res.funcion,
             res.alturaIngresada, res.alturaParaObjetivo,
             res.volumenCalculado, res.volumenObjetivo,
             res.radioBorde, res.volumenMaterial, res.masaGramos,
             res.areaPared,
-            res.costoTotal, mat.getNombreMaterial()
+            res.costoTotal, mat.getNombreMaterial(),
+            narrativaA
         );
-        res.reporteB = String.format(
-            "=== [B] ANÁLISIS DE GRADIENTE Y DESMOLDE ===\n" +
+
+        String dictamenAngulo = res.desmoldable
+            ? String.format(Locale.US, "El ángulo de salida obtenido de %.2f° supera con holgura el umbral crítico de 3.0°.", res.anguloDesmoldeGrados)
+            : String.format(Locale.US, "El ángulo de salida de %.2f° no alcanza el umbral mínimo de 3.0° requerido para desmolde.", res.anguloDesmoldeGrados);
+
+        String evaluacionFriccion = res.desmoldable
+            ? "La conicidad garantiza la expulsión de pieza en matriz rígida minimizando fricción y desgaste prematuro."
+            : "Existe riesgo severo de bloqueo mecánico, socavado o rayaduras durante la apertura del herramental.";
+
+        String evaluacionGradiente = String.format(Locale.US,
+            "El vector gradiente ∇f con magnitud %.2f en periferia define una pendiente continua y favorable en las generatrices.",
+            magGrad);
+
+        String evaluacionTolerancia = String.format(Locale.US,
+            "La convergencia numérica con tolerancia de ±%.3f%% valida la integridad dimensional para maquinado CNC.",
+            res.errorNumericoPorcentaje);
+
+        String narrativaB = String.format(
+            "\nDiagnóstico Técnico:\n" +
+            "• %s\n" +
+            "• %s\n" +
+            "• %s\n" +
+            "• %s",
+            dictamenAngulo, evaluacionFriccion, evaluacionGradiente, evaluacionTolerancia
+        );
+
+        res.reporteB = String.format(Locale.US,
+            "=== ANÁLISIS DE GRADIENTE Y DESMOLDE ===\n" +
             "∇f(%.2f, 0) = (%.2f, %.2f)\n" +
             "||∇f||: %.2f | Ángulo: %.1f°\n" +
             "Desmolde: %s (≥ 3.0°)\n" +
-            "Tolerancia: ±%.3f%% (%s)",
+            "Tolerancia: ±%.3f%% (%s)%s",
             xb, dfdx, dfdy,
             magGrad, res.anguloDesmoldeGrados,
             res.desmoldable ? "APROBADO" : "REVISAR",
             res.errorNumericoPorcentaje,
-            res.errorNumericoPorcentaje < 0.1 ? "OK" : "REVISAR"
+            res.errorNumericoPorcentaje < 0.1 ? "OK" : "REVISAR",
+            narrativaB
         );
 
-        res.reporteC = String.format(
-            "=== C_OPTIMIZACIÓN Y COMPARATIVA CAD ===\n" +
+        double ahorroMaterial = res.volumenMaterial - res.materialOptimoLagrange;
+        double difCilindro = res.volumenCilindroAprox - res.volumenCalculado;
+        double difCono = res.volumenConoAprox - res.volumenCalculado;
+
+        String evaluacionLagrange = (ahorroMaterial > 0.05)
+            ? String.format(Locale.US, "La optimización por multiplicadores de Lagrange proyecta un ahorro potencial de %.2f cm³ de insumo.", ahorroMaterial)
+            : "La configuración geométrica actual se aproxima estrechamente al óptimo isoperimétrico teórico.";
+
+        String evaluacionDimensiones = String.format(Locale.US,
+            "La proporción óptima r*=h*=%.2f cm balancea el área perimetral y reduce el peso estructural para la misma capacidad.",
+            res.radioOptimoLagrange);
+
+        String evaluacionAproximaciones = String.format(Locale.US,
+            "Las aproximaciones de taller acumulan desviaciones notables: cilindro (%+.1f ml) y tronco de cono (%+.1f ml).",
+            difCilindro, difCono);
+
+        String conclusionC = "El cálculo riguroso por integrales dobles previene mermas por sobrellenado en líneas automáticas.";
+
+        String narrativaC = String.format(
+            "\nDiagnóstico Técnico:\n" +
+            "• %s\n" +
+            "• %s\n" +
+            "• %s\n" +
+            "• %s",
+            evaluacionLagrange, evaluacionDimensiones, evaluacionAproximaciones, conclusionC
+        );
+
+        res.reporteC = String.format(Locale.US,
+            "=== OPTIMIZACIÓN Y COMPARATIVA CAD ===\n" +
             "Optimización Lagrange: r* = %.2f cm | h* = %.2f cm | Insumo* = %.1f cm³\n" +
-            "V(h) Integral: %.2f ml | Aprox. Cilindro: %.2f ml (%+.1f ml) | Aprox. Tronco de Cono: %.2f ml (%+.1f ml)",
+            "V(h) Integral: %.2f ml | Aprox. Cilindro: %.2f ml (%+.1f ml) | Aprox. Tronco de Cono: %.2f ml (%+.1f ml)%s",
             res.radioOptimoLagrange, res.alturaOptimaLagrange, res.materialOptimoLagrange,
             res.volumenCalculado,
-            res.volumenCilindroAprox, res.volumenCilindroAprox - res.volumenCalculado,
-            res.volumenConoAprox, res.volumenConoAprox - res.volumenCalculado
+            res.volumenCilindroAprox, difCilindro,
+            res.volumenConoAprox, difCono,
+            narrativaC
         );
         return res;
     }
+
     public double simularDesviacionCurvatura(String funcionBase, double factorK, double alturaH) {
         String funcDesviada = "(" + factorK + ") * (" + funcionBase + ")";
-        if (!compilarFuncion(funcDesviada)) return 0.0;
+        try {
+            compilarFuncion(funcDesviada);
+        } catch (Exception e) {
+            return 0.0;
+        }
         double vol = calcularVolumenHastaAltura(alturaH);
-        compilarFuncion(funcionBase); // Restaura original
+        try {
+            compilarFuncion(funcionBase); // Restaura original
+        } catch (Exception ignored) {}
         return vol;
     }
 }

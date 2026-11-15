@@ -1,31 +1,19 @@
 package Controladores;
 
-import DAO.MaterialDAO;
-import DAO.ProyectoDAO;
-import Modelo.CotaGraduacion;
-import Modelo.Material;
-import Modelo.Parametro;
-import Modelo.Proyecto;
-import Modelo.ResultadoCalculo;
-import Modelo.Usuario;
-import Utilidades.ConexionBD;
-import Vistas.frmLogin;
-import Vistas.frmPrincipal;
+import DAO.*;
+import Modelo.*;
+import Utilidades.*;
+import Vistas.*;
 import java.awt.Color;
 import java.awt.Insets;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.event.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Locale;
-import javax.swing.JFileChooser;
-import javax.swing.JOptionPane;
-import javax.swing.SwingConstants;
+import java.net.*;
+import java.util.*;
+import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
-import javax.swing.table.DefaultTableCellRenderer;
-import javax.swing.table.DefaultTableModel;
+import javax.swing.table.*;
 
 public class CtrlPrincipal implements ActionListener {
 
@@ -54,44 +42,43 @@ public class CtrlPrincipal implements ActionListener {
         this.usuarioActual = usuarioActual;
         this.proyectoDAO = new ProyectoDAO();
         this.materialDAO = new MaterialDAO();
-
-        // Instanciación de controladores auxiliares conectando las vistas de frmPrincipal
         this.motorCalculo = new CtrlMotorCalculo();
         this.generador2D = new CtrlGenerador2D(vista.getControlador2D(), vista.getLblCursorPosicion());
         this.generador3D = new CtrlGenerador3D(vista.getControlador3D());
-
         inicializar();
     }
 
     private void inicializar() {
-        // Título de la ventana con datos del usuario activo
         if (usuarioActual != null) {
             String nom = usuarioActual.getNombreCompleto();
             if (nom == null || nom.trim().isEmpty()) {
                 nom = (usuarioActual.getNombres() + " " + usuarioActual.getApellidos()).trim();
             }
             if (nom.isEmpty()) nom = usuarioActual.getUsuario();
-            vista.setTitle("GFR Modeler 3D — Usuario: " + nom + " (@" + usuarioActual.getUsuario() + ")");
+            vista.setTitle("GFR Modeler 3D - Usuario: " + nom + " (@" + usuarioActual.getUsuario() + ")");
+            URL urlIconOriginal = getClass().getResource("/Utilidades/GFR_Modeler_3D_icon.png");
+            URL urlIcon128 = getClass().getResource("/Utilidades/GFR_Modeler_3D_icon_128.png");
+            if (urlIconOriginal != null && urlIcon128 != null) {
+                vista.setIconImages(Arrays.asList(
+                        new ImageIcon(urlIcon128).getImage(),
+                        new ImageIcon(urlIconOriginal).getImage()
+                ));
+            } else if (urlIconOriginal != null) {
+                vista.setIconImage(new ImageIcon(urlIconOriginal).getImage());
+            }
         } else {
-            vista.setTitle("GFR Modeler 3D — Modelado y Cálculo de Envases");
+            vista.setTitle("GFR Modeler 3D - Modelado y Cálculo de Envases");
         }
 
-        // Estado inicial de la base de datos y tolerancia
         actualizarEstadoConexionBD();
         vista.getLblintegracion().setText("±0.018%");
-
-        // Inicializar materiales
         cargarMaterialesDesdeBD();
-
-        // Configurar modelo de la tabla de variables y cotas
         configurarTablaVariables();
 
-        // Configurar consola de salida
         vista.getTA_consola().setMargin(new Insets(10, 12, 10, 12));
         vista.getTA_consola().setLineWrap(true);
         vista.getTA_consola().setWrapStyleWord(true);
 
-        // Listener de selección en tabla de materiales
         vista.getTblMateriales().getSelectionModel().addListSelectionListener(e -> {
             if (!e.getValueIsAdjusting()) {
                 int fila = vista.getTblMateriales().getSelectedRow();
@@ -103,10 +90,7 @@ public class CtrlPrincipal implements ActionListener {
             }
         });
 
-        // Registrar ActionListeners centralizados
         registrarEventos();
-
-        // Cargar plantilla por defecto (Vaso estándar 350 ml) y ejecutar cálculo inicial
         seleccionarPlantilla(1);
         ejecutarCalculoCompleto();
     }
@@ -149,10 +133,10 @@ public class CtrlPrincipal implements ActionListener {
         vista.getBtnMateriales().addActionListener(this);
         vista.getBtnDesmoldar().addActionListener(this);
 
-        // Botones de reporte de consola A, B, C
-        vista.getBtnReporteA().addActionListener(this); // Botón A
-        vista.getBtnReporteB().addActionListener(this); // Botón B
-        vista.getBtnReporteC().addActionListener(this); // Botón C
+        // Botones de reporte de consola 
+        vista.getBtnReporteA().addActionListener(this);
+        vista.getBtnReporteB().addActionListener(this);
+        vista.getBtnReporteC().addActionListener(this);
 
         // JDialog dlg_abrirproyecto
         vista.getBtnBuscar().addActionListener(this);
@@ -179,9 +163,6 @@ public class CtrlPrincipal implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         Object s = e.getSource();
 
-        // ==========================================
-        // 1. ACCIONES DE ARCHIVO
-        // ==========================================
         if (s == vista.getBtnNuevo()) {
             accionNuevo();
         } else if (s == vista.getBtnAbrir()) {
@@ -204,10 +185,6 @@ public class CtrlPrincipal implements ActionListener {
             mostrarAcercaDe();
         } else if (s == vista.getBtnCerrarSesion()) {
             cerrarSesion();
-
-        // ==========================================
-        // 2. ACCIONES DE MODELADO Y GRÁFICOS 2D/3D
-        // ==========================================
         } else if (s == vista.getBtnCurvasnivel()) {
             mostrarCurvasNivel();
         } else if (s == vista.getBtnLagrange()) {
@@ -218,10 +195,6 @@ public class CtrlPrincipal implements ActionListener {
             alternarSuperficie3D();
         } else if (s == vista.getBtnPlantillas()) {
             abrirDialogoPlantillas();
-
-        // ==========================================
-        // 3. ACCIONES DE CÁLCULO
-        // ==========================================
         } else if (s == vista.getBtnCalcularVaso() || s == vista.getBtnCalculartodo()) {
             ejecutarCalculoCompleto();
         } else if (s == vista.getBtnVolumen()) {
@@ -236,10 +209,6 @@ public class CtrlPrincipal implements ActionListener {
             mostrarDetalleResina();
         } else if (s == vista.getBtnCosto()) {
             mostrarDetalleCosto();
-
-        // ==========================================
-        // 4. ACCIONES DE ANÁLISIS
-        // ==========================================
         } else if (s == vista.getBtnAnalizartodo()) {
             ejecutarAnalisisCompletoConsola();
         } else if (s == vista.getBtnAproximaciones()) {
@@ -250,20 +219,12 @@ public class CtrlPrincipal implements ActionListener {
             abrirDialogoSensibilidad();
         } else if (s == vista.getBtnMateriales()) {
             abrirDialogoMateriales();
-
-        // ==========================================
-        // 5. BOTONES RÁPIDOS DE CONSOLA (A, B, C)
-        // ==========================================
         } else if (s == vista.getBtnReporteA()) {
             mostrarReporteA();
         } else if (s == vista.getBtnReporteB()) {
             mostrarReporteB();
         } else if (s == vista.getBtnReporteC()) {
             mostrarReporteC();
-
-        // ==========================================
-        // 6. DIÁLOGO: ABRIR PROYECTO
-        // ==========================================
         } else if (s == vista.getBtnBuscar() || s == vista.getTxtBuscar()) {
             filtrarProyectos();
         } else if (s == vista.getBtnAbrirProyecto()) {
@@ -272,10 +233,6 @@ public class CtrlPrincipal implements ActionListener {
             renombrarProyectoSeleccionado();
         } else if (s == vista.getBtnEliminarProyecto()) {
             eliminarProyectoSeleccionado();
-
-        // ==========================================
-        // 7. DIÁLOGO: PLANTILLAS
-        // ==========================================
         } else if (s == vista.getBtnVaso()) {
             seleccionarPlantilla(1);
         } else if (s == vista.getBtnTazon()) {
@@ -286,25 +243,13 @@ public class CtrlPrincipal implements ActionListener {
             seleccionarPlantilla(4);
         } else if (s == vista.getBtnSeleccionarPlantilla()) {
             aplicarPlantilla();
-
-        // ==========================================
-        // 8. DIÁLOGO: MATERIALES
-        // ==========================================
         } else if (s == vista.getBtnSeleccionarMaterial()) {
             aplicarMaterialSeleccionado();
-
-        // ==========================================
-        // 9. DIÁLOGO: SENSIBILIDAD
-        // ==========================================
         } else if (s == vista.getBtnSimular()) {
             ejecutarSimulacionSensibilidad();
         }
     }
-
-    // =========================================================================
-    // NÚCLEO DE CÁLCULO Y ORQUESTACIÓN PRINCIPAL
-    // =========================================================================
-
+    
     private void ejecutarCalculoCompleto() {
         String funcionTexto = vista.getTxtFuncion1().getText().trim();
         double alturaH = ((Number) vista.getSpnAltura().getValue()).doubleValue();
@@ -326,26 +271,17 @@ public class CtrlPrincipal implements ActionListener {
         }
 
         try {
-            // 1. Delegar cálculo integral y numérico al Motor de Cálculo
             ResultadoCalculo res = motorCalculo.ejecutarAnalisisCompleto(funcionTexto, alturaH, espesorE, volumenObj, materialActual);
             this.resultadoActual = res;
 
-            // Si la altura fue calculada automáticamente por volumen objetivo, actualizar el spinner
             vista.getSpnAltura().setValue(res.alturaIngresada);
 
-            // 2. Delegar generación y renderizado 2D (por defecto Curvas de Nivel)
             generador2D.mostrarCurvasDeNivel(motorCalculo, res);
-
-            // 3. Delegar actualización de la malla 3D en JavaFX
             generador3D.actualizarEnvase3D(motorCalculo, res.alturaIngresada, res.espesor);
 
-            // 4. Actualizar tabla de graduación y cotas
             actualizarTablaVariables(res.cotas);
 
-            // 5. Imprimir reporte ejecutivo en la consola
             vista.getTA_consola().setText(res.reporteA);
-
-            // Actualizar datos de sensibilidad ideales
             vista.getLblVolumenIdeal().setText(String.format(Locale.US, "%.2f ml", res.volumenCalculado));
             vista.getLblEstadoIdeal().setText(res.desmoldable ? "APROBADO" : "REVISAR");
 
@@ -355,10 +291,6 @@ public class CtrlPrincipal implements ActionListener {
             JOptionPane.showMessageDialog(vista, "Error durante la ejecución del análisis: " + ex.getMessage(), "Error de Cálculo", JOptionPane.ERROR_MESSAGE);
         }
     }
-
-    // =========================================================================
-    // VISTAS 2D Y 3D (TAB MODELADO)
-    // =========================================================================
 
     private void mostrarCurvasNivel() {
         if (verificarCalculo()) {
@@ -389,10 +321,6 @@ public class CtrlPrincipal implements ActionListener {
             vista.getTA_consola().append("\n[3D] Modo visualización cambiado a: " + (modoWireframe ? "Malla de alambre (Wireframe)" : "Sólido sombreado (Shaded)"));
         }
     }
-
-    // =========================================================================
-    // BOTONES DE REPORTE Y CÁLCULO INDIVIDUAL (TAB CÁLCULO Y ANÁLISIS)
-    // =========================================================================
 
     private void mostrarDetalleVolumen() {
         if (!verificarCalculo()) return;
@@ -485,10 +413,6 @@ public class CtrlPrincipal implements ActionListener {
     private void mostrarReporteC() {
         if (verificarCalculo()) vista.getTA_consola().setText(resultadoActual.reporteC);
     }
-
-    // =========================================================================
-    // EXPORTACIÓN (DELEGACIÓN A CtrlExportador)
-    // =========================================================================
 
     private void exportarGraficaPNG() {
         if (!verificarCalculo()) return;
@@ -590,11 +514,22 @@ public class CtrlPrincipal implements ActionListener {
         }
     }
 
-    // =========================================================================
-    // GESTIÓN DE PROYECTOS (DAO Y JDIALOG dlg_abrirproyecto)
-    // =========================================================================
-
     private void accionNuevo() {
+        int opcion = JOptionPane.showOptionDialog(
+            vista,
+            "Se realizaron cambios y se perderán al generar un nuevo proyecto\n¿Desea crear un nuevo proyecto?",
+            "Confirmar Nuevo Proyecto",
+            JOptionPane.YES_NO_OPTION,
+            JOptionPane.WARNING_MESSAGE,
+            null,
+            new Object[]{"Sí", "No"},
+            "Sí"
+        );
+
+        if (opcion != 0) {
+            return;
+        }
+
         proyectoActual = null;
         seleccionarPlantilla(1);
         vista.getTA_consola().setText("=== NUEVO PROYECTO INICIADO ===\nIngrese los parámetros o elija una plantilla.");
@@ -779,10 +714,6 @@ public class CtrlPrincipal implements ActionListener {
         }
     }
 
-    // =========================================================================
-    // PLANTILLAS (JDIALOG dlg_plantillas)
-    // =========================================================================
-
     private void abrirDialogoPlantillas() {
         vista.getDlgPlantillas().pack();
         vista.getDlgPlantillas().setLocationRelativeTo(vista);
@@ -824,10 +755,6 @@ public class CtrlPrincipal implements ActionListener {
         vista.getDlgPlantillas().setVisible(false);
         ejecutarCalculoCompleto();
     }
-
-    // =========================================================================
-    // GESTIÓN DE MATERIALES (JDIALOG dlg_materiales)
-    // =========================================================================
 
     private void abrirDialogoMateriales() {
         cargarMaterialesDesdeBD();
@@ -892,10 +819,6 @@ public class CtrlPrincipal implements ActionListener {
         }
     }
 
-    // =========================================================================
-    // ANÁLISIS DE SENSIBILIDAD (JDIALOG dlg_sensibilidad)
-    // =========================================================================
-
     private void abrirDialogoSensibilidad() {
         if (!verificarCalculo()) return;
 
@@ -923,10 +846,6 @@ public class CtrlPrincipal implements ActionListener {
         String dictamen = Math.abs(desviacionPorcentual) <= 5.0 ? "TOLERABLE (±5%)" : "CRÍTICO (>5%)";
         vista.getLblEstadoSimulado().setText(String.format(Locale.US, "%+.2f %% (%s)", desviacionPorcentual, dictamen));
     }
-
-    // =========================================================================
-    // UTILIDADES DE INTERFAZ Y VALIDACIÓN
-    // =========================================================================
 
     private void configurarTablaVariables() {
         String[] columnas = {"Nivel (ml)", "Altura (cm)", "Radio (cm)", "Área (cm²)", "Insumo (cm³)", "Costo (S/.)"};
@@ -985,13 +904,23 @@ public class CtrlPrincipal implements ActionListener {
     }
 
     private void mostrarAcercaDe() {
-        String info = "GFR Modeler 3D v1.0.0\n" +
-                      "Arquitectura MVC en Java Swing con FlatLaf\n" +
-                      "Cálculo Multivariable aplicado a Ingeniería de Envases\n\n" +
-                      "• Autor: Walter Dario Maza Cuadrado\n" +
-                      "• Institución: Universidad César Vallejo (UCV)\n" +
-                      "• Motores: Apache Commons Math 3, Exp4j, JFreeChart, JavaFX 3D, OpenPDF\n" +
-                      "• Base de datos: MySQL Connector/J\n\n" +
+        String info = "GFR Modeler 3D v1.5.4\n\n" +
+                      "Autor: Walter D. Maza Cuadrado\n" +
+                      "Asignatura: Cálculo Integral y Ecuaciones Diferenciales\n" +
+                      "Institución: Universidad César Vallejo (UCV) - Campus Lima Norte\n\n" +
+                      "Librerías:\n" +
+                      "  • FlatLaf v3.7.2 (Tema visual moderno para Swing)\n" +
+                      "  • MySQL Connector/J v26.10.0 (Conector JDBC para persistencia)\n" +
+                      "  • Apache Commons Math v3.6.1 (Solvers numéricos y análisis univariable)\n" +
+                      "  • exp4j v0.4.8 (Parser y evaluador de expresiones matemáticas)\n" +
+                      "  • JFreeChart v1.5.6 (Generación y visualización de gráficos 2D)\n" +
+                      "  • JavaFX 3D / Swing v28 (Motor de renderizado interactivo 3D)\n" +
+                      "  • OpenPDF v2.4.0 (Generación de reportes técnicos y exportación PDF)\n" +
+                      "  • NetBeans AbsoluteLayout RELEASE300 (Gestión de layout de componentes)\n" +
+                      "  • cvsclient v20060125 (Cliente de control de versiones NetBeans)\n" +
+                      "  • JUnit Jupiter v6.1.3 (Framework de pruebas unitarias)\n\n" +
+                      "Sistema gestor de base de datos: MySQL / MariaDB\n" +
+                      "JDK 25 LTS\n" +
                       "© 2026 Todos los derechos reservados.";
         JOptionPane.showMessageDialog(vista, info, "Acerca de GFR Modeler 3D", JOptionPane.INFORMATION_MESSAGE);
     }

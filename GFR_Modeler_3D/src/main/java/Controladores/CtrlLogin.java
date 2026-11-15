@@ -1,21 +1,17 @@
 package Controladores;
 
-import DAO.UsuarioDAO;
-import Modelo.Usuario;
-import Vistas.frmLogin;
-import Vistas.frmPrincipal;
-import java.awt.Cursor;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import javax.swing.JOptionPane;
+import DAO.*;
+import Modelo.*;
+import Vistas.*;
+import java.awt.*;
+import java.awt.event.*;
+import java.net.URL;
+import java.util.Arrays;
+import javax.swing.*;
 
 public class CtrlLogin implements ActionListener {
-
     private final frmLogin vista;
     private final UsuarioDAO usuarioDAO;
-
     public CtrlLogin(frmLogin vista) {
         this.vista = vista;
         this.usuarioDAO = new UsuarioDAO();
@@ -26,7 +22,16 @@ public class CtrlLogin implements ActionListener {
         // Limpiar campos por defecto
         vista.getTxtContraseña().setText("");
         vista.getLblRegistrarse().setCursor(new Cursor(Cursor.HAND_CURSOR));
-
+        URL urlIconOriginal = getClass().getResource("/Utilidades/GFR_Modeler_3D_icon.png");
+        URL urlIcon128 = getClass().getResource("/Utilidades/GFR_Modeler_3D_icon_128.png");
+        if (urlIconOriginal != null && urlIcon128 != null) {
+            vista.setIconImages(Arrays.asList(
+                    new ImageIcon(urlIcon128).getImage(),
+                    new ImageIcon(urlIconOriginal).getImage()
+            ));
+        } else if (urlIconOriginal != null) {
+            vista.setIconImage(new ImageIcon(urlIconOriginal).getImage());
+        }
         // Registrar ActionListeners centralizados
         vista.getBtnIniciarSesion().addActionListener(this);
         vista.getTxtContraseña().addActionListener(this); // Iniciar sesión con tecla Enter
