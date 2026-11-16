@@ -1275,7 +1275,7 @@ public class frmPrincipal extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnl_superior_izqLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(controlador3D, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
         pnl_superior_izqLayout.setVerticalGroup(
             pnl_superior_izqLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)

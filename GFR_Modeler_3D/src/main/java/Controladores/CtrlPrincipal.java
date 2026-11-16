@@ -78,6 +78,7 @@ public class CtrlPrincipal implements ActionListener {
         vista.getTA_consola().setMargin(new Insets(10, 12, 10, 12));
         vista.getTA_consola().setLineWrap(true);
         vista.getTA_consola().setWrapStyleWord(true);
+        vista.getTA_consola().setEditable(false);
 
         configurarTooltips();
 
