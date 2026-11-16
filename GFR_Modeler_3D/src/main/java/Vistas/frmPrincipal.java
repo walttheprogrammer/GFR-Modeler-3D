@@ -776,7 +776,7 @@ public class frmPrincipal extends javax.swing.JFrame {
                     .addComponent(btnExportarPNG1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnActualizar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnCerrarSesion, javax.swing.GroupLayout.DEFAULT_SIZE, 184, Short.MAX_VALUE))
-                .addContainerGap(23, Short.MAX_VALUE))
+                .addContainerGap(104, Short.MAX_VALUE))
         );
         tab_archivoLayout.setVerticalGroup(
             tab_archivoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -983,12 +983,12 @@ public class frmPrincipal extends javax.swing.JFrame {
                         .addComponent(btnTablaGradiente)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnCalculartodo, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(281, Short.MAX_VALUE))
+                .addContainerGap(362, Short.MAX_VALUE))
             .addGroup(tab_calculoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, tab_calculoLayout.createSequentialGroup()
-                    .addContainerGap(1003, Short.MAX_VALUE)
+                    .addContainerGap(1043, Short.MAX_VALUE)
                     .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(463, Short.MAX_VALUE)))
+                    .addContainerGap(504, Short.MAX_VALUE)))
         );
         tab_calculoLayout.setVerticalGroup(
             tab_calculoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1076,12 +1076,12 @@ public class frmPrincipal extends javax.swing.JFrame {
                 .addComponent(btnAproximaciones, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(6, 6, 6)
                 .addComponent(btnAnalizartodo)
-                .addContainerGap(642, Short.MAX_VALUE))
+                .addContainerGap(723, Short.MAX_VALUE))
             .addGroup(tab_analisisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(tab_analisisLayout.createSequentialGroup()
                     .addGap(830, 830, 830)
                     .addComponent(separador3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(636, Short.MAX_VALUE)))
+                    .addContainerGap(717, Short.MAX_VALUE)))
         );
         tab_analisisLayout.setVerticalGroup(
             tab_analisisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1256,7 +1256,17 @@ public class frmPrincipal extends javax.swing.JFrame {
 
         controlador3D.setBackground(new java.awt.Color(54, 54, 54));
         controlador3D.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(102, 102, 102)));
-        controlador3D.setLayout(new java.awt.BorderLayout());
+
+        javax.swing.GroupLayout controlador3DLayout = new javax.swing.GroupLayout(controlador3D);
+        controlador3D.setLayout(controlador3DLayout);
+        controlador3DLayout.setHorizontalGroup(
+            controlador3DLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 441, Short.MAX_VALUE)
+        );
+        controlador3DLayout.setVerticalGroup(
+            controlador3DLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 431, Short.MAX_VALUE)
+        );
 
         javax.swing.GroupLayout pnl_superior_izqLayout = new javax.swing.GroupLayout(pnl_superior_izq);
         pnl_superior_izq.setLayout(pnl_superior_izqLayout);
@@ -1264,14 +1274,14 @@ public class frmPrincipal extends javax.swing.JFrame {
             pnl_superior_izqLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnl_superior_izqLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(controlador3D, javax.swing.GroupLayout.DEFAULT_SIZE, 443, Short.MAX_VALUE)
-                .addContainerGap())
+                .addComponent(controlador3D, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         pnl_superior_izqLayout.setVerticalGroup(
             pnl_superior_izqLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnl_superior_izqLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(controlador3D, javax.swing.GroupLayout.DEFAULT_SIZE, 433, Short.MAX_VALUE)
+                .addComponent(controlador3D, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -1290,7 +1300,7 @@ public class frmPrincipal extends javax.swing.JFrame {
             pnl_superior_derLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnl_superior_derLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(controlador2D, javax.swing.GroupLayout.DEFAULT_SIZE, 509, Short.MAX_VALUE)
+                .addComponent(controlador2D, javax.swing.GroupLayout.DEFAULT_SIZE, 590, Short.MAX_VALUE)
                 .addContainerGap())
         );
         pnl_superior_derLayout.setVerticalGroup(
@@ -1331,35 +1341,33 @@ public class frmPrincipal extends javax.swing.JFrame {
         pnl_inferior_izq.setLayout(pnl_inferior_izqLayout);
         pnl_inferior_izqLayout.setHorizontalGroup(
             pnl_inferior_izqLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnl_inferior_izqLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(pnl_inferior_izqLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(pnl_inferior_izqLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addComponent(btnReporteB, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(btnReporteA, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(btnReporteC, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jsp_consola, javax.swing.GroupLayout.PREFERRED_SIZE, 383, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(pnl_inferior_izqLayout.createSequentialGroup()
+                .addGap(6, 6, 6)
+                .addGroup(pnl_inferior_izqLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnReporteA, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnReporteB, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnReporteC, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(6, 6, 6)
+                .addComponent(jsp_consola, javax.swing.GroupLayout.DEFAULT_SIZE, 370, Short.MAX_VALUE)
+                .addGap(6, 6, 6))
         );
         pnl_inferior_izqLayout.setVerticalGroup(
             pnl_inferior_izqLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnl_inferior_izqLayout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(6, 6, 6)
                 .addGroup(pnl_inferior_izqLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(pnl_inferior_izqLayout.createSequentialGroup()
-                        .addComponent(jsp_consola)
-                        .addContainerGap())
+                    .addComponent(jsp_consola)
                     .addGroup(pnl_inferior_izqLayout.createSequentialGroup()
                         .addComponent(btnReporteA, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(8, 8, 8)
                         .addComponent(btnReporteB, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGap(6, 6, 6)
                         .addComponent(btnReporteC, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(108, 117, Short.MAX_VALUE))))
+                        .addGap(0, 141, Short.MAX_VALUE)))
+                .addGap(6, 6, 6))
         );
 
-        jsp_consolaytabla.setLeftComponent(pnl_inferior_izq);
+        jsp_consolaytabla.setTopComponent(pnl_inferior_izq);
 
         pnl_inferior_der.setBackground(new java.awt.Color(54, 54, 54));
         pnl_inferior_der.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(102, 102, 102)));
@@ -1385,14 +1393,14 @@ public class frmPrincipal extends javax.swing.JFrame {
             pnl_inferior_derLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnl_inferior_derLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jsp_tabla, javax.swing.GroupLayout.DEFAULT_SIZE, 518, Short.MAX_VALUE)
+                .addComponent(jsp_tabla, javax.swing.GroupLayout.DEFAULT_SIZE, 609, Short.MAX_VALUE)
                 .addContainerGap())
         );
         pnl_inferior_derLayout.setVerticalGroup(
             pnl_inferior_derLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnl_inferior_derLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jsp_tabla, javax.swing.GroupLayout.DEFAULT_SIZE, 245, Short.MAX_VALUE)
+                .addComponent(jsp_tabla, javax.swing.GroupLayout.DEFAULT_SIZE, 266, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
