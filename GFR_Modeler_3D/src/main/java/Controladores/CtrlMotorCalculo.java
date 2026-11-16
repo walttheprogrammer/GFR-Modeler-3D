@@ -389,9 +389,21 @@ public class CtrlMotorCalculo {
         );
         return res;
     }
+    public double simularDesviacionCurvatura(String funcionBase, double nuevoCoeficiente, double alturaH) {
+        if (nuevoCoeficiente <= 0) return 0.0;
+        String limpia = funcionBase.trim();
+        String funcDesviada;
 
-    public double simularDesviacionCurvatura(String funcionBase, double factorK, double alturaH) {
-        String funcDesviada = "(" + factorK + ") * (" + funcionBase + ")";
+        // Reemplaza el coeficiente inicial si tiene forma "numero * (expresion)" sin otro término sumando afuera
+        String sinParentesis = limpia.replaceAll("\\([^()]*\\)", "");
+        boolean tieneTerminosMultiples = sinParentesis.matches(".*[+-].*");
+
+        if (!tieneTerminosMultiples && limpia.matches("^[0-9]+([.,][0-9]+)?\\s*\\*.*")) {
+            funcDesviada = limpia.replaceFirst("^[0-9]+([.,][0-9]+)?", String.valueOf(nuevoCoeficiente));
+        } else {
+            funcDesviada = "(" + nuevoCoeficiente + ") * (" + limpia + ")";
+        }
+
         try {
             compilarFuncion(funcDesviada);
         } catch (Exception e) {
@@ -399,7 +411,7 @@ public class CtrlMotorCalculo {
         }
         double vol = calcularVolumenHastaAltura(alturaH);
         try {
-            compilarFuncion(funcionBase); // Restaura original
+            compilarFuncion(funcionBase);
         } catch (Exception ignored) {}
         return vol;
     }

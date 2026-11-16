@@ -898,6 +898,11 @@ public class CtrlPrincipal implements ActionListener {
     }
 
     private void ejecutarSimulacionSensibilidad() {
+        try {
+            vista.getSpnCoeficiente().commitEdit(); // Fuerza a Swing a guardar lo que escribiste con el teclado
+        } catch (java.text.ParseException ex) {
+        }
+        double kSimulado = ((Number) vista.getSpnCoeficiente().getValue()).doubleValue();
         if (!verificarCalculo()) return;
 
         double factorK = ((Number) vista.getSpnCoeficiente().getValue()).doubleValue();
@@ -1001,9 +1006,9 @@ public class CtrlPrincipal implements ActionListener {
             if (nom.isEmpty()) {
                 nom = usuarioActual.getUsuario();
             }
-            vista.setTitle("GFR Modeler 3D — " + nombreDocumento + " — Usuario: " + nom + " (@" + usuarioActual.getUsuario() + ")");
+            vista.setTitle("GFR Modeler 3D - " + nombreDocumento + " - Usuario: " + nom + " (@" + usuarioActual.getUsuario() + ")");
         } else {
-            vista.setTitle("GFR Modeler 3D — " + nombreDocumento);
+            vista.setTitle("GFR Modeler 3D - " + nombreDocumento);
         }
     }
 
@@ -1038,7 +1043,7 @@ public class CtrlPrincipal implements ActionListener {
     }
 
     private void mostrarAcercaDe() {
-        String info = "GFR Modeler 3D v1.5.6\n\n" +
+        String info = "GFR Modeler 3D v1.5.7\n\n" +
                       "Autor: Walter D. Maza Cuadrado\n" +
                       "Asignatura: Cálculo Integral y Ecuaciones Diferenciales\n" +
                       "Institución: Universidad César Vallejo (UCV) - Campus Lima Norte\n\n" +
