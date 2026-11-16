@@ -545,41 +545,45 @@ public class frmPrincipal extends javax.swing.JFrame {
         pnl_sensibilidad.setLayout(pnl_sensibilidadLayout);
         pnl_sensibilidadLayout.setHorizontalGroup(
             pnl_sensibilidadLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pnl_sensibilidadLayout.createSequentialGroup()
-                .addGap(30, 30, 30)
-                .addGroup(pnl_sensibilidadLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, pnl_sensibilidadLayout.createSequentialGroup()
-                        .addComponent(lbl_caption11)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(spn_coeficiente, javax.swing.GroupLayout.PREFERRED_SIZE, 237, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(lbl_caption10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnl_sensibilidadLayout.createSequentialGroup()
+                .addGap(15, 15, 15)
+                .addGroup(pnl_sensibilidadLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(pnl_sensibilidadLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(pnl_sensibilidadLayout.createSequentialGroup()
+                            .addGap(68, 68, 68)
+                            .addGroup(pnl_sensibilidadLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(lbl_caption20)
+                                .addComponent(lbl_caption21))
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addGroup(pnl_sensibilidadLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(pnl_sensibilidadLayout.createSequentialGroup()
+                                    .addGroup(pnl_sensibilidadLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(lbl_caption13)
+                                        .addComponent(lbl_caption15))
+                                    .addGap(41, 41, 41)
+                                    .addGroup(pnl_sensibilidadLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(lbl_volumen_ideal)
+                                        .addComponent(lbl_estado_ideal)))
+                                .addGroup(pnl_sensibilidadLayout.createSequentialGroup()
+                                    .addGroup(pnl_sensibilidadLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(lbl_caption17)
+                                        .addComponent(lbl_caption18))
+                                    .addGap(41, 41, 41)
+                                    .addGroup(pnl_sensibilidadLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(lbl_volumen_simulado)
+                                        .addComponent(lbl_estado_simulado))))
+                            .addGap(158, 158, 158))
+                        .addGroup(pnl_sensibilidadLayout.createSequentialGroup()
+                            .addGap(159, 159, 159)
+                            .addComponent(lbl_caption11)
+                            .addGap(18, 18, 18)
+                            .addComponent(spn_coeficiente, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                     .addGroup(pnl_sensibilidadLayout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addGroup(pnl_sensibilidadLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addGroup(pnl_sensibilidadLayout.createSequentialGroup()
-                                .addGroup(pnl_sensibilidadLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(lbl_caption21)
-                                    .addComponent(lbl_caption20))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addGroup(pnl_sensibilidadLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(pnl_sensibilidadLayout.createSequentialGroup()
-                                        .addGroup(pnl_sensibilidadLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(lbl_caption13)
-                                            .addComponent(lbl_caption15))
-                                        .addGap(41, 41, 41)
-                                        .addGroup(pnl_sensibilidadLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(lbl_volumen_ideal)
-                                            .addComponent(lbl_estado_ideal)))
-                                    .addGroup(pnl_sensibilidadLayout.createSequentialGroup()
-                                        .addGroup(pnl_sensibilidadLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(lbl_caption17)
-                                            .addComponent(lbl_caption18))
-                                        .addGap(41, 41, 41)
-                                        .addGroup(pnl_sensibilidadLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(lbl_volumen_simulado)
-                                            .addComponent(lbl_estado_simulado)))))
-                            .addComponent(btnSimular, javax.swing.GroupLayout.PREFERRED_SIZE, 384, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(31, Short.MAX_VALUE))
+                        .addGroup(pnl_sensibilidadLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(btnSimular, javax.swing.GroupLayout.PREFERRED_SIZE, 575, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lbl_caption10, javax.swing.GroupLayout.PREFERRED_SIZE, 575, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(20, 20, 20))))
         );
         pnl_sensibilidadLayout.setVerticalGroup(
             pnl_sensibilidadLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -613,9 +617,9 @@ public class frmPrincipal extends javax.swing.JFrame {
                         .addGroup(pnl_sensibilidadLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(lbl_caption17)
                             .addComponent(lbl_estado_simulado))
-                        .addGap(27, 27, 27))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnl_sensibilidadLayout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(pnl_sensibilidadLayout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 40, Short.MAX_VALUE)
                         .addComponent(lbl_caption21)
                         .addGap(46, 46, 46)))
                 .addComponent(btnSimular, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -776,7 +780,7 @@ public class frmPrincipal extends javax.swing.JFrame {
                     .addComponent(btnExportarPNG1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnActualizar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnCerrarSesion, javax.swing.GroupLayout.DEFAULT_SIZE, 184, Short.MAX_VALUE))
-                .addContainerGap(104, Short.MAX_VALUE))
+                .addContainerGap(146, Short.MAX_VALUE))
         );
         tab_archivoLayout.setVerticalGroup(
             tab_archivoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -983,12 +987,12 @@ public class frmPrincipal extends javax.swing.JFrame {
                         .addComponent(btnTablaGradiente)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnCalculartodo, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(362, Short.MAX_VALUE))
+                .addContainerGap(404, Short.MAX_VALUE))
             .addGroup(tab_calculoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, tab_calculoLayout.createSequentialGroup()
-                    .addContainerGap(1043, Short.MAX_VALUE)
+                    .addContainerGap(1064, Short.MAX_VALUE)
                     .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(504, Short.MAX_VALUE)))
+                    .addContainerGap(525, Short.MAX_VALUE)))
         );
         tab_calculoLayout.setVerticalGroup(
             tab_calculoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1076,12 +1080,12 @@ public class frmPrincipal extends javax.swing.JFrame {
                 .addComponent(btnAproximaciones, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(6, 6, 6)
                 .addComponent(btnAnalizartodo)
-                .addContainerGap(723, Short.MAX_VALUE))
+                .addContainerGap(765, Short.MAX_VALUE))
             .addGroup(tab_analisisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(tab_analisisLayout.createSequentialGroup()
                     .addGap(830, 830, 830)
                     .addComponent(separador3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(717, Short.MAX_VALUE)))
+                    .addContainerGap(759, Short.MAX_VALUE)))
         );
         tab_analisisLayout.setVerticalGroup(
             tab_analisisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1251,6 +1255,9 @@ public class frmPrincipal extends javax.swing.JFrame {
 
         jsp_tableta.setOrientation(javax.swing.JSplitPane.VERTICAL_SPLIT);
 
+        jsp_3dy2d.setDividerLocation(480);
+        jsp_3dy2d.setResizeWeight(0.5);
+
         pnl_superior_izq.setBackground(new java.awt.Color(54, 54, 54));
         pnl_superior_izq.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(102, 102, 102)));
 
@@ -1261,11 +1268,11 @@ public class frmPrincipal extends javax.swing.JFrame {
         controlador3D.setLayout(controlador3DLayout);
         controlador3DLayout.setHorizontalGroup(
             controlador3DLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 441, Short.MAX_VALUE)
+            .addGap(0, 464, Short.MAX_VALUE)
         );
         controlador3DLayout.setVerticalGroup(
             controlador3DLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 431, Short.MAX_VALUE)
+            .addGap(0, 440, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout pnl_superior_izqLayout = new javax.swing.GroupLayout(pnl_superior_izq);
@@ -1300,14 +1307,14 @@ public class frmPrincipal extends javax.swing.JFrame {
             pnl_superior_derLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnl_superior_derLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(controlador2D, javax.swing.GroupLayout.DEFAULT_SIZE, 590, Short.MAX_VALUE)
+                .addComponent(controlador2D, javax.swing.GroupLayout.DEFAULT_SIZE, 657, Short.MAX_VALUE)
                 .addContainerGap())
         );
         pnl_superior_derLayout.setVerticalGroup(
             pnl_superior_derLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnl_superior_derLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(controlador2D, javax.swing.GroupLayout.DEFAULT_SIZE, 433, Short.MAX_VALUE)
+                .addComponent(controlador2D, javax.swing.GroupLayout.DEFAULT_SIZE, 442, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -1393,7 +1400,7 @@ public class frmPrincipal extends javax.swing.JFrame {
             pnl_inferior_derLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnl_inferior_derLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jsp_tabla, javax.swing.GroupLayout.DEFAULT_SIZE, 609, Short.MAX_VALUE)
+                .addComponent(jsp_tabla, javax.swing.GroupLayout.DEFAULT_SIZE, 654, Short.MAX_VALUE)
                 .addContainerGap())
         );
         pnl_inferior_derLayout.setVerticalGroup(
@@ -1451,9 +1458,7 @@ public class frmPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_btnNuevoActionPerformed
 
     private void btnPlantillasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPlantillasActionPerformed
-        this.dlg_plantillas.pack();
-        this.dlg_plantillas.setVisible(true);
-        this.dlg_plantillas.setLocationRelativeTo(this);
+
     }//GEN-LAST:event_btnPlantillasActionPerformed
 
     private void btnDesmoldarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDesmoldarActionPerformed
@@ -1481,7 +1486,7 @@ public class frmPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_btnResinaActionPerformed
 
     private void btnSeleccionarPlantillaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSeleccionarPlantillaActionPerformed
-        this.dlg_plantillas.setVisible(false);
+
     }//GEN-LAST:event_btnSeleccionarPlantillaActionPerformed
 
     private void btnExportarPNG1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExportarPNG1ActionPerformed
@@ -1497,21 +1502,17 @@ public class frmPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_btnActualizarActionPerformed
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
-        this.dlg_abrirproyecto.setVisible(false);
+
     }//GEN-LAST:event_btnBuscarActionPerformed
 
     private void btnMaterialesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMaterialesActionPerformed
-        this.dlg_materiales.pack();
-        this.dlg_materiales.setVisible(true);
-        this.dlg_materiales.setLocationRelativeTo(this);
+
     }//GEN-LAST:event_btnMaterialesActionPerformed
     private void btnSensibilidadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSensibilidadActionPerformed
-        this.dlg_sensibilidad.pack();
-        this.dlg_sensibilidad.setVisible(true);
-        this.dlg_sensibilidad.setLocationRelativeTo(this);
+
     }//GEN-LAST:event_btnSensibilidadActionPerformed
     private void btnSimularActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSimularActionPerformed
-        this.dlg_sensibilidad.setVisible(false);
+
     }//GEN-LAST:event_btnSimularActionPerformed
 
     private void btnSeleccionarMaterialActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSeleccionarMaterialActionPerformed
@@ -1539,9 +1540,7 @@ public class frmPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_btnEliminarProyectoActionPerformed
 
     private void btnAbrirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAbrirActionPerformed
-        this.dlg_abrirproyecto.pack();
-        this.dlg_abrirproyecto.setVisible(true);
-        this.dlg_abrirproyecto.setLocationRelativeTo(this);
+
     }//GEN-LAST:event_btnAbrirActionPerformed
 
     /**
