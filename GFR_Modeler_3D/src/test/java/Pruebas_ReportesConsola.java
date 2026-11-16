@@ -1,13 +1,9 @@
-import Controladores.CtrlMotorCalculo;
-import Modelo.Material;
-import Modelo.ResultadoCalculo;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
+import Controladores.*;
+import Modelo.*;
+import org.junit.jupiter.api.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class Pruebas_ReportesConsola {
-
     private CtrlMotorCalculo motor;
     private Material vidrio;
     private ResultadoCalculo resultado;
@@ -22,7 +18,6 @@ public class Pruebas_ReportesConsola {
     @Test
     @DisplayName("Títulos limpios sin prefijos [A], [B], [C] ni C_")
     void testTitulosLimpios() {
-        // Títulos limpios exactos
         assertTrue(resultado.reporteA.startsWith("=== CÁLCULO VOLUMÉTRICO Y CUBICACIÓN ==="),
                 "El reporte A debe iniciar exactamente con '=== CÁLCULO VOLUMÉTRICO Y CUBICACIÓN ==='");
         assertTrue(resultado.reporteB.startsWith("=== ANÁLISIS DE GRADIENTE Y DESMOLDE ==="),
@@ -30,7 +25,6 @@ public class Pruebas_ReportesConsola {
         assertTrue(resultado.reporteC.startsWith("=== OPTIMIZACIÓN Y COMPARATIVA CAD ==="),
                 "El reporte C debe iniciar exactamente con '=== OPTIMIZACIÓN Y COMPARATIVA CAD ==='");
 
-        // Ausencia total de [A], [B], [C] o C_
         assertFalse(resultado.reporteA.contains("[A]"), "Reporte A no debe contener '[A]'");
         assertFalse(resultado.reporteA.contains("[B]"), "Reporte A no debe contener '[B]'");
         assertFalse(resultado.reporteA.contains("[C]"), "Reporte A no debe contener '[C]'");
@@ -52,10 +46,8 @@ public class Pruebas_ReportesConsola {
         
         String parteNarrativa = resultado.reporteA.substring(resultado.reporteA.indexOf("Diagnóstico Técnico:"));
         String[] lineas = parteNarrativa.split("\n");
-        // Debe tener al menos el encabezado y 4 líneas de viñetas interpretativas (total >= 5)
         assertTrue(lineas.length >= 5, "La narrativa del reporte A debe contener al menos 4 líneas técnicas interpretativas");
 
-        // Verificación de presencia de valores interpretados
         assertTrue(resultado.reporteA.contains("ml"), "La narrativa de cubicación debe evaluar volúmenes en ml");
         assertTrue(resultado.reporteA.contains("cm³"), "La narrativa debe evaluar el consumo de insumo en cm³");
         assertTrue(resultado.reporteA.contains("S/"), "La narrativa debe evaluar el costo unitario de producción");
@@ -70,7 +62,6 @@ public class Pruebas_ReportesConsola {
         String[] lineas = parteNarrativa.split("\n");
         assertTrue(lineas.length >= 5, "La narrativa del reporte B debe contener al menos 4 líneas técnicas interpretativas");
 
-        // Verificación de presencia de valores de ángulo y desmolde
         assertTrue(resultado.reporteB.contains("3.0°"), "La narrativa de desmolde debe contrastar contra el umbral de 3.0°");
         assertTrue(resultado.reporteB.contains("molde") || resultado.reporteB.contains("herramental"), 
                 "La narrativa debe interpretar el comportamiento frente a fricción y molde");
@@ -85,7 +76,6 @@ public class Pruebas_ReportesConsola {
         String[] lineas = parteNarrativa.split("\n");
         assertTrue(lineas.length >= 5, "La narrativa del reporte C debe contener al menos 4 líneas técnicas interpretativas");
 
-        // Verificación de comparación de Lagrange y aproximaciones
         assertTrue(resultado.reporteC.contains("Lagrange"), "La narrativa debe interpretar el modelo de Lagrange");
         assertTrue(resultado.reporteC.contains("cilindro") || resultado.reporteC.contains("tronco de cono"),
                 "La narrativa debe contrastar contra aproximaciones de taller");

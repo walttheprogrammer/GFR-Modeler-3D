@@ -1,11 +1,8 @@
 import Controladores.CtrlMotorCalculo;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class Pruebas_ValidacionFunciones {
-
     private CtrlMotorCalculo motor;
 
     @BeforeEach
@@ -16,13 +13,11 @@ public class Pruebas_ValidacionFunciones {
     @Test
     @DisplayName("Aceptación de superficies cerradas válidas")
     void testSuperficiesCerradasValidas() {
-        // Paraboloide circular estándar
         assertTrue(motor.compilarFuncion("0.5 * (x^2 + y^2)"), "Debe compilar un paraboloide circular válido");
         double r1 = motor.hallarRadioEnNivel(5.0, 0.0);
         assertTrue(r1 > 0.0, "El radio en nivel h = 5 debe ser positivo");
         assertEquals(Math.sqrt(10.0), r1, 0.01, "Para z = 0.5 * r^2, en z = 5 el radio r = sqrt(10) ~ 3.16 cm");
 
-        // Paraboloide elíptico suave
         assertTrue(motor.compilarFuncion("0.25 * x^2 + 0.30 * y^2"), "Debe compilar un paraboloide elíptico");
         double r2 = motor.hallarRadioEnNivel(4.0, 0.0);
         assertTrue(r2 > 0.0, "El radio en nivel h = 4 debe ser positivo");

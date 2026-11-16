@@ -10,6 +10,7 @@ import java.awt.event.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.net.*;
+import java.text.ParseException;
 import java.util.*;
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
@@ -36,6 +37,7 @@ public class CtrlPrincipal implements ActionListener {
     private List<Material> listaMaterialesMemoria;
     private int plantillaSeleccionada = 1;
     private boolean modoWireframe = false;
+    private int vista2DActiva = 1;
 
     public CtrlPrincipal(frmPrincipal vista, Usuario usuarioActual) {
         this.vista = vista;
@@ -49,28 +51,26 @@ public class CtrlPrincipal implements ActionListener {
     }
 
     private void inicializar() {
-        if (usuarioActual != null) {
-            String nom = usuarioActual.getNombreCompleto();
-            if (nom == null || nom.trim().isEmpty()) {
-                nom = (usuarioActual.getNombres() + " " + usuarioActual.getApellidos()).trim();
-            }
-            if (nom.isEmpty()) nom = usuarioActual.getUsuario();
-            vista.setTitle("GFR Modeler 3D - Usuario: " + nom + " (@" + usuarioActual.getUsuario() + ")");
-            URL urlIconOriginal = getClass().getResource("/Utilidades/GFR_Modeler_3D_icon.png");
-            URL urlIcon128 = getClass().getResource("/Utilidades/GFR_Modeler_3D_icon_128.png");
-            if (urlIconOriginal != null && urlIcon128 != null) {
-                vista.setIconImages(Arrays.asList(
-                        new ImageIcon(urlIcon128).getImage(),
-                        new ImageIcon(urlIconOriginal).getImage()
-                ));
-            } else if (urlIconOriginal != null) {
-                vista.setIconImage(new ImageIcon(urlIconOriginal).getImage());
-            }
-        } else {
-            vista.setTitle("GFR Modeler 3D - Modelado y Cálculo de Envases");
+        actualizarTituloVentana();
+        URL urlIconOriginal = getClass().getResource("/Utilidades/GFR_Modeler_3D_icon.png");
+        URL urlIcon128 = getClass().getResource("/Utilidades/GFR_Modeler_3D_icon_128.png");
+        if (urlIconOriginal != null && urlIcon128 != null) {
+            vista.setIconImages(Arrays.asList(
+                    new ImageIcon(urlIcon128).getImage(),
+                    new ImageIcon(urlIconOriginal).getImage()
+            ));
+        } else if (urlIconOriginal != null) {
+            vista.setIconImage(new ImageIcon(urlIconOriginal).getImage());
         }
 
         actualizarEstadoConexionBD();
+        new javax.swing.Timer(4000, e -> new Thread(() -> {
+            boolean conectada = ConexionBD.verificarConexion();
+            SwingUtilities.invokeLater(() -> {
+                vista.getLblEstadoBD().setText(conectada ? "Conectado" : "Offline");
+                vista.getLblEstadoBD().setForeground(conectada ? new Color(46, 204, 113) : new Color(231, 76, 60));
+            });
+        }).start()).start();
         vista.getLblintegracion().setText("±0.018%");
         cargarMaterialesDesdeBD();
         configurarTablaVariables();
@@ -78,6 +78,8 @@ public class CtrlPrincipal implements ActionListener {
         vista.getTA_consola().setMargin(new Insets(10, 12, 10, 12));
         vista.getTA_consola().setLineWrap(true);
         vista.getTA_consola().setWrapStyleWord(true);
+
+        configurarTooltips();
 
         vista.getTblMateriales().getSelectionModel().addListSelectionListener(e -> {
             if (!e.getValueIsAdjusting()) {
@@ -251,6 +253,12 @@ public class CtrlPrincipal implements ActionListener {
     }
     
     private void ejecutarCalculoCompleto() {
+        try {
+            vista.getSpnAltura().commitEdit();
+            vista.getSpnEspesor().commitEdit();
+            vista.getSpnVolumen().commitEdit();
+        } catch (ParseException ignored) {}
+
         String funcionTexto = vista.getTxtFuncion1().getText().trim();
         double alturaH = ((Number) vista.getSpnAltura().getValue()).doubleValue();
         double espesorE = ((Number) vista.getSpnEspesor().getValue()).doubleValue();
@@ -260,12 +268,10 @@ public class CtrlPrincipal implements ActionListener {
             JOptionPane.showMessageDialog(vista, "Ingrese la función f(x, y) de la pared del envase.", "Aviso", JOptionPane.WARNING_MESSAGE);
             return;
         }
-
         if (espesorE <= 0) {
             espesorE = 0.20;
             vista.getSpnEspesor().setValue(espesorE);
         }
-
         if (materialActual == null) {
             materialActual = new Material(1, "Vidrio Templado", 2.50, 0.18);
         }
@@ -275,16 +281,15 @@ public class CtrlPrincipal implements ActionListener {
             this.resultadoActual = res;
 
             vista.getSpnAltura().setValue(res.alturaIngresada);
+            actualizarVista2DActiva(res);
 
-            generador2D.mostrarCurvasDeNivel(motorCalculo, res);
+            generador3D.setModoWireframe(modoWireframe);
             generador3D.actualizarEnvase3D(motorCalculo, res.alturaIngresada, res.espesor);
 
             actualizarTablaVariables(res.cotas);
-
-            vista.getTA_consola().setText(res.reporteA);
+            vista.getTA_consola().setText(formatearReporteConsola(res.reporteA));
             vista.getLblVolumenIdeal().setText(String.format(Locale.US, "%.2f ml", res.volumenCalculado));
             vista.getLblEstadoIdeal().setText(res.desmoldable ? "APROBADO" : "REVISAR");
-
         } catch (IllegalArgumentException ex) {
             JOptionPane.showMessageDialog(vista, "Error en la expresión matemática: " + ex.getMessage(), "Error de Sintaxis", JOptionPane.ERROR_MESSAGE);
         } catch (Exception ex) {
@@ -292,8 +297,19 @@ public class CtrlPrincipal implements ActionListener {
         }
     }
 
+    private void actualizarVista2DActiva(ResultadoCalculo res) {
+        if (vista2DActiva == 2) {
+            generador2D.mostrarPerfilEnvase(motorCalculo, res);
+        } else if (vista2DActiva == 3) {
+            generador2D.mostrarCurvaGraduacion(res);
+        } else {
+            generador2D.mostrarCurvasDeNivel(motorCalculo, res);
+        }
+    }
+
     private void mostrarCurvasNivel() {
         if (verificarCalculo()) {
+            vista2DActiva = 1;
             generador2D.mostrarCurvasDeNivel(motorCalculo, resultadoActual);
             vista.getTA_consola().append("\n[2D] Mostrando Curvas de Nivel en el plano XY.");
         }
@@ -301,6 +317,7 @@ public class CtrlPrincipal implements ActionListener {
 
     private void mostrarPerfilEnvase() {
         if (verificarCalculo()) {
+            vista2DActiva = 2;
             generador2D.mostrarPerfilEnvase(motorCalculo, resultadoActual);
             vista.getTA_consola().append("\n[2D] Mostrando Perfil Transversal z(r) y marcas de cota.");
         }
@@ -308,6 +325,7 @@ public class CtrlPrincipal implements ActionListener {
 
     private void mostrarMarcasGraduacion() {
         if (verificarCalculo()) {
+            vista2DActiva = 3;
             generador2D.mostrarCurvaGraduacion(resultadoActual);
             vista.getTA_consola().append("\n[2D] Mostrando Curva de Graduación Volumétrica V(h).");
         }
@@ -413,7 +431,11 @@ public class CtrlPrincipal implements ActionListener {
     private void mostrarReporteC() {
         if (verificarCalculo()) vista.getTA_consola().setText(resultadoActual.reporteC);
     }
-
+    
+    private String formatearReporteConsola(String reporte) {
+        if (reporte == null) return "";
+        return reporte.replaceAll("(?<!\\n)\\nDiagnóstico Técnico:", "\n\nDiagnóstico Técnico:");
+    }
     private void exportarGraficaPNG() {
         if (!verificarCalculo()) return;
         BufferedImage img = generador2D.capturarImagen2D(900, 650);
@@ -424,12 +446,13 @@ public class CtrlPrincipal implements ActionListener {
 
         JFileChooser fc = new JFileChooser();
         fc.setDialogTitle("Exportar Gráfica 2D a PNG");
-        fc.setSelectedFile(new File("grafica_envase_2d.png"));
+        fc.setSelectedFile(new File(obtenerNombreSugeridoExportacion("grafica_envase_2d.png", ".png")));
         fc.setFileFilter(new FileNameExtensionFilter("Imagen PNG (*.png)", "png"));
 
         if (fc.showSaveDialog(vista) == JFileChooser.APPROVE_OPTION) {
             try {
                 File destino = normalizarExtension(fc.getSelectedFile(), ".png");
+                if (!confirmarSobrescritura(destino)) return;
                 CtrlExportador.exportarPNG(destino, img);
                 JOptionPane.showMessageDialog(vista, "Gráfica 2D guardada correctamente en:\n" + destino.getAbsolutePath(), "Exportación Exitosa", JOptionPane.INFORMATION_MESSAGE);
             } catch (Exception ex) {
@@ -442,12 +465,13 @@ public class CtrlPrincipal implements ActionListener {
         if (!verificarCalculo()) return;
         JFileChooser fc = new JFileChooser();
         fc.setDialogTitle("Exportar Cotas de Graduación a CSV");
-        fc.setSelectedFile(new File("cotas_graduacion.csv"));
+        fc.setSelectedFile(new File(obtenerNombreSugeridoExportacion("cotas_graduacion.csv", ".csv")));
         fc.setFileFilter(new FileNameExtensionFilter("Archivo CSV (*.csv)", "csv"));
 
         if (fc.showSaveDialog(vista) == JFileChooser.APPROVE_OPTION) {
             try {
                 File destino = normalizarExtension(fc.getSelectedFile(), ".csv");
+                if (!confirmarSobrescritura(destino)) return;
                 CtrlExportador.exportarCSV(destino, resultadoActual);
                 JOptionPane.showMessageDialog(vista, "Datos exportados correctamente en:\n" + destino.getAbsolutePath(), "Exportación Exitosa", JOptionPane.INFORMATION_MESSAGE);
             } catch (Exception ex) {
@@ -460,12 +484,13 @@ public class CtrlPrincipal implements ActionListener {
         if (!verificarCalculo()) return;
         JFileChooser fc = new JFileChooser();
         fc.setDialogTitle("Exportar Modelo 3D a STL (Impresión 3D)");
-        fc.setSelectedFile(new File("envase_modelado_3d.stl"));
+        fc.setSelectedFile(new File(obtenerNombreSugeridoExportacion("envase_modelado_3d.stl", ".stl")));
         fc.setFileFilter(new FileNameExtensionFilter("Malla Estereolitografía (*.stl)", "stl"));
 
         if (fc.showSaveDialog(vista) == JFileChooser.APPROVE_OPTION) {
             try {
                 File destino = normalizarExtension(fc.getSelectedFile(), ".stl");
+                if (!confirmarSobrescritura(destino)) return;
                 CtrlExportador.exportarSTL(destino, motorCalculo, resultadoActual.alturaIngresada, resultadoActual.espesor);
                 JOptionPane.showMessageDialog(vista, "Malla STL exportada correctamente en:\n" + destino.getAbsolutePath(), "Exportación Exitosa", JOptionPane.INFORMATION_MESSAGE);
             } catch (Exception ex) {
@@ -478,12 +503,13 @@ public class CtrlPrincipal implements ActionListener {
         if (!verificarCalculo()) return;
         JFileChooser fc = new JFileChooser();
         fc.setDialogTitle("Exportar Planos CAD a DXF");
-        fc.setSelectedFile(new File("planos_curvas_envase.dxf"));
+        fc.setSelectedFile(new File(obtenerNombreSugeridoExportacion("planos_curvas_envase.dxf", ".dxf")));
         fc.setFileFilter(new FileNameExtensionFilter("Dibujo CAD DXF (*.dxf)", "dxf"));
 
         if (fc.showSaveDialog(vista) == JFileChooser.APPROVE_OPTION) {
             try {
                 File destino = normalizarExtension(fc.getSelectedFile(), ".dxf");
+                if (!confirmarSobrescritura(destino)) return;
                 CtrlExportador.exportarDXF(destino, motorCalculo, resultadoActual);
                 JOptionPane.showMessageDialog(vista, "Planos vectoriales guardados correctamente en:\n" + destino.getAbsolutePath(), "Exportación Exitosa", JOptionPane.INFORMATION_MESSAGE);
             } catch (Exception ex) {
@@ -496,12 +522,13 @@ public class CtrlPrincipal implements ActionListener {
         if (!verificarCalculo()) return;
         JFileChooser fc = new JFileChooser();
         fc.setDialogTitle("Exportar Reporte Técnico a PDF");
-        fc.setSelectedFile(new File("Reporte_Tecnico_Envase.pdf"));
+        fc.setSelectedFile(new File(obtenerNombreSugeridoExportacion("Reporte_Tecnico_Envase.pdf", ".pdf")));
         fc.setFileFilter(new FileNameExtensionFilter("Documento PDF (*.pdf)", "pdf"));
 
         if (fc.showSaveDialog(vista) == JFileChooser.APPROVE_OPTION) {
             try {
                 File destino = normalizarExtension(fc.getSelectedFile(), ".pdf");
+                if (!confirmarSobrescritura(destino)) return;
                 BufferedImage img2D = generador2D.capturarImagen2D(700, 360);
                 BufferedImage img3D = generador3D.capturarImagen3D();
                 String nombreProyecto = (proyectoActual != null) ? proyectoActual.getNombreProyecto() : "Diseño Libre";
@@ -531,6 +558,7 @@ public class CtrlPrincipal implements ActionListener {
         }
 
         proyectoActual = null;
+        actualizarTituloVentana();
         seleccionarPlantilla(1);
         vista.getTA_consola().setText("=== NUEVO PROYECTO INICIADO ===\nIngrese los parámetros o elija una plantilla.");
         ejecutarCalculoCompleto();
@@ -583,6 +611,7 @@ public class CtrlPrincipal implements ActionListener {
 
         Proyecto p = listaProyectosMemoria.get(fila);
         this.proyectoActual = p;
+        actualizarTituloVentana();
 
         if (p.getParametro() != null) {
             Parametro par = p.getParametro();
@@ -616,6 +645,7 @@ public class CtrlPrincipal implements ActionListener {
                 p.setNombreProyecto(nuevo.trim());
                 if (proyectoActual != null && proyectoActual.getIdProyecto() == p.getIdProyecto()) {
                     proyectoActual.setNombreProyecto(nuevo.trim());
+                    actualizarTituloVentana();
                 }
                 cargarListaProyectos(vista.getTxtBuscar().getText().trim());
             } else {
@@ -641,6 +671,7 @@ public class CtrlPrincipal implements ActionListener {
                 JOptionPane.showMessageDialog(vista.getDlgAbrirproyecto(), "Proyecto eliminado correctamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
                 if (proyectoActual != null && proyectoActual.getIdProyecto() == p.getIdProyecto()) {
                     proyectoActual = null;
+                    actualizarTituloVentana();
                 }
                 cargarListaProyectos(vista.getTxtBuscar().getText().trim());
             } else {
@@ -656,29 +687,83 @@ public class CtrlPrincipal implements ActionListener {
             String nombre = JOptionPane.showInputDialog(vista, "Ingrese el nombre del proyecto:", "Guardar Proyecto", JOptionPane.QUESTION_MESSAGE);
             if (nombre == null || nombre.trim().isEmpty()) return;
 
-            Proyecto nuevo = new Proyecto();
-            nuevo.setIdUsuario(usuarioActual != null ? usuarioActual.getIdUsuario() : 1);
-            nuevo.setIdMaterial(materialActual != null ? materialActual.getIdMaterial() : 1);
-            nuevo.setNombreProyecto(nombre.trim());
+            nombre = nombre.trim();
+            int idUsuario = usuarioActual != null ? usuarioActual.getIdUsuario() : 1;
+            int idMaterial = materialActual != null ? materialActual.getIdMaterial() : 1;
 
-            Parametro par = new Parametro();
-            par.setFuncionPared(resultadoActual.funcion);
-            par.setAlturaCm(resultadoActual.alturaIngresada);
-            par.setEspesorCm(resultadoActual.espesor);
-            par.setVolumenObjetivoMl(resultadoActual.volumenObjetivo);
-            par.setVolumenCalculadoMl(resultadoActual.volumenCalculado);
-            par.setAreaParedCm2(resultadoActual.areaPared);
-            par.setVolumenMaterialCm3(resultadoActual.volumenMaterial);
-            par.setCostoEstimado(resultadoActual.costoTotal);
-            nuevo.setParametro(par);
+            List<Proyecto> listaExistentes = proyectoDAO.listarPorUsuario(idUsuario, "");
+            Proyecto existente = null;
+            if (listaExistentes != null) {
+                for (Proyecto p : listaExistentes) {
+                    if (p.getNombreProyecto() != null && p.getNombreProyecto().trim().equalsIgnoreCase(nombre)) {
+                        existente = p;
+                        break;
+                    }
+                }
+            }
 
-            int idGenerado = proyectoDAO.guardarNuevo(nuevo);
-            if (idGenerado > 0) {
-                nuevo.setIdProyecto(idGenerado);
-                this.proyectoActual = nuevo;
-                JOptionPane.showMessageDialog(vista, "Proyecto '" + nombre + "' guardado con éxito.", "Guardado", JOptionPane.INFORMATION_MESSAGE);
+            if (existente != null) {
+                Object[] opciones = {"Sí", "No"};
+                int resp = JOptionPane.showOptionDialog(
+                        vista,
+                        "Ya existe un proyecto llamado \"" + nombre + "\".\n¿Desea sobrescribirlo con los datos actuales?",
+                        "Confirmar sobrescritura",
+                        JOptionPane.YES_NO_OPTION,
+                        JOptionPane.WARNING_MESSAGE,
+                        null,
+                        opciones,
+                        opciones[1]
+                );
+                if (resp != 0) return;
+
+                this.proyectoActual = existente;
+                this.proyectoActual.setNombreProyecto(nombre);
+                this.proyectoActual.setIdMaterial(idMaterial);
+
+                Parametro par = new Parametro();
+                par.setIdProyecto(this.proyectoActual.getIdProyecto());
+                par.setFuncionPared(resultadoActual.funcion);
+                par.setAlturaCm(resultadoActual.alturaIngresada);
+                par.setEspesorCm(resultadoActual.espesor);
+                par.setVolumenObjetivoMl(resultadoActual.volumenObjetivo);
+                par.setVolumenCalculadoMl(resultadoActual.volumenCalculado);
+                par.setAreaParedCm2(resultadoActual.areaPared);
+                par.setVolumenMaterialCm3(resultadoActual.volumenMaterial);
+                par.setCostoEstimado(resultadoActual.costoTotal);
+                this.proyectoActual.setParametro(par);
+
+                if (proyectoDAO.actualizarExistente(this.proyectoActual)) {
+                    actualizarTituloVentana();
+                    JOptionPane.showMessageDialog(vista, "Proyecto '" + nombre + "' sobrescrito con éxito.", "Guardado", JOptionPane.INFORMATION_MESSAGE);
+                } else {
+                    JOptionPane.showMessageDialog(vista, "No se pudo actualizar el proyecto en la base de datos.", "Error", JOptionPane.ERROR_MESSAGE);
+                }
             } else {
-                JOptionPane.showMessageDialog(vista, "No se pudo guardar el proyecto en la base de datos.", "Error", JOptionPane.ERROR_MESSAGE);
+                Proyecto nuevo = new Proyecto();
+                nuevo.setIdUsuario(idUsuario);
+                nuevo.setIdMaterial(idMaterial);
+                nuevo.setNombreProyecto(nombre);
+
+                Parametro par = new Parametro();
+                par.setFuncionPared(resultadoActual.funcion);
+                par.setAlturaCm(resultadoActual.alturaIngresada);
+                par.setEspesorCm(resultadoActual.espesor);
+                par.setVolumenObjetivoMl(resultadoActual.volumenObjetivo);
+                par.setVolumenCalculadoMl(resultadoActual.volumenCalculado);
+                par.setAreaParedCm2(resultadoActual.areaPared);
+                par.setVolumenMaterialCm3(resultadoActual.volumenMaterial);
+                par.setCostoEstimado(resultadoActual.costoTotal);
+                nuevo.setParametro(par);
+
+                int idGenerado = proyectoDAO.guardarNuevo(nuevo);
+                if (idGenerado > 0) {
+                    nuevo.setIdProyecto(idGenerado);
+                    this.proyectoActual = nuevo;
+                    actualizarTituloVentana();
+                    JOptionPane.showMessageDialog(vista, "Proyecto '" + nombre + "' guardado con éxito.", "Guardado", JOptionPane.INFORMATION_MESSAGE);
+                } else {
+                    JOptionPane.showMessageDialog(vista, "No se pudo guardar el proyecto en la base de datos.", "Error", JOptionPane.ERROR_MESSAGE);
+                }
             }
         } else {
             accionActualizarProyecto();
@@ -686,31 +771,9 @@ public class CtrlPrincipal implements ActionListener {
     }
 
     private void accionActualizarProyecto() {
-        if (proyectoActual == null || proyectoActual.getIdProyecto() == 0) {
-            accionGuardarProyecto();
-            return;
-        }
-
-        if (!verificarCalculo()) return;
-
-        proyectoActual.setIdMaterial(materialActual != null ? materialActual.getIdMaterial() : 1);
-        Parametro par = proyectoActual.getParametro();
-        if (par == null) par = new Parametro();
-
-        par.setFuncionPared(resultadoActual.funcion);
-        par.setAlturaCm(resultadoActual.alturaIngresada);
-        par.setEspesorCm(resultadoActual.espesor);
-        par.setVolumenObjetivoMl(resultadoActual.volumenObjetivo);
-        par.setVolumenCalculadoMl(resultadoActual.volumenCalculado);
-        par.setAreaParedCm2(resultadoActual.areaPared);
-        par.setVolumenMaterialCm3(resultadoActual.volumenMaterial);
-        par.setCostoEstimado(resultadoActual.costoTotal);
-        proyectoActual.setParametro(par);
-
-        if (proyectoDAO.actualizarExistente(proyectoActual)) {
-            JOptionPane.showMessageDialog(vista, "Proyecto '" + proyectoActual.getNombreProyecto() + "' actualizado con éxito.", "Actualizado", JOptionPane.INFORMATION_MESSAGE);
-        } else {
-            JOptionPane.showMessageDialog(vista, "No se pudo actualizar el proyecto.", "Error", JOptionPane.ERROR_MESSAGE);
+        ejecutarCalculoCompleto();
+        if (resultadoActual != null) {
+            vista.getTA_consola().append("\n\n[Actualizado] Parámetros, panel 2D y modelo 3D sincronizados.");
         }
     }
 
@@ -903,22 +966,92 @@ public class CtrlPrincipal implements ActionListener {
         return f;
     }
 
+    private boolean confirmarSobrescritura(File destino) {
+        if (destino != null && destino.exists()) {
+            Object[] opciones = {"Sí", "No"};
+            int resp = JOptionPane.showOptionDialog(
+                    vista,
+                    "El archivo \"" + destino.getName() + "\" ya existe.\n¿Desea reemplazarlo?",
+                    "Confirmar reemplazo",
+                    JOptionPane.YES_NO_OPTION,
+                    JOptionPane.WARNING_MESSAGE,
+                    null,
+                    opciones,
+                    opciones[1]
+            );
+            return resp == 0;
+        }
+        return true;
+    }
+
+    private void actualizarTituloVentana() {
+        String nombreDocumento = "Sin título";
+        if (proyectoActual != null && proyectoActual.getIdProyecto() > 0
+                && proyectoActual.getNombreProyecto() != null
+                && !proyectoActual.getNombreProyecto().trim().isEmpty()) {
+            nombreDocumento = proyectoActual.getNombreProyecto().trim();
+        }
+
+        if (usuarioActual != null) {
+            String nom = usuarioActual.getNombreCompleto();
+            if (nom == null || nom.trim().isEmpty()) {
+                nom = (usuarioActual.getNombres() + " " + usuarioActual.getApellidos()).trim();
+            }
+            if (nom.isEmpty()) {
+                nom = usuarioActual.getUsuario();
+            }
+            vista.setTitle("GFR Modeler 3D — " + nombreDocumento + " — Usuario: " + nom + " (@" + usuarioActual.getUsuario() + ")");
+        } else {
+            vista.setTitle("GFR Modeler 3D — " + nombreDocumento);
+        }
+    }
+
+    public String obtenerNombreSugeridoExportacion(String nombrePorDefecto, String extension) {
+        if (proyectoActual != null && proyectoActual.getIdProyecto() > 0
+                && proyectoActual.getNombreProyecto() != null
+                && !proyectoActual.getNombreProyecto().trim().isEmpty()) {
+            String sanitizado = proyectoActual.getNombreProyecto().trim()
+                    .replaceAll("[\\\\/:*?\"<>|]", "_")
+                    .replaceAll("\\s+", "_");
+            return sanitizado + extension;
+        }
+        return nombrePorDefecto;
+    }
+
+    public frmPrincipal getVista() {
+        return vista;
+    }
+
+    public Proyecto getProyectoActual() {
+        return proyectoActual;
+    }
+
+    public void setProyectoActual(Proyecto proyectoActual) {
+        this.proyectoActual = proyectoActual;
+        actualizarTituloVentana();
+    }
+
+    public void reiniciarProyectoNuevo() {
+        this.proyectoActual = null;
+        actualizarTituloVentana();
+    }
+
     private void mostrarAcercaDe() {
-        String info = "GFR Modeler 3D v1.5.4\n\n" +
+        String info = "GFR Modeler 3D v1.5.6\n\n" +
                       "Autor: Walter D. Maza Cuadrado\n" +
                       "Asignatura: Cálculo Integral y Ecuaciones Diferenciales\n" +
                       "Institución: Universidad César Vallejo (UCV) - Campus Lima Norte\n\n" +
                       "Librerías:\n" +
-                      "  • FlatLaf v3.7.2 (Tema visual moderno para Swing)\n" +
-                      "  • MySQL Connector/J v26.10.0 (Conector JDBC para persistencia)\n" +
-                      "  • Apache Commons Math v3.6.1 (Solvers numéricos y análisis univariable)\n" +
-                      "  • exp4j v0.4.8 (Parser y evaluador de expresiones matemáticas)\n" +
-                      "  • JFreeChart v1.5.6 (Generación y visualización de gráficos 2D)\n" +
-                      "  • JavaFX 3D / Swing v28 (Motor de renderizado interactivo 3D)\n" +
-                      "  • OpenPDF v2.4.0 (Generación de reportes técnicos y exportación PDF)\n" +
-                      "  • NetBeans AbsoluteLayout RELEASE300 (Gestión de layout de componentes)\n" +
-                      "  • cvsclient v20060125 (Cliente de control de versiones NetBeans)\n" +
-                      "  • JUnit Jupiter v6.1.3 (Framework de pruebas unitarias)\n\n" +
+                      "  • FlatLaf v3.7.2\n" +
+                      "  • MySQL Connector/J v26.10.0\n" +
+                      "  • Apache Commons Math v3.6.1\n" +
+                      "  • exp4j v0.4.8\n" +
+                      "  • JFreeChart v1.5.6\n" +
+                      "  • JavaFX 3D / Swing v28\n" +
+                      "  • OpenPDF v2.4.0\n" +
+                      "  • cvsclient v20060125\n" +
+                      "  • JUnit Jupiter v6.1.3 (Framework para pruebas unitarias)\n" +
+                      "IDE: Apache NetBeans 29\n\n" +
                       "Sistema gestor de base de datos: MySQL / MariaDB\n" +
                       "JDK 25 LTS\n" +
                       "© 2026 Todos los derechos reservados.";
@@ -936,6 +1069,261 @@ public class CtrlPrincipal implements ActionListener {
             new CtrlLogin(login);
             login.setLocationRelativeTo(null);
             login.setVisible(true);
+        }
+    }
+
+    // =========================================================================
+    // SISTEMA DE AYUDAS VISUALES (TOOLTIPS) INFORMATIVAS Y TÉCNICAS
+    // =========================================================================
+
+    private void setToolTip(JComponent comp, String text) {
+        if (comp != null) {
+            comp.setToolTipText(text);
+        }
+    }
+
+    private void configurarTooltips() {
+        // Calibración de retardos para lectura cómoda en demostraciones
+        ToolTipManager.sharedInstance().setInitialDelay(350);
+        ToolTipManager.sharedInstance().setDismissDelay(12000);
+
+        // ---------------------------------------------------------------------
+        // 1. PRIORIDAD ALTA: Botones de Reportes de Consola (A, B, C) en HTML
+        // ---------------------------------------------------------------------
+        setToolTip(vista.getBtnReporteA(),
+            "<html><div style='width:320px;'><b>Reporte de Cálculo Volumétrico y Cubicación</b><br>" +
+            "Muestra la capacidad V(h) por integral doble, altura despejada, radio de borde, " +
+            "área superficial de pared, consumo de material (cm³ y gramos) y costo unitario de fabricación.</div></html>");
+
+        setToolTip(vista.getBtnReporteB(),
+            "<html><div style='width:320px;'><b>Reporte de Análisis de Gradiente y Desmolde</b><br>" +
+            "Evalúa el vector gradiente ∇f = (∂f/∂x, ∂f/∂y) en el borde, la magnitud de pendiente " +
+            "y el ángulo de inclinación de pared para verificar la extracción sin fricción del molde (umbral ≥ 3.0°).</div></html>");
+
+        setToolTip(vista.getBtnReporteC(),
+            "<html><div style='width:320px;'><b>Reporte de Optimización Lagrange y Comparativa CAD</b><br>" +
+            "Determina las dimensiones óptimas (r*, h*) de mínimo consumo de material mediante " +
+            "multiplicadores de Lagrange (∇V = λ∇A) y contrasta el volumen integral exacto frente a cilindro y tronco de cono.</div></html>");
+
+        // ---------------------------------------------------------------------
+        // 2. Parámetros de Entrada, Tablas y Barra de Estado (frmPrincipal)
+        // ---------------------------------------------------------------------
+        setToolTip(vista.getTxtFuncion1(),
+            "Ecuación explícita z = f(x, y) de la pared interior del envase en cm (ej. 0.5 * (x^2 + y^2)). " +
+            "Debe formar una superficie cerrada creciente desde el origen.");
+
+        setToolTip(vista.getSpnAltura(),
+            "Altura total del envase en cm. Tip: ingrese 0 para que el motor despeje automáticamente la altura exacta según el volumen objetivo.");
+
+        setToolTip(vista.getSpnEspesor(),
+            "Espesor de la pared del envase en cm (ej. 0.20 cm = 2 mm). Multiplica el área superficial para estimar el consumo de insumo.");
+
+        setToolTip(vista.getSpnVolumen(),
+            "Capacidad volumétrica objetivo en mililitros (ml) para las marcas de graduación y el despeje inverso de altura.");
+
+        setToolTip(vista.getTblVariables(),
+            "Tabla de cotas de graduación cada 50 ml: muestra altura de llenado, radio interno, área acumulada, volumen de material y costo progresivo.");
+
+        setToolTip(vista.getTA_consola(),
+            "Consola de resultados técnicos: muestra reportes volumétricos, análisis de gradiente, optimización Lagrange y diagnósticos.");
+
+        setToolTip(vista.getLblintegracion(),
+            "Margen de error numérico estimado de la integración doble en coordenadas polares (< 0.1% respecto al valor analítico).");
+
+        setToolTip(vista.getLblEstadoBD(),
+            "Estado de conexión en tiempo real con el servidor para persistencia de proyectos y materiales.");
+
+        setToolTip(vista.getLblCursorPosicion(),
+            "Coordenadas actuales del cursor (X, Y, Z) sobre la gráfica bidimensional.");
+
+        setToolTip(vista.getControlador2D(),
+            "Área de visualización 2D: curvas de nivel, perfil transversal z(r) o curva de llenado V(h).");
+
+        setToolTip(vista.getControlador3D(),
+            "Visor 3D interactivo: arrastre con el mouse para rotar el envase y use la rueda para zoom.");
+
+        // ---------------------------------------------------------------------
+        // 3. Cinta Superior de Herramientas
+        // ---------------------------------------------------------------------
+        // Pestaña Archivo
+        setToolTip(vista.getBtnNuevo(),
+            "Reinicia el área de trabajo para comenzar un nuevo diseño desde cero (solicita confirmación).");
+
+        setToolTip(vista.getBtnAbrir(),
+            "Abre el gestor de proyectos guardados en la base de datos para cargar, renombrar o eliminar diseños.");
+
+        setToolTip(vista.getBtnGuardar(),
+            "Guarda el diseño actual, sus parámetros y material asignado.");
+
+        setToolTip(vista.getBtnActualizar(),
+            "Guarda los cambios recientes sobre el proyecto activo en la base de datos.");
+
+        setToolTip(vista.getBtnExportarPNG(),
+            "Exporta la gráfica 2D activa (curvas de nivel, perfil o curva V(h)) como imagen PNG.");
+
+        setToolTip(vista.getBtnExportarCSV(),
+            "Exporta la tabla numérica de cotas y volúmenes por nivel a un archivo CSV.");
+
+        setToolTip(vista.getBtnExportarSTIL(),
+            "Genera y exporta la malla tridimensional sólida con espesor en formato STL para impresión 3D.");
+
+        setToolTip(vista.getBtnExportarDXF(),
+            "Exporta las curvas de nivel y el perfil transversal en capas CAD formato DXF.");
+
+        setToolTip(vista.getBtnExportarPDF(),
+            "Genera un informe técnico completo en PDF con parámetros, tabla de cotas y gráficas 2D/3D.");
+
+        setToolTip(vista.getBtnExportarPNG1(),
+            "Muestra información de versión, autoría, institución y librerías del sistema (Acerca de).");
+
+        setToolTip(vista.getBtnCerrarSesion(),
+            "Cierra la sesión del proyectista actual y regresa a la pantalla de inicio de sesión.");
+
+        // Pestaña Modelado
+        setToolTip(vista.getBtnSuperficie(),
+            "Alterna la visualización 3D entre sólido sombreado y malla de alambre (Wireframe).");
+
+        setToolTip(vista.getBtnCurvasnivel(),
+            "Proyecta en 2D las curvas de nivel f(x, y) = k correspondientes a cada marca de graduación.");
+
+        setToolTip(vista.getBtnGradienteDerivadas(),
+            "Grafica la curva de graduación volumétrica V(h) en función de la altura de llenado.");
+
+        setToolTip(vista.getBtnLagrange(),
+            "Grafica el perfil transversal z(r) del envase junto con las cotas de nivel.");
+
+        setToolTip(vista.getBtnPlantillas(),
+            "Abre el catálogo de geometrías predefinidas (Vaso, Tazón, Vaso abombado y Copa).");
+
+        // Pestaña Cálculo
+        setToolTip(vista.getBtnCalcularVaso(),
+            "Ejecuta el motor de cálculo multivariable, actualiza el modelo 3D, las gráficas 2D y la tabla de cotas.");
+
+        setToolTip(vista.getBtnCalculartodo(),
+            "Ejecuta el motor de cálculo multivariable, actualiza el modelo 3D, las gráficas 2D y la tabla de cotas.");
+
+        setToolTip(vista.getBtnVolumen(),
+            "Calcula la capacidad volumétrica exacta mediante la integral doble ∬ [h - f(r,θ)] r dr dθ.");
+
+        setToolTip(vista.getBtnAlturaObjetivo(),
+            "Muestra la altura despejada y el radio de borde necesarios para alcanzar el volumen objetivo.");
+
+        setToolTip(vista.getBtnTablaGradiente(),
+            "Actualiza la tabla inferior con las alturas exactas de graduación cada 50 ml.");
+
+        setToolTip(vista.getBtnAreaPared(),
+            "Calcula el área de la superficie lateral mediante ∬ √(1 + ||∇f||²) dA.");
+
+        setToolTip(vista.getBtnResina(),
+            "Estima el volumen de material requerido (Área × Espesor) y su peso total en gramos.");
+
+        setToolTip(vista.getBtnCosto(),
+            "Calcula el costo unitario de fabricación según el consumo de material y su tarifa por cm³.");
+
+        // Pestaña Análisis
+        setToolTip(vista.getBtnAnalizartodo(),
+            "Ejecuta y muestra en consola el reporte integral unificado (Cubicación, Gradiente y Lagrange).");
+
+        setToolTip(vista.getBtnAproximaciones(),
+            "Contrasta el volumen integral exacto frente a aproximaciones geométricas de cilindro y tronco de cono.");
+
+        setToolTip(vista.getBtnDesmoldar(),
+            "Evalúa el gradiente ∇f y verifica si el ángulo de salida de pared permite desmoldar la pieza (≥ 3.0°).");
+
+        setToolTip(vista.getBtnSensibilidad(),
+            "Abre el simulador de desviación de curvatura para evaluar tolerancias de fabricación.");
+
+        setToolTip(vista.getBtnMateriales(),
+            "Abre el catálogo de materiales (Vidrio, Resina PET, PP) para seleccionar o editar densidad y precio.");
+
+        // ---------------------------------------------------------------------
+        // 4. Diálogos Modales (JDialog) y Controles Internos
+        // ---------------------------------------------------------------------
+        // Diálogo: Abrir Proyecto
+        setToolTip(vista.getTxtBuscar(),
+            "Escribe parte del nombre del proyecto y presiona Enter o Buscar para filtrar.");
+
+        setToolTip(vista.getBtnBuscar(),
+            "Filtra la lista de proyectos registrados por el usuario.");
+
+        setToolTip(vista.getTblProyectos(),
+            "Lista de proyectos guardados. Haz clic en una fila para seleccionarlo.");
+
+        setToolTip(vista.getBtnAbrirProyecto(),
+            "Carga los parámetros geométricos y el material del proyecto seleccionado en el editor.");
+
+        setToolTip(vista.getBtnCambiarNombre(),
+            "Permite editar el nombre del proyecto seleccionado en la base de datos.");
+
+        setToolTip(vista.getBtnEliminarProyecto(),
+            "Elimina de forma permanente el proyecto seleccionado de la base de datos.");
+
+        if (vista.getDlgAbrirproyecto() != null) {
+            setToolTip(vista.getDlgAbrirproyecto().getRootPane(),
+                "Gestor de Proyectos: administración y apertura de diseños almacenados en la base de datos.");
+        }
+
+        // Diálogo: Plantillas
+        setToolTip(vista.getBtnVaso(),
+            "Previsualiza parámetros de Vaso estándar (350 ml, pared parabólica z = 0.4(x² + y²)).");
+
+        setToolTip(vista.getBtnTazon(),
+            "Previsualiza parámetros de Tazón / Bowl amplio (500 ml, z = 0.15(x² + y²)).");
+
+        setToolTip(vista.getBtnVasoabombado(),
+            "Previsualiza parámetros de Vaso abombado (500 ml, perfil polinómico de grado 6).");
+
+        setToolTip(vista.getBtnCopa(),
+            "Previsualiza parámetros de Copa con tallo (250 ml, perfil exponencial-parabólico).");
+
+        setToolTip(vista.getBtnSeleccionarPlantilla(),
+            "Aplica la plantilla elegida al formulario principal y ejecuta el cálculo 2D/3D.");
+
+        if (vista.getDlgPlantillas() != null) {
+            setToolTip(vista.getDlgPlantillas().getRootPane(),
+                "Catálogo de Plantillas: geometrías típicas de recipientes para inicio rápido de modelado.");
+        }
+
+        // Diálogo: Materiales
+        setToolTip(vista.getTblMateriales(),
+            "Catálogo de materiales disponibles. Selecciona una fila para ver o modificar sus propiedades.");
+
+        setToolTip(vista.getTxtDensidad(),
+            "Densidad física del material en g/cm³. Puedes editar este valor antes de confirmar.");
+
+        setToolTip(vista.getTxtPrecio(),
+            "Costo unitario del insumo en soles por cm³ (S/ / cm³). Puedes editar este valor antes de confirmar.");
+
+        setToolTip(vista.getBtnSeleccionarMaterial(),
+            "Asigna el material elegido al envase actual, actualiza densidad/precio y recalcula costos.");
+
+        if (vista.getDlgMateriales() != null) {
+            setToolTip(vista.getDlgMateriales().getRootPane(),
+                "Gestor de Materiales: selección y calibración de propiedades físicas (densidad y costo unitario).");
+        }
+
+        // Diálogo: Análisis de Sensibilidad
+        setToolTip(vista.getSpnCoeficiente(),
+            "Factor multiplicador k aplicado a la curvatura f(x, y). Ejemplo: k = 1.10 simula un incremento del +10% en la curvatura del molde.");
+
+        setToolTip(vista.getBtnSimular(),
+            "Calcula el volumen resultante bajo el factor k y evalúa si la desviación está dentro de la tolerancia (±5%).");
+
+        setToolTip(vista.getLblVolumenIdeal(),
+            "Volumen teórico de diseño V(h) bajo curvatura nominal (k = 1.0).");
+
+        setToolTip(vista.getLblEstadoIdeal(),
+            "Dictamen de conformidad volumétrica nominal respecto al volumen objetivo.");
+
+        setToolTip(vista.getLblVolumenSimulado(),
+            "Volumen perturbado V*(h) resultante de aplicar la desviación de curvatura k·f(x, y).");
+
+        setToolTip(vista.getLblEstadoSimulado(),
+            "Porcentaje de desviación volumétrica (V* - V)/V·100% y estado de tolerancia industrial.");
+
+        if (vista.getDlgSensibilidad() != null) {
+            setToolTip(vista.getDlgSensibilidad().getRootPane(),
+                "Análisis de Sensibilidad: simulación de tolerancias y desviaciones dimensionales de curvatura en molde.");
         }
     }
 }

@@ -250,7 +250,7 @@ public class frmLogin extends javax.swing.JFrame {
         lbl_caption4.setText("Powered by Java & MySQL."); // NOI18N
         lbl_caption4.setToolTipText("");
         lbl_caption4.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        pnl_contenido.add(lbl_caption4, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 500, 420, 20));
+        pnl_contenido.add(lbl_caption4, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 505, 420, 20));
 
         lbl_registrarse.setBackground(new java.awt.Color(255, 255, 255));
         lbl_registrarse.setForeground(new java.awt.Color(255, 183, 183));
@@ -265,7 +265,6 @@ public class frmLogin extends javax.swing.JFrame {
         txtUsuario.setBackground(new java.awt.Color(54, 54, 54));
         txtUsuario.setFont(new java.awt.Font("Square721 BT", 0, 18)); // NOI18N
         txtUsuario.setForeground(new java.awt.Color(255, 255, 255));
-        txtUsuario.setText("wdmazam");
         pnl_contenido.add(txtUsuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 240, 420, 35));
 
         btnIniciarSesion.setBackground(new java.awt.Color(163, 53, 53));
@@ -278,7 +277,6 @@ public class frmLogin extends javax.swing.JFrame {
         txtContraseña.setBackground(new java.awt.Color(54, 54, 54));
         txtContraseña.setFont(new java.awt.Font("Square721 BT", 0, 18)); // NOI18N
         txtContraseña.setForeground(new java.awt.Color(255, 255, 255));
-        txtContraseña.setText("jPasswordField1");
         pnl_contenido.add(txtContraseña, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 330, 420, 35));
 
         lbl_empresa4.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N

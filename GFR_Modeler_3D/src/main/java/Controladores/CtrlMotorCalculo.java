@@ -286,7 +286,7 @@ public class CtrlMotorCalculo {
             : String.format(Locale.US, "Se sugiere calibrar la altura a %.2f cm para coincidir exactamente con el tiraje de envasado.", res.alturaParaObjetivo);
 
         String narrativaA = String.format(
-            "\nDiagnóstico Técnico:\n" +
+            "\n\nDiagnóstico Técnico:\n" +
             "• %s\n" +
             "• %s\n" +
             "• %s\n" +
@@ -328,7 +328,7 @@ public class CtrlMotorCalculo {
             res.errorNumericoPorcentaje);
 
         String narrativaB = String.format(
-            "\nDiagnóstico Técnico:\n" +
+            "\n\nDiagnóstico Técnico:\n" +
             "• %s\n" +
             "• %s\n" +
             "• %s\n" +
@@ -369,7 +369,7 @@ public class CtrlMotorCalculo {
         String conclusionC = "El cálculo riguroso por integrales dobles previene mermas por sobrellenado en líneas automáticas.";
 
         String narrativaC = String.format(
-            "\nDiagnóstico Técnico:\n" +
+            "\n\nDiagnóstico Técnico:\n" +
             "• %s\n" +
             "• %s\n" +
             "• %s\n" +
