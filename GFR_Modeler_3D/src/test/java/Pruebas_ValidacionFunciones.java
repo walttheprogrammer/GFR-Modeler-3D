@@ -1,13 +1,13 @@
-import Controladores.CtrlMotorCalculo;
+import Servicios.*;
 import org.junit.jupiter.api.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class Pruebas_ValidacionFunciones {
-    private CtrlMotorCalculo motor;
+    private SrvMotorCalculo motor;
 
     @BeforeEach
     void setUp() {
-        motor = new CtrlMotorCalculo();
+        motor = new SrvMotorCalculo();
     }
 
     @Test
@@ -66,7 +66,7 @@ public class Pruebas_ValidacionFunciones {
     @Test
     @DisplayName("Rechazo en hallarRadioEnNivel si no hay función o es inalcanzable")
     void testHallarRadioExcepciones() {
-        CtrlMotorCalculo motorSinCompilar = new CtrlMotorCalculo();
+        SrvMotorCalculo motorSinCompilar = new SrvMotorCalculo();
         assertThrows(IllegalArgumentException.class, () -> {
             motorSinCompilar.hallarRadioEnNivel(5.0, 0.0);
         }, "Debe lanzar excepción si no hay función compilada");

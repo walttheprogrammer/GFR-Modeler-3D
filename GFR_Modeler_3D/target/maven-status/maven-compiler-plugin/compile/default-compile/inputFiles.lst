@@ -1,8 +1,4 @@
-C:\Users\Walter\Documents\GitHub\GFR Modeler 3D\GFR_Modeler_3D\src\main\java\Controladores\CtrlExportador.java
-C:\Users\Walter\Documents\GitHub\GFR Modeler 3D\GFR_Modeler_3D\src\main\java\Controladores\CtrlGenerador2D.java
-C:\Users\Walter\Documents\GitHub\GFR Modeler 3D\GFR_Modeler_3D\src\main\java\Controladores\CtrlGenerador3D.java
 C:\Users\Walter\Documents\GitHub\GFR Modeler 3D\GFR_Modeler_3D\src\main\java\Controladores\CtrlLogin.java
-C:\Users\Walter\Documents\GitHub\GFR Modeler 3D\GFR_Modeler_3D\src\main\java\Controladores\CtrlMotorCalculo.java
 C:\Users\Walter\Documents\GitHub\GFR Modeler 3D\GFR_Modeler_3D\src\main\java\Controladores\CtrlPrincipal.java
 C:\Users\Walter\Documents\GitHub\GFR Modeler 3D\GFR_Modeler_3D\src\main\java\DAO\MaterialDAO.java
 C:\Users\Walter\Documents\GitHub\GFR Modeler 3D\GFR_Modeler_3D\src\main\java\DAO\ProyectoDAO.java
@@ -14,6 +10,10 @@ C:\Users\Walter\Documents\GitHub\GFR Modeler 3D\GFR_Modeler_3D\src\main\java\Mod
 C:\Users\Walter\Documents\GitHub\GFR Modeler 3D\GFR_Modeler_3D\src\main\java\Modelo\Proyecto.java
 C:\Users\Walter\Documents\GitHub\GFR Modeler 3D\GFR_Modeler_3D\src\main\java\Modelo\ResultadoCalculo.java
 C:\Users\Walter\Documents\GitHub\GFR Modeler 3D\GFR_Modeler_3D\src\main\java\Modelo\Usuario.java
+C:\Users\Walter\Documents\GitHub\GFR Modeler 3D\GFR_Modeler_3D\src\main\java\Servicios\CtrlExportador.java
+C:\Users\Walter\Documents\GitHub\GFR Modeler 3D\GFR_Modeler_3D\src\main\java\Servicios\CtrlGenerador2D.java
+C:\Users\Walter\Documents\GitHub\GFR Modeler 3D\GFR_Modeler_3D\src\main\java\Servicios\CtrlGenerador3D.java
+C:\Users\Walter\Documents\GitHub\GFR Modeler 3D\GFR_Modeler_3D\src\main\java\Servicios\CtrlMotorCalculo.java
 C:\Users\Walter\Documents\GitHub\GFR Modeler 3D\GFR_Modeler_3D\src\main\java\Utilidades\ConexionBD.java
 C:\Users\Walter\Documents\GitHub\GFR Modeler 3D\GFR_Modeler_3D\src\main\java\Vistas\frmLogin.java
 C:\Users\Walter\Documents\GitHub\GFR Modeler 3D\GFR_Modeler_3D\src\main\java\Vistas\frmPrincipal.java

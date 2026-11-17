@@ -1,4 +1,4 @@
-package Controladores;
+package Servicios;
 import Modelo.CotaGraduacion;
 import Modelo.Material;
 import Modelo.ResultadoCalculo;
@@ -10,7 +10,7 @@ import net.objecthunter.exp4j.ExpressionBuilder;
 import org.apache.commons.math3.analysis.UnivariateFunction;
 import org.apache.commons.math3.analysis.solvers.BisectionSolver;
 
-public class CtrlMotorCalculo {
+public class SrvMotorCalculo {
     private Expression expresion;
     private String funcionActual = "";
     private static final int N_THETA = 36;

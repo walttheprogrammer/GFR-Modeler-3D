@@ -1,16 +1,17 @@
+import Servicios.*;
 import Controladores.*;
 import Modelo.*;
 import org.junit.jupiter.api.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class Pruebas_ReportesConsola {
-    private CtrlMotorCalculo motor;
+    private SrvMotorCalculo motor;
     private Material vidrio;
     private ResultadoCalculo resultado;
 
     @BeforeEach
     void setUp() {
-        motor = new CtrlMotorCalculo();
+        motor = new SrvMotorCalculo();
         vidrio = new Material(1, "Vidrio Templado", 2.50, 0.18);
         resultado = motor.ejecutarAnalisisCompleto("0.25 * (x^2 + y^2)", 7.5, 0.20, 350.0, vidrio);
     }

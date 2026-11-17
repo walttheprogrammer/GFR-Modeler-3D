@@ -1,17 +1,10 @@
-import Controladores.CtrlPrincipal;
-import DAO.ProyectoDAO;
-import Modelo.Parametro;
-import Modelo.Proyecto;
-import Modelo.Usuario;
-import Utilidades.ConexionBD;
-import Vistas.frmPrincipal;
-import org.junit.jupiter.api.Assumptions;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
-
+import Controladores.*;
+import DAO.*;
+import Modelo.*;
+import Utilidades.*;
+import Vistas.*;
+import org.junit.jupiter.api.*;
 import java.util.List;
-
 import static org.junit.jupiter.api.Assertions.*;
 
 public class Pruebas_TituloYGuardado {

@@ -4,7 +4,7 @@ import Vistas.frmLogin;
 import com.formdev.flatlaf.FlatDarkLaf;
 import javax.swing.UIManager;
 
-public class main {
+public class Main {
     public static void main(String[] args) {
         try {
             FlatDarkLaf.setup();

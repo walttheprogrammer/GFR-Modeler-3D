@@ -1,5 +1,9 @@
 package Controladores;
 
+import Servicios.SrvGenerador3D;
+import Servicios.SrvExportador;
+import Servicios.SrvGenerador2D;
+import Servicios.SrvMotorCalculo;
 import DAO.*;
 import Modelo.*;
 import Utilidades.*;
@@ -24,10 +28,10 @@ public class CtrlPrincipal implements ActionListener {
     private final MaterialDAO materialDAO;
 
     // 4 Controladores orquestados
-    private final CtrlMotorCalculo motorCalculo;
-    private final CtrlGenerador2D generador2D;
-    private final CtrlGenerador3D generador3D;
-    // CtrlExportador opera mediante métodos estáticos
+    private final SrvMotorCalculo motorCalculo;
+    private final SrvGenerador2D generador2D;
+    private final SrvGenerador3D generador3D;
+    // SrvExportador opera mediante métodos estáticos
 
     // Estado del modelo y sesión
     private Proyecto proyectoActual;
@@ -44,9 +48,9 @@ public class CtrlPrincipal implements ActionListener {
         this.usuarioActual = usuarioActual;
         this.proyectoDAO = new ProyectoDAO();
         this.materialDAO = new MaterialDAO();
-        this.motorCalculo = new CtrlMotorCalculo();
-        this.generador2D = new CtrlGenerador2D(vista.getControlador2D(), vista.getLblCursorPosicion());
-        this.generador3D = new CtrlGenerador3D(vista.getControlador3D());
+        this.motorCalculo = new SrvMotorCalculo();
+        this.generador2D = new SrvGenerador2D(vista.getControlador2D(), vista.getLblCursorPosicion());
+        this.generador3D = new SrvGenerador3D(vista.getControlador3D());
         inicializar();
     }
 
@@ -454,7 +458,7 @@ public class CtrlPrincipal implements ActionListener {
             try {
                 File destino = normalizarExtension(fc.getSelectedFile(), ".png");
                 if (!confirmarSobrescritura(destino)) return;
-                CtrlExportador.exportarPNG(destino, img);
+                SrvExportador.exportarPNG(destino, img);
                 JOptionPane.showMessageDialog(vista, "Gráfica 2D guardada correctamente en:\n" + destino.getAbsolutePath(), "Exportación Exitosa", JOptionPane.INFORMATION_MESSAGE);
             } catch (Exception ex) {
                 JOptionPane.showMessageDialog(vista, "Error al exportar PNG: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
@@ -473,7 +477,7 @@ public class CtrlPrincipal implements ActionListener {
             try {
                 File destino = normalizarExtension(fc.getSelectedFile(), ".csv");
                 if (!confirmarSobrescritura(destino)) return;
-                CtrlExportador.exportarCSV(destino, resultadoActual);
+                SrvExportador.exportarCSV(destino, resultadoActual);
                 JOptionPane.showMessageDialog(vista, "Datos exportados correctamente en:\n" + destino.getAbsolutePath(), "Exportación Exitosa", JOptionPane.INFORMATION_MESSAGE);
             } catch (Exception ex) {
                 JOptionPane.showMessageDialog(vista, "Error al exportar CSV: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
@@ -492,7 +496,7 @@ public class CtrlPrincipal implements ActionListener {
             try {
                 File destino = normalizarExtension(fc.getSelectedFile(), ".stl");
                 if (!confirmarSobrescritura(destino)) return;
-                CtrlExportador.exportarSTL(destino, motorCalculo, resultadoActual.alturaIngresada, resultadoActual.espesor);
+                SrvExportador.exportarSTL(destino, motorCalculo, resultadoActual.alturaIngresada, resultadoActual.espesor);
                 JOptionPane.showMessageDialog(vista, "Malla STL exportada correctamente en:\n" + destino.getAbsolutePath(), "Exportación Exitosa", JOptionPane.INFORMATION_MESSAGE);
             } catch (Exception ex) {
                 JOptionPane.showMessageDialog(vista, "Error al exportar STL: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
@@ -511,7 +515,7 @@ public class CtrlPrincipal implements ActionListener {
             try {
                 File destino = normalizarExtension(fc.getSelectedFile(), ".dxf");
                 if (!confirmarSobrescritura(destino)) return;
-                CtrlExportador.exportarDXF(destino, motorCalculo, resultadoActual);
+                SrvExportador.exportarDXF(destino, motorCalculo, resultadoActual);
                 JOptionPane.showMessageDialog(vista, "Planos vectoriales guardados correctamente en:\n" + destino.getAbsolutePath(), "Exportación Exitosa", JOptionPane.INFORMATION_MESSAGE);
             } catch (Exception ex) {
                 JOptionPane.showMessageDialog(vista, "Error al exportar DXF: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
@@ -534,7 +538,7 @@ public class CtrlPrincipal implements ActionListener {
                 BufferedImage img3D = generador3D.capturarImagen3D();
                 String nombreProyecto = (proyectoActual != null) ? proyectoActual.getNombreProyecto() : "Diseño Libre";
 
-                CtrlExportador.exportarPDF(destino, nombreProyecto, resultadoActual, img2D, img3D);
+                SrvExportador.exportarPDF(destino, nombreProyecto, resultadoActual, img2D, img3D);
                 JOptionPane.showMessageDialog(vista, "Reporte técnico PDF generado correctamente en:\n" + destino.getAbsolutePath(), "Exportación Exitosa", JOptionPane.INFORMATION_MESSAGE);
             } catch (Exception ex) {
                 JOptionPane.showMessageDialog(vista, "Error al generar informe PDF: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);

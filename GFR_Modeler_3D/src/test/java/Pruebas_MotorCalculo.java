@@ -1,15 +1,15 @@
-import Controladores.CtrlMotorCalculo;
+import Servicios.*;
 import Modelo.*;
 import org.junit.jupiter.api.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class Pruebas_MotorCalculo {
-    private CtrlMotorCalculo motor;
+    private SrvMotorCalculo motor;
     private Material vidrio;
 
     @BeforeEach
     void setUp() {
-        motor = new CtrlMotorCalculo();
+        motor = new SrvMotorCalculo();
         vidrio = new Material(1, "Vidrio Templado", 2.50, 0.18);
     }
 

@@ -1,4 +1,4 @@
-package Controladores;
+package Servicios;
 import java.awt.BorderLayout;
 import java.awt.image.BufferedImage;
 import java.util.concurrent.CountDownLatch;
@@ -14,7 +14,7 @@ import javafx.scene.shape.*;
 import javafx.scene.transform.Rotate;
 import javax.swing.JPanel;
 
-public class CtrlGenerador3D {
+public class SrvGenerador3D {
 
     private final JFXPanel jfxPanel;
     private Group contenedorMalla;
@@ -26,7 +26,7 @@ public class CtrlGenerador3D {
     private PerspectiveCamera camera;
     private boolean modoWireframe = false;
 
-    public CtrlGenerador3D(JPanel panelContenedorSwing) {
+    public SrvGenerador3D(JPanel panelContenedorSwing) {
         Platform.setImplicitExit(false);
         this.jfxPanel = new JFXPanel();
         panelContenedorSwing.removeAll();
@@ -84,7 +84,7 @@ public class CtrlGenerador3D {
         this.modoWireframe = wireframe;
     }
 
-    public void actualizarEnvase3D(CtrlMotorCalculo motor, double alturaH, double espesorE) {
+    public void actualizarEnvase3D(SrvMotorCalculo motor, double alturaH, double espesorE) {
         Platform.runLater(() -> {
             if (contenedorMalla == null) return;
             contenedorMalla.getChildren().clear();

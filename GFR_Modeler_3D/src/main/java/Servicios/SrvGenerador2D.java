@@ -1,4 +1,4 @@
-package Controladores;
+package Servicios;
 
 import Modelo.CotaGraduacion;
 import Modelo.ResultadoCalculo;
@@ -24,19 +24,19 @@ import org.jfree.chart.renderer.xy.XYLineAndShapeRenderer;
 import org.jfree.data.xy.XYSeries;
 import org.jfree.data.xy.XYSeriesCollection;
 
-public class CtrlGenerador2D {
+public class SrvGenerador2D {
 
     private final JPanel panelContenedor;
     private final JLabel lblCursor;
     private JFreeChart chartActual;
 
-    public CtrlGenerador2D(JPanel panelContenedor, JLabel lblCursor) {
+    public SrvGenerador2D(JPanel panelContenedor, JLabel lblCursor) {
         this.panelContenedor = panelContenedor;
         this.lblCursor = lblCursor;
     }
 
     // Vista 1: Curvas de Nivel f(x,y) = k (Proporción 1:1 circular)
-    public void mostrarCurvasDeNivel(CtrlMotorCalculo motor, ResultadoCalculo res) {
+    public void mostrarCurvasDeNivel(SrvMotorCalculo motor, ResultadoCalculo res) {
         XYSeriesCollection dataset = new XYSeriesCollection();
 
         if (res.cotas != null && !res.cotas.isEmpty()) {
@@ -85,7 +85,7 @@ public class CtrlGenerador2D {
     }
 
     // Vista 2: Perfil de Corte Transversal z(r) con recorrido continuo sin cruce por el centro
-    public void mostrarPerfilEnvase(CtrlMotorCalculo motor, ResultadoCalculo res) {
+    public void mostrarPerfilEnvase(SrvMotorCalculo motor, ResultadoCalculo res) {
         XYSeriesCollection dataset = new XYSeriesCollection();
         // autoSort = false para respetar el orden continuo del contorno
         XYSeries paredInt = new XYSeries("Pared Interior z = f(r,0)", false);
@@ -199,7 +199,7 @@ public class CtrlGenerador2D {
         plot.setRenderer(renderer);
     }
 
-    private void renderizarEnPanel(JFreeChart chart, CtrlMotorCalculo motor, boolean esVistaXY) {
+    private void renderizarEnPanel(JFreeChart chart, SrvMotorCalculo motor, boolean esVistaXY) {
         this.chartActual = chart;
         ChartPanel cp = new ChartPanel(chart);
         cp.setMouseWheelEnabled(true);

@@ -1,16 +1,8 @@
-import Controladores.CtrlExportador;
-import Controladores.CtrlMotorCalculo;
-import DAO.ProyectoDAO;
-import Modelo.Material;
-import Modelo.Parametro;
-import Modelo.Proyecto;
-import Modelo.ResultadoCalculo;
+import Servicios.*;
+import DAO.*;
+import Modelo.*;
 import Utilidades.ConexionBD;
-import org.junit.jupiter.api.Assumptions;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.io.TempDir;
+import org.junit.jupiter.api.*;
 
 import java.io.File;
 import java.io.IOException;
@@ -18,16 +10,16 @@ import java.nio.file.Path;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
-
+import org.junit.jupiter.api.io.*;
 public class Pruebas_FlujoProyecto {
 
-    private CtrlMotorCalculo motor;
+    private SrvMotorCalculo motor;
     private Material materialVidrio;
     private ProyectoDAO proyectoDAO;
 
     @BeforeEach
     void setUp() {
-        motor = new CtrlMotorCalculo();
+        motor = new SrvMotorCalculo();
         materialVidrio = new Material(1, "Vidrio Templado", 2.50, 0.18);
         proyectoDAO = new ProyectoDAO();
     }
@@ -119,7 +111,7 @@ public class Pruebas_FlujoProyecto {
         File archivoCSV = tempDir.resolve("cotas_test.csv").toFile();
         assertFalse(archivoCSV.exists(), "El archivo no debe existir antes de exportar");
 
-        CtrlExportador.exportarCSV(archivoCSV, res);
+        SrvExportador.exportarCSV(archivoCSV, res);
         assertTrue(archivoCSV.exists(), "El archivo CSV exportado debe existir en disco");
         assertTrue(archivoCSV.length() > 0, "El archivo CSV no debe estar vacío");
 
@@ -130,7 +122,7 @@ public class Pruebas_FlujoProyecto {
         File archivoDXF = tempDir.resolve("planos_test.dxf").toFile();
         assertFalse(archivoDXF.exists(), "El archivo DXF no debe existir antes de exportar");
 
-        CtrlExportador.exportarDXF(archivoDXF, motor, res);
+        SrvExportador.exportarDXF(archivoDXF, motor, res);
         assertTrue(archivoDXF.exists(), "El archivo DXF exportado debe existir en disco");
         assertTrue(archivoDXF.length() > 0, "El archivo DXF no debe estar vacío");
         assertTrue(archivoDXF.exists(), "Debe reportar que el archivo DXF ya existe al reintentar guardar sobre la misma ruta");

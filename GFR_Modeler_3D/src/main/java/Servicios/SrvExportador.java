@@ -1,4 +1,4 @@
-package Controladores;
+package Servicios;
 import Modelo.CotaGraduacion;
 import Modelo.ResultadoCalculo;
 import com.lowagie.text.*;
@@ -10,7 +10,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.Locale;
 import javax.imageio.ImageIO;
 
-public class CtrlExportador {
+public class SrvExportador {
     public static void exportarCSV(File archivo, ResultadoCalculo res) throws IOException {
         try (PrintWriter pw = new PrintWriter(new OutputStreamWriter(new FileOutputStream(archivo), StandardCharsets.UTF_8))) {
             pw.println("Nivel_ml;Altura_cm;Radio_cm;Area_cm2;Material_cm3;Costo_Soles");
@@ -29,7 +29,7 @@ public class CtrlExportador {
         ImageIO.write(img2D, "PNG", archivo);
     }
 
-    public static void exportarSTL(File archivo, CtrlMotorCalculo motor, double alturaH, double espesorE) throws IOException {
+    public static void exportarSTL(File archivo, SrvMotorCalculo motor, double alturaH, double espesorE) throws IOException {
         int nTheta = 48;
         int nZ = 30;
         double zMin = motor.evaluarZ(0, 0);
@@ -72,7 +72,7 @@ public class CtrlExportador {
         pw.println("  endfacet");
     }
 
-    public static void exportarDXF(File archivo, CtrlMotorCalculo motor, ResultadoCalculo res) throws IOException {
+    public static void exportarDXF(File archivo, SrvMotorCalculo motor, ResultadoCalculo res) throws IOException {
         try (PrintWriter pw = new PrintWriter(new OutputStreamWriter(new FileOutputStream(archivo), StandardCharsets.UTF_8))) {
             pw.println("0\nSECTION\n2\nENTITIES");
 
