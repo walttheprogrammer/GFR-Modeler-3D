@@ -12,9 +12,7 @@ public class Main {
             UIManager.put("Component.arc", 10);
             UIManager.put("TextComponent.arc", 10);
         } catch (Exception ex) {
-            ex.printStackTrace();
         }
-
         java.awt.EventQueue.invokeLater(() -> {
             frmLogin login = new frmLogin();
             new CtrlLogin(login);
