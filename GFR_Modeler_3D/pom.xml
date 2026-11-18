@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>ucv.wdmc</groupId>
     <artifactId>GFR_Modeler_3D</artifactId>
-    <version>1.0.0</version>
+    <version>1.5.4</version>
     <packaging>jar</packaging>
     <dependencies>
         <dependency>
