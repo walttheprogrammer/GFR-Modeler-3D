@@ -1076,7 +1076,7 @@
                           <Component id="btnActualizar" alignment="0" max="32767" attributes="0"/>
                           <Component id="btnCerrarSesion" alignment="0" pref="184" max="32767" attributes="0"/>
                       </Group>
-                      <EmptySpace pref="146" max="32767" attributes="0"/>
+                      <EmptySpace pref="553" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -1570,13 +1570,13 @@
                       </Group>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Component id="btnCalculartodo" min="-2" pref="195" max="-2" attributes="0"/>
-                      <EmptySpace pref="404" max="32767" attributes="0"/>
+                      <EmptySpace pref="811" max="32767" attributes="0"/>
                   </Group>
                   <Group type="103" rootIndex="1" groupAlignment="0" attributes="0">
                       <Group type="102" alignment="1" attributes="0">
-                          <EmptySpace pref="1064" max="32767" attributes="0"/>
+                          <EmptySpace pref="1267" max="32767" attributes="0"/>
                           <Component id="jSeparator2" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace pref="525" max="32767" attributes="0"/>
+                          <EmptySpace pref="729" max="32767" attributes="0"/>
                       </Group>
                   </Group>
               </Group>
@@ -1785,13 +1785,13 @@
                       <Component id="btnAproximaciones" min="-2" pref="192" max="-2" attributes="0"/>
                       <EmptySpace min="6" pref="6" max="-2" attributes="0"/>
                       <Component id="btnAnalizartodo" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace pref="765" max="32767" attributes="0"/>
+                      <EmptySpace pref="1184" max="32767" attributes="0"/>
                   </Group>
                   <Group type="103" rootIndex="1" groupAlignment="0" attributes="0">
                       <Group type="102" alignment="0" attributes="0">
                           <EmptySpace min="-2" pref="830" max="-2" attributes="0"/>
                           <Component id="separador3" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace pref="759" max="32767" attributes="0"/>
+                          <EmptySpace pref="1166" max="32767" attributes="0"/>
                       </Group>
                   </Group>
               </Group>
@@ -2329,7 +2329,7 @@
                 <Container class="javax.swing.JSplitPane" name="jsp_3dy2d">
                   <Properties>
                     <Property name="dividerLocation" type="int" value="480"/>
-                    <Property name="resizeWeight" type="double" value="0.5"/>
+                    <Property name="resizeWeight" type="double" value="0.8"/>
                   </Properties>
                   <Constraints>
                     <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JSplitPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JSplitPaneSupportLayout$JSplitPaneConstraintsDescription">
@@ -2432,7 +2432,7 @@
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Group type="102" alignment="0" attributes="0">
                                   <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="controlador2D" pref="657" max="32767" attributes="0"/>
+                                  <Component id="controlador2D" pref="1371" max="32767" attributes="0"/>
                                   <EmptySpace max="-2" attributes="0"/>
                               </Group>
                           </Group>
@@ -2469,6 +2469,10 @@
                   </SubComponents>
                 </Container>
                 <Container class="javax.swing.JSplitPane" name="jsp_consolaytabla">
+                  <Properties>
+                    <Property name="dividerLocation" type="int" value="480"/>
+                    <Property name="resizeWeight" type="double" value="0.5"/>
+                  </Properties>
                   <Constraints>
                     <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JSplitPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JSplitPaneSupportLayout$JSplitPaneConstraintsDescription">
                       <JSplitPaneConstraints position="right"/>
@@ -2507,7 +2511,7 @@
                                       <Component id="btnReporteC" min="-2" pref="45" max="-2" attributes="0"/>
                                   </Group>
                                   <EmptySpace min="-2" pref="6" max="-2" attributes="0"/>
-                                  <Component id="jsp_consola" pref="370" max="32767" attributes="0"/>
+                                  <Component id="jsp_consola" pref="415" max="32767" attributes="0"/>
                                   <EmptySpace min="-2" pref="6" max="-2" attributes="0"/>
                               </Group>
                           </Group>
@@ -2622,7 +2626,7 @@
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Group type="102" alignment="0" attributes="0">
                                   <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="jsp_tabla" pref="654" max="32767" attributes="0"/>
+                                  <Component id="jsp_tabla" pref="1371" max="32767" attributes="0"/>
                                   <EmptySpace max="-2" attributes="0"/>
                               </Group>
                           </Group>
@@ -2631,7 +2635,7 @@
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Group type="102" alignment="0" attributes="0">
                                   <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="jsp_tabla" pref="266" max="32767" attributes="0"/>
+                                  <Component id="jsp_tabla" pref="275" max="32767" attributes="0"/>
                                   <EmptySpace max="-2" attributes="0"/>
                               </Group>
                           </Group>

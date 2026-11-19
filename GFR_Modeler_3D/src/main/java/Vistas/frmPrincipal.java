@@ -780,7 +780,7 @@ public class frmPrincipal extends javax.swing.JFrame {
                     .addComponent(btnExportarPNG1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnActualizar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnCerrarSesion, javax.swing.GroupLayout.DEFAULT_SIZE, 184, Short.MAX_VALUE))
-                .addContainerGap(146, Short.MAX_VALUE))
+                .addContainerGap(553, Short.MAX_VALUE))
         );
         tab_archivoLayout.setVerticalGroup(
             tab_archivoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -987,12 +987,12 @@ public class frmPrincipal extends javax.swing.JFrame {
                         .addComponent(btnTablaGradiente)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnCalculartodo, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(404, Short.MAX_VALUE))
+                .addContainerGap(811, Short.MAX_VALUE))
             .addGroup(tab_calculoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, tab_calculoLayout.createSequentialGroup()
-                    .addContainerGap(1064, Short.MAX_VALUE)
+                    .addContainerGap(1267, Short.MAX_VALUE)
                     .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(525, Short.MAX_VALUE)))
+                    .addContainerGap(729, Short.MAX_VALUE)))
         );
         tab_calculoLayout.setVerticalGroup(
             tab_calculoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1080,12 +1080,12 @@ public class frmPrincipal extends javax.swing.JFrame {
                 .addComponent(btnAproximaciones, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(6, 6, 6)
                 .addComponent(btnAnalizartodo)
-                .addContainerGap(765, Short.MAX_VALUE))
+                .addContainerGap(1184, Short.MAX_VALUE))
             .addGroup(tab_analisisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(tab_analisisLayout.createSequentialGroup()
                     .addGap(830, 830, 830)
                     .addComponent(separador3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(759, Short.MAX_VALUE)))
+                    .addContainerGap(1166, Short.MAX_VALUE)))
         );
         tab_analisisLayout.setVerticalGroup(
             tab_analisisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1256,7 +1256,7 @@ public class frmPrincipal extends javax.swing.JFrame {
         jsp_tableta.setOrientation(javax.swing.JSplitPane.VERTICAL_SPLIT);
 
         jsp_3dy2d.setDividerLocation(480);
-        jsp_3dy2d.setResizeWeight(0.5);
+        jsp_3dy2d.setResizeWeight(0.8);
 
         pnl_superior_izq.setBackground(new java.awt.Color(54, 54, 54));
         pnl_superior_izq.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(102, 102, 102)));
@@ -1307,7 +1307,7 @@ public class frmPrincipal extends javax.swing.JFrame {
             pnl_superior_derLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnl_superior_derLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(controlador2D, javax.swing.GroupLayout.DEFAULT_SIZE, 657, Short.MAX_VALUE)
+                .addComponent(controlador2D, javax.swing.GroupLayout.DEFAULT_SIZE, 1371, Short.MAX_VALUE)
                 .addContainerGap())
         );
         pnl_superior_derLayout.setVerticalGroup(
@@ -1321,6 +1321,9 @@ public class frmPrincipal extends javax.swing.JFrame {
         jsp_3dy2d.setRightComponent(pnl_superior_der);
 
         jsp_tableta.setTopComponent(jsp_3dy2d);
+
+        jsp_consolaytabla.setDividerLocation(480);
+        jsp_consolaytabla.setResizeWeight(0.5);
 
         pnl_inferior_izq.setBackground(new java.awt.Color(54, 54, 54));
         pnl_inferior_izq.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(102, 102, 102)));
@@ -1355,7 +1358,7 @@ public class frmPrincipal extends javax.swing.JFrame {
                     .addComponent(btnReporteB, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnReporteC, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(6, 6, 6)
-                .addComponent(jsp_consola, javax.swing.GroupLayout.DEFAULT_SIZE, 370, Short.MAX_VALUE)
+                .addComponent(jsp_consola, javax.swing.GroupLayout.DEFAULT_SIZE, 415, Short.MAX_VALUE)
                 .addGap(6, 6, 6))
         );
         pnl_inferior_izqLayout.setVerticalGroup(
@@ -1400,14 +1403,14 @@ public class frmPrincipal extends javax.swing.JFrame {
             pnl_inferior_derLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnl_inferior_derLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jsp_tabla, javax.swing.GroupLayout.DEFAULT_SIZE, 654, Short.MAX_VALUE)
+                .addComponent(jsp_tabla, javax.swing.GroupLayout.DEFAULT_SIZE, 1371, Short.MAX_VALUE)
                 .addContainerGap())
         );
         pnl_inferior_derLayout.setVerticalGroup(
             pnl_inferior_derLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnl_inferior_derLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jsp_tabla, javax.swing.GroupLayout.DEFAULT_SIZE, 266, Short.MAX_VALUE)
+                .addComponent(jsp_tabla, javax.swing.GroupLayout.DEFAULT_SIZE, 275, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
