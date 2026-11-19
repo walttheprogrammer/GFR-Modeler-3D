@@ -94,7 +94,7 @@
                         <argument>--enable-native-access=ALL-UNNAMED</argument>
                         <argument>-classpath</argument>
                         <classpath/>
-                        <argument>Main.main</argument>
+                        <argument>Main.Main</argument>
                     </arguments>
                 </configuration>
             </plugin>
